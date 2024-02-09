@@ -1,7 +1,7 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
+import { CoreModule } from './app/core/core.module';
 import { APP_CONFIG } from './environments/environment';
 
 if (APP_CONFIG.production) {
@@ -9,7 +9,7 @@ if (APP_CONFIG.production) {
 }
 
 platformBrowserDynamic()
-  .bootstrapModule(AppModule, {
+  .bootstrapModule(CoreModule, {
     preserveWhitespaces: false
   })
   .catch(err => console.error(err));

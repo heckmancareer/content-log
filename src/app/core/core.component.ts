@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { ElectronService } from './core/services';
+import { ElectronService } from './services';
 import { TranslateService } from '@ngx-translate/core';
-import { APP_CONFIG } from '../environments/environment';
-import { CATEGORIES } from './shared/constants/content-log-categories';
+import { APP_CONFIG } from '../../environments/environment';
+import { CATEGORIES } from '../shared/constants/content-log-categories';
 import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'core',
+  templateUrl: './core.component.html',
+  styleUrls: ['./core.component.scss']
 })
-export class AppComponent {
+export class CoreComponent {
   contentCategories = CATEGORIES
-  
+
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService,
