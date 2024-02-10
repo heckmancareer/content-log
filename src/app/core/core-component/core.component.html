@@ -1,0 +1,25 @@
+<div class="master-container min-h-screen flex flex-row surface-200">
+  <div class="sidebar min-h-full flex flex-column static inline flex-shrink-0 surface-0">
+    <div class="sidebar__top w-full flex flex-column align-items-center justify-content-center border-bottom-1 surface-border">
+      <i class="pi pi-th-large text-700" style="font-size: 1.5rem;"></i>
+    </div>
+    <div class="sidebar__body w-full flex flex-column">
+      <ul class="sidebar__navigation list-none p-2 m-0">
+        <li>
+          @for (category of contentCategories; track $index) {
+            <a pRipple class="sidebar__navigation__link p-ripple p-element flex flex-column align-items-center justify-content-center cursor-pointer p-3 hover:surface-100 border-round transition-colors transition-duration-150">
+              <i class="pi pi-{{category.icon}} text-700" style="font-size: 1.5rem;"></i>
+              <span class="sidebar__navigation__link__text text-center mt-2">{{category.name}}</span>
+            </a>
+          }
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="content flex-grow-1">
+    <div class="content__header-bar surface-0">
+
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

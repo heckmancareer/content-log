@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from '../shared/components';
 
-import { HomeRoutingModule } from '../home/home-routing.module';
-import { DetailRoutingModule } from '../detail/detail-routing.module';
-
 const routes: Routes = [
   {
+    path: 'movies',
+    loadChildren: () => import('../modules/movies/movies.module').then(m => m.MoviesModule)
+  },
+  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'movies',
     pathMatch: 'full'
   },
   {
@@ -20,8 +21,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {}),
-    HomeRoutingModule,
-    DetailRoutingModule
   ],
   exports: [RouterModule]
 })

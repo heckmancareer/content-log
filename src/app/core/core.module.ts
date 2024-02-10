@@ -14,10 +14,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { HomeModule } from '../home/home.module';
-import { DetailModule } from '../detail/detail.module';
-
-import { CoreComponent } from './core.component';
+import { CoreComponent } from './core-component/core.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,8 +26,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     FormsModule,
     HttpClientModule,
     SharedModule,
-    HomeModule,
-    DetailModule,
     CoreRoutingModule,
     DividerModule,
     RippleModule,

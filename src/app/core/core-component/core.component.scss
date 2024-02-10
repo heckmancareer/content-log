@@ -1,0 +1,23 @@
+$sidebar-width: 120px;
+$sidebar-top-height: 60px;
+
+:host {
+
+}
+
+.content {
+  &__header-bar {
+    height: $sidebar-top-height;
+  }
+}
+
+.master-container {
+
+}
+
+.sidebar {
+  width: $sidebar-width;
+  &__top {
+    height: $sidebar-top-height;
+  }
+}
