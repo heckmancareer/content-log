@@ -8,6 +8,7 @@
         <li>
           @for (category of contentCategories; track $index) {
             <a pRipple
+              routerLink="/{{category.route}}"
               class="sidebar__navigation__link
                 p-ripple p-element flex flex-column align-items-center justify-content-center
                 cursor-pointer p-3 hover:bg-{{contentCategories[$index].color}}-100 border-round transition-colors transition-duration-150"
