@@ -6,11 +6,11 @@ import { CATEGORIES } from '../../shared/constants/content-log-categories';
 import { PrimeNGConfig } from 'primeng/api';
 import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { NgClass } from '@angular/common';
 @Component({
   selector: 'core',
   templateUrl: './core.component.html',
-  styleUrls: ['./core.component.scss']
+  styleUrls: ['./core.component.scss'],
 })
 export class CoreComponent {
   private routeSub!: Subscription;
@@ -63,5 +63,16 @@ export class CoreComponent {
     if(this.routeSub) {
       this.routeSub.unsubscribe();
     }
+  }
+
+  getSidebarNavItemBackgroundColorClass(index: number, hoverElevationValue: number, activeElevationValue: number) {
+    if(this.sidebarActiveRoute[index]) {
+      return `bg-${this.highlightColor}-${activeElevationValue}
+        hover:bg-${this.highlightColor}-${activeElevationValue + hoverElevationValue}
+        text-white`
+    } else {
+      return `hover:bg-${this.contentCategories[index].color}-${hoverElevationValue}`
+    }
+
   }
 }
