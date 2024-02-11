@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 
-import { CoreRoutingModule } from './core-routing.module';
-
 // NG Prime Imports
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { CoreComponent } from './core-component/core.component';
+import { CoreRoutingModule } from './core-routing.module';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +29,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     CoreRoutingModule,
     DividerModule,
     RippleModule,
+    BreadcrumbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
