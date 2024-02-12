@@ -21,7 +21,8 @@ export const MENU_BAR: RouteAndMenuItemsTuple[] = [
           },
           {
             label: 'New Entry',
-            icon: PrimeIcons.PLUS_CIRCLE
+            icon: PrimeIcons.PLUS_CIRCLE,
+            routerLink: '/movies/new-movie'
           }
         ]
       }
