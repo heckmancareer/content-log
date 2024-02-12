@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenubarModule } from 'primeng/menubar';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+// Core Imports
 import { CoreComponent } from './core-component/core.component';
 import { CoreRoutingModule } from './core-routing.module';
 
@@ -30,6 +32,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     DividerModule,
     RippleModule,
     BreadcrumbModule,
+    MenubarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

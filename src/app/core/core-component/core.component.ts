@@ -3,6 +3,7 @@ import { ElectronService } from '../services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../../../environments/environment';
 import { CATEGORIES } from '../../shared/constants/content-log-categories';
+import { MENU_BAR } from '../../shared/constants/menu-bar-options';
 import { PrimeNGConfig } from 'primeng/api';
 import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,10 +16,12 @@ import { MenuItem } from 'primeng/api';
 export class CoreComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   contentCategories = CATEGORIES
+  menuBarConfig = MENU_BAR
   sidebarActiveRoute: boolean[] = Object.keys(CATEGORIES).map(() => false);
   highlightColor: string = ''
   breadcrumbMenuItems: MenuItem[] | undefined
   breadcrumbHomeMenuItem: MenuItem | undefined = {icon: 'pi pi-home'}
+  menuBarConfigIndex: number = 0
 
   constructor(
     private electronService: ElectronService,
@@ -55,6 +58,7 @@ export class CoreComponent implements OnInit, OnDestroy {
           if(urlSegments[1] === this.contentCategories[i].route) {
             this.sidebarActiveRoute[i] = true;
             this.highlightColor = this.contentCategories[i].color;
+            this.activateMenuBarConfig(urlSegments[1]);
             break;
           }
         }
@@ -72,8 +76,7 @@ export class CoreComponent implements OnInit, OnDestroy {
   /**
    * Creates string representations of CSS classes to be applied to elements.
    * Intended for the sidebar navigation elements. When one of those elements
-   * isn't activated, it should have no background color and have an on-hover
-   * value of surface 100.
+   * isn't activated, it should have no background color.
    *
    * When the elements corresponding route is activated, the element should
    * have a background color corresponding to its category, as defined by
@@ -139,5 +142,21 @@ export class CoreComponent implements OnInit, OnDestroy {
     });
 
     return wordsArray.join(' ').replace('Tv', 'TV');
+  }
+
+  /**
+   * Given a route value, search the MenuBar config constant for a
+   * corresponding route value. Set the corresponding index for the MenuBar
+   * component to load.
+   * @param baseRoute The route value to search for.
+   */
+  private activateMenuBarConfig(baseRoute: string): void {
+    for(let i = 0; i < this.menuBarConfig.length; i++) {
+      if(this.menuBarConfig[i].route === baseRoute) {
+        this.menuBarConfigIndex = i;
+      }
+    }
+
+    return;
   }
 }
