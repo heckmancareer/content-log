@@ -1,0 +1,22 @@
+@import '../../../../global-style-variables.scss';
+.image-placeholder {
+  width: $global-image-panel-width;
+  height: $global-image-panel-height;
+  border-radius: 12px;
+  background-color: red;
+}
+
+.cropped-image {
+  width: $global-image-panel-width;
+  height: $global-image-panel-height;
+  border-radius: 12px;
+}
+
+.cropped-image-auto-resize {
+  width: $global-image-panel-height;
+  height: $global-image-panel-height;
+}
+
+.image-cropper-row {
+  max-height: 60vh;
+}

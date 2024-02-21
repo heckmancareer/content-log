@@ -1,0 +1,74 @@
+<div class="container flex-flex-column">
+  <div class="image-placeholder"></div>
+  <div>Upload Image with Cropper:</div>
+  <input type="file" (change)="onFileChangeEvent($event)" />
+  <div>Upload Image with Auto-Resize</div>
+  <input type="file" (change)="onFileAutoResizeEvent($event)" />
+</div>
+
+<p-dialog header="Crop Image" [modal]="true" [draggable]="false"
+  [resizable]="false" [(visible)]="imageDialogVisible" [blockScroll]="true"
+  [style]="{width: '75vw'}">
+  <div class="grid">
+    <div class="col-12 image-cropper-row">
+      <image-cropper
+      [imageChangedEvent]="cropperImageChangedEvent"
+      [aspectRatio]="imagePanelWidth / imagePanelHeight"
+      [maintainAspectRatio]="true"
+      [resizeToWidth]="imagePanelWidth"
+      [onlyScaleDown]="true"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady($event)"
+      (loadImageFailed)="loadImageFailed($event)"></image-cropper>
+    </div>
+  </div>
+  <div class="col-4">
+    <img [src]="croppedImage">
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+  <div class="col-2">
+
+  </div>
+</p-dialog>
+
+
+
+<!-- <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    format="jpeg"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper> -->
+
+<!-- <img [src]="croppedImage" /> -->
+<!-- [cropperStaticWidth]="imagePanelHeight"
+      [cropperStaticWidth]="imagePanelWidth"
+      [resizeToHeight]="imagePanelHeight"
+      [resizeToWidth]="imagePanelWidth"
+      [containWithinAspectRatio]="true" -->

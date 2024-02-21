@@ -1,4 +1,4 @@
-abstract class BasicEntity {
+export abstract class BasicEntity {
   title: string = '';
   releaseDate: Date = new Date();
   releaseYear: number = this.releaseDate.getUTCFullYear();
