@@ -1,4 +1,4 @@
-import {app, BrowserWindow, screen} from 'electron';
+import {app, BrowserWindow, ipcMain, screen, dialog} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -81,3 +81,36 @@ try {
   // Catch Error
   // throw e;
 }
+
+ipcMain.on('save-file', async (event, buffer) => {
+  const { filePath } = await dialog.showSaveDialog({
+    title: 'Save Image',
+    buttonLabel: 'Save',
+    filters: [
+      {
+        name: 'Images',
+        extensions: ['png', 'jpg', 'jpeg']
+      }
+    ]
+  });
+  if(filePath) {
+    writeFile(filePath, buffer);
+  }
+});
+
+function writeFile(path: any, buffer: any) {
+  fs.writeFile(path, buffer, (err) => {
+    if(err) {
+      console.error(`Error saving the file: `);
+      console.log(err);
+    } else {
+      console.log('File saved successfully.');
+    }
+  });
+}
+
+ipcMain.on('hello-world', async (event, message) => {
+  console.log('Electron successfully received event.');
+  console.log('Received this message: ');
+  console.log(message)
+})

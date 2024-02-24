@@ -3,7 +3,10 @@
   width: $global-image-panel-width;
   height: $global-image-panel-height;
   border-radius: 12px;
-  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
 }
 
 .cropped-image {

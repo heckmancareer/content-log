@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent, ImageTransform, LoadedImage } from 'ngx-image-cropper';
+import { AngularElectronInterfaceService } from '../../services/angular-electron-interface.service';
 
 const GLOBAL_IMAGE_PANEL_WIDTH: number = 180;
 const GLOBAL_IMAGE_PANEL_HEIGHT: number = 320;
@@ -14,6 +15,8 @@ export class ImageUploaderComponent {
   @ViewChild('cropperImageInput') cropperImageInput!: ElementRef
 
   imageDialogVisible: boolean = false;
+  imageSubmitted: boolean = false;
+  savedCroppedImage: any = '';
   imagePanelWidth = GLOBAL_IMAGE_PANEL_WIDTH
   imagePanelHeight = GLOBAL_IMAGE_PANEL_HEIGHT
 
@@ -22,14 +25,14 @@ export class ImageUploaderComponent {
   cropperTransform: ImageTransform = {};
   cropperCanvasRotation: number = 0;
   cropperScale: number = 1;
-  croppedImage: any = '';
+  activeCroppedImage: any = '';
   cropperContainWithinAspectRatio: boolean = false;
   cropperZoomValue: number = 1;
   zoomMinValue: number = 1;
   zoomMaxValue: number = 3;
   zoomStepValue: number = 0.1;
 
-  constructor(private sanitizer: DomSanitizer){}
+  constructor(private sanitizer: DomSanitizer, private angularElectronInterface: AngularElectronInterfaceService){}
 
 
   onUploadHandler(event: unknown): void {
@@ -46,7 +49,7 @@ export class ImageUploaderComponent {
 
   imageCropped(event: ImageCroppedEvent): void {
     // this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
-    this.croppedImage = event.objectUrl;
+    this.activeCroppedImage = event.objectUrl;
   }
 
   imageLoaded(image: LoadedImage) {
@@ -61,9 +64,43 @@ export class ImageUploaderComponent {
 
   }
 
+  submitHandler(event: unknown): void {
+    this.imageDialogVisible = false;
+    this.savedCroppedImage = this.activeCroppedImage;
+    this.imageSubmitted = true;
+    console.log(this.savedCroppedImage);
+  }
 
-  public getCurrentCroppedImage(): void {
+  cancelHandler(event: unknown): void {
+    this.imageDialogVisible = false;
+    this.activeCroppedImage = this.savedCroppedImage;
+    this.imageSubmitted = this.savedCroppedImage === '' ? false : true;
+    if(!this.imageSubmitted) {
+      this.cropperImageInput.nativeElement.value = null;
+    }
+  }
 
+  clearHandler(event: unknown): void {
+    this.cropperResetImage();
+    this.imageSubmitted = false;
+    this.savedCroppedImage = '';
+    this.activeCroppedImage = '';
+    this.cropperImageInput.nativeElement.value = null;
+  }
+
+  editHandler(event: unknown): void {
+    this.imageDialogVisible = true;
+  }
+
+  dummyExport(event: unknown): void {
+    console.log('Emitting event to electron...');
+    this.angularElectronInterface.testConnection();
+    // this.angularElectronInterface.sendBlobToFileSystem(this.savedCroppedImage as Blob);
+  }
+
+
+  public getCurrentCroppedImageBlob(): any {
+    return this.savedCroppedImage;
   }
 
   // Event functions used to transform the image

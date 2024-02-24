@@ -1,35 +1,61 @@
 <div class="container flex-flex-column">
-  <div class="image-placeholder"></div>
-  <div>Upload Image:</div>
-  <input #cropperImageInput type="file" (change)="onFileChangeEvent($event)" />
+  @switch (imageSubmitted) {
+    @case(false) {
+      <div class="image-placeholder border-1 border-surface">
+        <i class="pi pi-plus-circle" style="font-size: 3rem; color: gray;"></i>
+      </div>
+    }
+    @case(true) {
+      <img [src]="savedCroppedImage" class="cropped-image">
+    }
+  }
+
+  @switch (imageSubmitted) {
+    @case(false) {
+      <div>Upload Image:</div>
+      <input #cropperImageInput type="file" (change)="onFileChangeEvent($event)" />
+    }
+    @case(true) {
+      <div>
+        <p-button label="Edit" class="mr-3" (onClick)="editHandler($event)"></p-button>
+        <p-button label="Clear" (onClick)="clearHandler($event)"></p-button>
+      </div>
+    }
+  }
+  <p-button label="Dummy Export" (onClick)="dummyExport($event)"></p-button>
 </div>
 
-<p-dialog header="Crop Image" [modal]="true" [draggable]="false"
-  [resizable]="false" [(visible)]="imageDialogVisible" [blockScroll]="true"
+<p-dialog header="Crop Image"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [(visible)]="imageDialogVisible"
+  [blockScroll]="true"
+  [closable]="false"
   [style]="{width: '75vw'}">
   <div class="grid">
     <div class="col-10 image-cropper-row">
       <image-cropper
-      [imageChangedEvent]="cropperImageChangedEvent"
-      [aspectRatio]="imagePanelWidth / imagePanelHeight"
-      [maintainAspectRatio]="true"
-      [canvasRotation]="cropperCanvasRotation"
-      [containWithinAspectRatio]="cropperContainWithinAspectRatio"
-      [resizeToWidth]="imagePanelWidth"
-      [onlyScaleDown]="true"
-      [transform]="cropperTransform"
-      format="png"
-      (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded($event)"
-      (cropperReady)="cropperReady($event)"
-      (loadImageFailed)="loadImageFailed($event)"></image-cropper>
+        [imageChangedEvent]="cropperImageChangedEvent"
+        [aspectRatio]="imagePanelWidth / imagePanelHeight"
+        [maintainAspectRatio]="true"
+        [canvasRotation]="cropperCanvasRotation"
+        [containWithinAspectRatio]="cropperContainWithinAspectRatio"
+        [resizeToWidth]="imagePanelWidth"
+        [onlyScaleDown]="true"
+        [transform]="cropperTransform"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded($event)"
+        (cropperReady)="cropperReady($event)"
+        (loadImageFailed)="loadImageFailed($event)"></image-cropper>
     </div>
-    <div class="col-2">
+    <div class="col-2 flex flex-column">
       <span>Image Preview:</span>
-      <img [src]="croppedImage">
+      <img [src]="activeCroppedImage" class="cropped-image">
     </div>
   </div>
-  <div class="flex justify-content-around">
+  <div class="flex justify-content-around mt-3">
     <p-button label="Rotate Left" (onClick)="cropperRotateLeft()"></p-button>
     <p-button label="Rotate Right" (onClick)="cropperRotateRight()"></p-button>
     <p-button label="Flip Horizontal" (onClick)="cropperFlipHorizontal()"></p-button>
@@ -37,8 +63,11 @@
     <p-button label="Aspect Ratio" (onClick)="cropperContainWithinAspectRatioToggle()"></p-button>
     <p-button label="Reset Image" (onClick)="cropperResetImage()"></p-button>
   </div>
-  <div class="flex justify-content-around">
-    <div>
+  <div class="flex justify-content-center align-items-center mt-3">
+    <div class="mr-3">
+      Zoom Control:
+    </div>
+    <div class="mr-3">
       <p-inputNumber [(ngModel)]="cropperZoomValue"
         mode="decimal"
         [min]="zoomMinValue"
@@ -52,23 +81,7 @@
         [step]="zoomStepValue"
         (onChange)="zoomValueChange($event)"></p-slider>
     </div>
+    <p-button class="mr-3" label="Submit" severity="success" (onClick)="submitHandler($event)"></p-button>
+    <p-button class="mr-3" label="Cancel" severity="danger" (onClick)="cancelHandler($event)"></p-button>
   </div>
 </p-dialog>
-
-<!-- <image-cropper
-    [imageChangedEvent]="imageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    format="jpeg"
-    (imageCropped)="imageCropped($event)"
-    (imageLoaded)="imageLoaded($event)"
-    (cropperReady)="cropperReady()"
-    (loadImageFailed)="loadImageFailed()"
-></image-cropper> -->
-
-<!-- <img [src]="croppedImage" /> -->
-<!-- [cropperStaticWidth]="imagePanelHeight"
-      [cropperStaticWidth]="imagePanelWidth"
-      [resizeToHeight]="imagePanelHeight"
-      [resizeToWidth]="imagePanelWidth"
-      [containWithinAspectRatio]="true" -->
