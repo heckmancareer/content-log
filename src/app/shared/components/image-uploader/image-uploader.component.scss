@@ -23,3 +23,32 @@
 .image-cropper-row {
   max-height: 60vh;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  cursor: pointer;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+  margin-left: 25px;
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  display: inline-block;
+}
+
+.custom-file-upload:hover {
+  background: var(--primary-600);
+}
+.custom-file-upload:active {
+  background: var(--primary-700);
+}
+.custom-file-upload:invalid+span {
+  color: #000000;
+}
+.custom-file-upload:valid+span {
+  color: #ffffff;
+}

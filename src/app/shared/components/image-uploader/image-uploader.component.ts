@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ImageCroppedEvent, ImageTransform, LoadedImage } from 'ngx-image-cropper';
-import { AngularElectronInterfaceService } from '../../services/angular-electron-interface.service';
+import { Component, ElementRef, Output, ViewChild, EventEmitter } from '@angular/core';
+import { ImageCroppedEvent, ImageTransform, LoadedImage, Dimensions } from 'ngx-image-cropper';
+import { FileSelectEvent } from 'primeng/fileupload';
 
 const GLOBAL_IMAGE_PANEL_WIDTH: number = 180;
 const GLOBAL_IMAGE_PANEL_HEIGHT: number = 320;
@@ -12,66 +11,56 @@ const GLOBAL_IMAGE_PANEL_HEIGHT: number = 320;
   styleUrl: './image-uploader.component.scss'
 })
 export class ImageUploaderComponent {
-  @ViewChild('cropperImageInput') cropperImageInput!: ElementRef
+  @ViewChild('cropperImageInput') cropperImageInput!: ElementRef;
+
+  /**
+   * Whenever an image is successfully cropped and submitted, component
+   * will emit the new saved image blob url.
+   */
+  @Output() onImageSubmission = new EventEmitter<string>();
 
   imageDialogVisible: boolean = false;
   imageSubmitted: boolean = false;
+  imagePanelWidth = GLOBAL_IMAGE_PANEL_WIDTH;
+  imagePanelHeight = GLOBAL_IMAGE_PANEL_HEIGHT;
+  imageMaxFileSize: number = 1000000;
   savedCroppedImage: any = '';
-  imagePanelWidth = GLOBAL_IMAGE_PANEL_WIDTH
-  imagePanelHeight = GLOBAL_IMAGE_PANEL_HEIGHT
 
   // Variables used by the image cropper component
+  activeCroppedImage: any = '';
   cropperImageChangedEvent: any = '';
   cropperTransform: ImageTransform = {};
   cropperCanvasRotation: number = 0;
   cropperScale: number = 1;
-  activeCroppedImage: any = '';
   cropperContainWithinAspectRatio: boolean = false;
   cropperZoomValue: number = 1;
   zoomMinValue: number = 1;
   zoomMaxValue: number = 3;
   zoomStepValue: number = 0.1;
 
-  constructor(private sanitizer: DomSanitizer, private angularElectronInterface: AngularElectronInterfaceService){}
+  constructor(){}
 
-
-  onUploadHandler(event: unknown): void {
-
+  public getCurrentCroppedImageBlobURL(): any {
+    return this.savedCroppedImage;
   }
 
-  onSelectHandler(event: unknown): void {
-    this.imageDialogVisible = true;
+  /**
+   * BUTTON HANDLER FUNCTIONS
+   * Functions to handle the various button functionality.
+   */
+
+  onFileSelectHandler($event: unknown): void {
+    this.cropperImageChangedEvent = $event;
   }
 
-  onFileChangeEvent(event: unknown): void {
-    this.cropperImageChangedEvent = event;
-  }
-
-  imageCropped(event: ImageCroppedEvent): void {
-    // this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl as string);
-    this.activeCroppedImage = event.objectUrl;
-  }
-
-  imageLoaded(image: LoadedImage) {
-    this.imageDialogVisible = true;
-  }
-
-  cropperReady(event: unknown): void {
-
-  }
-
-  loadImageFailed(event: unknown): void {
-
-  }
-
-  submitHandler(event: unknown): void {
+  submitHandler($event: unknown): void {
     this.imageDialogVisible = false;
     this.savedCroppedImage = this.activeCroppedImage;
     this.imageSubmitted = true;
-    console.log(this.savedCroppedImage);
+    this.onImageSubmission.emit(this.savedCroppedImage);
   }
 
-  cancelHandler(event: unknown): void {
+  cancelHandler($event: unknown): void {
     this.imageDialogVisible = false;
     this.activeCroppedImage = this.savedCroppedImage;
     this.imageSubmitted = this.savedCroppedImage === '' ? false : true;
@@ -80,7 +69,7 @@ export class ImageUploaderComponent {
     }
   }
 
-  clearHandler(event: unknown): void {
+  clearHandler($event: unknown): void {
     this.cropperResetImage();
     this.imageSubmitted = false;
     this.savedCroppedImage = '';
@@ -88,22 +77,35 @@ export class ImageUploaderComponent {
     this.cropperImageInput.nativeElement.value = null;
   }
 
-  editHandler(event: unknown): void {
+  /**
+   * IMAGE CROPPER OUTPUT FUNCTIONS
+   * Functions that handle the emitted events from the image-cropper component.
+   */
+  editHandler($event: unknown): void {
     this.imageDialogVisible = true;
   }
 
-  dummyExport(event: unknown): void {
-    console.log('Emitting event to electron...');
-    this.angularElectronInterface.testConnection();
-    // this.angularElectronInterface.sendBlobToFileSystem(this.savedCroppedImage as Blob);
+  imageCropped($event: ImageCroppedEvent): void {
+    this.activeCroppedImage = $event.objectUrl;
   }
 
-
-  public getCurrentCroppedImageBlob(): any {
-    return this.savedCroppedImage;
+  imageLoaded(image: LoadedImage) {
+    this.imageDialogVisible = true;
   }
 
-  // Event functions used to transform the image
+  cropperReady($event: Dimensions): void {
+
+  }
+
+  loadImageFailed($event: unknown): void {
+
+  }
+
+  /**
+   * IMAGE CROPPER TRANSFORM FUNCTIONS
+   * Functions used to handle buttons events from the image-cropper
+   * modal, to transform the current image.
+   */
   cropperRotateLeft(): void {
     this.cropperCanvasRotation--;
     this.flipAfterRotate();
@@ -142,7 +144,7 @@ export class ImageUploaderComponent {
     this.cropperTransform = {
       ...this.cropperTransform,
       scale: $event.value
-    }
+    };
   }
 
   private flipAfterRotate(): void {

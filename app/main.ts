@@ -82,35 +82,25 @@ try {
   // throw e;
 }
 
-ipcMain.on('save-file', async (event, buffer) => {
+ipcMain.on('SAVE-BUFFER-TO-FS', async (event, buffer) => {
+  console.log('Hello World!');
+  console.log(buffer);
+
   const { filePath } = await dialog.showSaveDialog({
     title: 'Save Image',
     buttonLabel: 'Save',
     filters: [
-      {
-        name: 'Images',
-        extensions: ['png', 'jpg', 'jpeg']
-      }
+      { name: 'PNG', extensions: ['png']}
     ]
   });
+
   if(filePath) {
-    writeFile(filePath, buffer);
+    fs.writeFile(filePath, buffer, err => {
+      if(err) {
+        console.error(err);
+      } else {
+        console.log('File save success.');
+      }
+    })
   }
-});
-
-function writeFile(path: any, buffer: any) {
-  fs.writeFile(path, buffer, (err) => {
-    if(err) {
-      console.error(`Error saving the file: `);
-      console.log(err);
-    } else {
-      console.log('File saved successfully.');
-    }
-  });
-}
-
-ipcMain.on('hello-world', async (event, message) => {
-  console.log('Electron successfully received event.');
-  console.log('Received this message: ');
-  console.log(message)
 })

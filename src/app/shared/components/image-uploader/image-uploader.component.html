@@ -12,8 +12,10 @@
 
   @switch (imageSubmitted) {
     @case(false) {
-      <div>Upload Image:</div>
-      <input #cropperImageInput type="file" (change)="onFileChangeEvent($event)" />
+      <label class="custom-file-upload">
+        <input #cropperImageInput type="file" (change)="onFileSelectHandler($event)" />
+        <span>Select Image</span>
+      </label>
     }
     @case(true) {
       <div>
@@ -22,7 +24,6 @@
       </div>
     }
   }
-  <p-button label="Dummy Export" (onClick)="dummyExport($event)"></p-button>
 </div>
 
 <p-dialog header="Crop Image"
