@@ -89,7 +89,7 @@ export class ImageUploaderComponent {
     this.activeCroppedImage = $event.objectUrl;
   }
 
-  imageLoaded(image: LoadedImage) {
+  imageLoaded($event: LoadedImage) {
     this.imageDialogVisible = true;
   }
 
