@@ -21,14 +21,15 @@
       </ul>
     </div>
   </div>
-  <div class="content flex-grow-1">
+  <div class="content flex-grow-1 flex flex-column">
     <div class="content__header-bar bg-{{highlightColor}}-200 flex max-w-full">
       <p-breadcrumb [model]="breadcrumbMenuItems" [home]="breadcrumbHomeMenuItem" styleClass="bg-{{highlightColor}}-200 border-none" style="padding-top: 5px;"></p-breadcrumb>
     </div>
     <div class="content__menu-bar max-w-full">
       <p-menubar [model]="menuBarConfig[menuBarConfigIndex].menuItems"></p-menubar>
     </div>
-    <router-outlet></router-outlet>
-
+    <div class="content__main-content max-w-full flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
