@@ -8,7 +8,8 @@ import { NewMoviePageComponent } from './pages/new-movie-page/new-movie-page.com
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
-import { Calendar, CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 import { MovieEntryFormComponent } from './components/movie-entry-form/movie-entry-form.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MovieEntryFormComponent } from './components/movie-entry-form/movie-ent
     CardModule,
     InputTextModule,
     TabViewModule,
-    CalendarModule
+    CalendarModule,
+    InputTextareaModule,
   ],
   bootstrap: [
     MoviesInventoryPageComponent

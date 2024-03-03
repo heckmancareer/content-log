@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
-import { FormsModule } from '@angular/forms';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 
 
@@ -30,12 +31,16 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     DialogModule,
     InputNumberModule,
     SliderModule,
+    ToastModule,
   ],
   exports: [
     TranslateModule,
     WebviewDirective,
     FormsModule,
     ImageUploaderComponent
+  ],
+  providers: [
+    MessageService
   ]
 })
 export class SharedModule {}

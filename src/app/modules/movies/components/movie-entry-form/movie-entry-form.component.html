@@ -1,6 +1,7 @@
 <p-card header="New Movie" class="card">
   <div class="card__body-container flex">
     <div class="card__body-left">
+      <span>Image Preview:</span>
       <app-image-uploader></app-image-uploader>
     </div>
     <div class="card__bord-right flex-grow-1 ml-2">
@@ -9,27 +10,37 @@
           <div class="formgrid grid w-full">
             <div class="field col-12">
               <label for="movie-title">Movie Title:</label>
-              <input id="movie-title" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+              <input id="movie-title" type="text" pInputText class="w-full p-2"/>
             </div>
             <div class="field col-6">
               <label for="movie-writer">Writer:</label>
-              <input id="movie-title" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+              <input id="movie-writer" type="text" pInputText class="w-full p-2"/>
             </div>
             <div class="field col-6">
               <label for="movie-director">Director:</label>
-              <input id="movie-director" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+              <input id="movie-title" type="text" pInputText class="w-full p-2"/>
             </div>
             <div class="field col-6 flex flex-column">
               <label for="movie-release-year">Release Year:</label>
-              <p-calendar 
-                [(ngModel)]="date" 
-                [inputStyleClass]="'w-full'" 
-                [styleClass]="'w-full'" 
-                view="year" 
-                dateFormat="yy" 
-                inputId="movie-release-year" 
-                class="text-base text-color surface-overlay surface-border
-                 border-round appearance-none outline-none focus:border-primary"></p-calendar>
+              <p-calendar
+                [(ngModel)]="date"
+                [inputStyleClass]="'w-full p-2'"
+                [styleClass]="'w-full'"
+                view="year"
+                dateFormat="yy"
+                inputId="movie-release-year"
+                class="text-base text-color
+                  surface-overlay surface-border
+                  border-round appearance-none
+                  outline-none focus:border-primary"></p-calendar>
+            </div>
+            <div class="field col-6">
+              <label for="movie-runtime">Runtime:</label>
+              <input id="movie-runtime" type="text" pInputText class="w-full p-2"/>
+            </div>
+            <div class="field col-12">
+              <label for="movie-plotsummary">Plot Summary:</label>
+              <textarea pInputTextarea class="w-full" [autoResize]="true"></textarea>
             </div>
           </div>
         </p-tabPanel>
@@ -40,7 +51,10 @@
 
         </p-tabPanel>
       </p-tabView>
-
+      <div class="flex justify-content-end">
+        <p-button class="mr-3" label="Cancel" severity="danger"></p-button>
+        <p-button label="Save" severity="success"></p-button>
+      </div>
     </div>
   </div>
 </p-card>

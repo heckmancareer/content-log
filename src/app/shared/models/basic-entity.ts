@@ -3,7 +3,8 @@ export abstract class BasicEntity {
   releaseDate: Date = new Date();
   releaseYear: number = this.releaseDate.getUTCFullYear();
   genres: string[] = [];
-  keywords: string[] = [];
+  tags: string[] = [];
+  gridImageIdentifier: string = '';
 
   userRating: number = 0;
   userDateCompleted: Date = new Date();
