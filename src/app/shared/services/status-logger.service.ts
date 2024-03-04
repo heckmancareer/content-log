@@ -34,30 +34,42 @@ export class StatusLoggerService {
     detail?: string,
     toastSeverity?: string,
     ...objs: unknown[]) {
-      if(logToToast) this.logStatusToToast(toastSeverity ?? 'info', summary, detail ?? '')
+      if(logToToast) this.logStatusToToast(toastSeverity ?? 'info', summary, detail ?? undefined)
       let messageString = `${this.logLabel}\n${summary}\n${detail}`;
       console.log(messageString);
-      if(objs) console.log(this.objectPrintOutStatement);
+      if(objs.length > 0) console.log(this.objectPrintOutStatement);
       for(const obj in objs) {
         this.logObjectToConsole(obj);
       }
   }
 
+  /**
+   * Log an error to the console
+   * @param summary Primary message. Ideally a short sumation.
+   * @param logToToast Boolean indicating whether this message should
+   * also be sent as a toast to the user.
+   * @param err A JavaScript Error object to optionally print out alongside message.
+   * @param detail Main message. Full descriptor of what is trying to be conveyed
+   * to the user.
+   * @param objs Optional objects to print out for debugging purposes.
+   */
   logErrorToConsole(
     summary: string,
+    logToToast = false,
     err?: Error,
     detail?: string,
     ...objs: unknown[]): void {
-    let errorString = `${this.logLabel}\n${summary}\n${detail}`;
-    if(err) {
-      errorString += `\n${this.errorStackTracePrintOutStatement}`
-    }
-    console.error(errorString);
-    if(err) this.logObjectToConsole(err);
-    if(objs) console.log(this.objectPrintOutStatement);
-    for(const obj in objs) {
-      this.logObjectToConsole(obj);
-    }
+      if(logToToast) this.logStatusToToast('error', summary, detail ?? undefined)
+      let errorString = `${this.logLabel}\n${summary}\n${detail}`;
+      if(err) {
+        errorString += `\n${this.errorStackTracePrintOutStatement}`
+      }
+      console.error(errorString);
+      if(err) this.logObjectToConsole(err);
+      if(objs.length > 0) console.log(this.objectPrintOutStatement);
+      for(const obj in objs) {
+        this.logObjectToConsole(obj);
+      }
   }
 
   logStatusToToast(toastSeverity: string, toastSummary: string, toastDetail?: string): void {
@@ -69,7 +81,7 @@ export class StatusLoggerService {
   }
 
   logObjectToConsole(obj: unknown, label?: string): void {
-    if(label) console.log(label);
+    if(label) console.log(`Printing out ${label}`);
     console.log(obj);
   }
 }

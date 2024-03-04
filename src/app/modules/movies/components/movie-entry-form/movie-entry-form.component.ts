@@ -8,13 +8,11 @@ import { StatusLoggerService } from '../../../../shared/services/status-logger.s
   styleUrl: './movie-entry-form.component.scss'
 })
 export class MovieEntryFormComponent implements OnInit {
-  date: Date[] | undefined;
-  dummyError: Error = new Error();
+  movie: MovieEntity = new MovieEntity();
 
   constructor(private statusLoggerService: StatusLoggerService){}
 
   ngOnInit(): void {
-    this.statusLoggerService.logErrorToConsole('Something broke', this.dummyError, 'oof ouch owie', this.date);
-    this.statusLoggerService.logMessageToConsole('Something didnt break', 'poggers', this.date);
+    this.movie.title = 'New Movie'
   }
 }

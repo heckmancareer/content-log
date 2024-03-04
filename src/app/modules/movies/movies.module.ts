@@ -9,7 +9,10 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
+import { EditorModule } from 'primeng/editor';
+import { KnobModule } from 'primeng/knob';
 import { MovieEntryFormComponent } from './components/movie-entry-form/movie-entry-form.component';
 
 @NgModule({
@@ -27,6 +30,9 @@ import { MovieEntryFormComponent } from './components/movie-entry-form/movie-ent
     TabViewModule,
     CalendarModule,
     InputTextareaModule,
+    InputNumberModule,
+    EditorModule,
+    KnobModule,
   ],
   bootstrap: [
     MoviesInventoryPageComponent

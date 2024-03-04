@@ -1,4 +1,4 @@
-<p-card header="New Movie" class="card">
+<p-card [header]="movie.title" class="card">
   <div class="card__body-container flex">
     <div class="card__body-left">
       <span>Image Preview:</span>
@@ -23,7 +23,6 @@
             <div class="field col-6 flex flex-column">
               <label for="movie-release-year">Release Year:</label>
               <p-calendar
-                [(ngModel)]="date"
                 [inputStyleClass]="'w-full p-2'"
                 [styleClass]="'w-full'"
                 view="year"
@@ -48,7 +47,33 @@
 
         </p-tabPanel>
         <p-tabPanel header="Review">
-
+          <div class="formgrid grid w-full">
+            <div class="field col-6 flex flex-column">
+              <label for="movie-user-date-completed">Date Watched:</label>
+              <p-calendar
+                [inputStyleClass]="'w-full p-2'"
+                [styleClass]="'w-full'"
+                inputId="movie-user-date-completed"
+                class="text-base text-color
+                  surface-overlay surface-border
+                  border-round appearance-none
+                  outline-none focus:border-primary"></p-calendar>
+            </div>
+            <div class="field col-6 flex flex-column">
+              <label for="movie-user-rating">Rating:</label>
+              <p-knob [readonly]="true" class="m-auto"></p-knob>
+              <p-inputNumber
+                [showButtons]="true"
+                [min]="0"
+                [max]="100"
+                inputId="movie-user-rating" 
+                class="m-auto"></p-inputNumber>
+            </div>
+            <div class="field col-12 flex flex-column">
+              <label>Review:</label>
+              <p-editor [style]="{width: '100%', height: '500px'}"></p-editor>
+            </div>
+          </div>
         </p-tabPanel>
       </p-tabView>
       <div class="flex justify-content-end">
@@ -58,3 +83,4 @@
     </div>
   </div>
 </p-card>
+
