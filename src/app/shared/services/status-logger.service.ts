@@ -41,7 +41,7 @@ export class StatusLoggerService {
       for(const obj in objs) {
         this.logObjectToConsole(obj);
       }
-  }
+    }
 
   /**
    * Log an error to the console

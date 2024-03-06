@@ -13,6 +13,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { EditorModule } from 'primeng/editor';
 import { KnobModule } from 'primeng/knob';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MovieEntryFormComponent } from './components/movie-entry-form/movie-entry-form.component';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { MovieEntryFormComponent } from './components/movie-entry-form/movie-ent
     InputTextareaModule,
     InputNumberModule,
     EditorModule,
+    AutoCompleteModule,
     KnobModule,
   ],
   bootstrap: [

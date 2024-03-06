@@ -44,7 +44,26 @@
           </div>
         </p-tabPanel>
         <p-tabPanel header="Categories">
-
+          <div class="formgrid grid w-full">
+            <div class="field col-6 flex flex-column">
+              <label>Genres:</label>
+              <span class="p-fluid">
+                <p-autoComplete
+                  [(ngModel)]="genresAutoCompleteSelectedItems"
+                  [multiple]="true"
+                  [suggestions]="genresAutoCompleteSuggestedItems"></p-autoComplete>
+              </span>
+            </div>
+            <div class="field col-6 flex flex-column">
+              <label>Tags:</label>
+              <span class="p-fluid">
+                <p-autoComplete
+                  [(ngModel)]="tagsAutoCompleteSelectedItems"
+                  [multiple]="true"
+                  [suggestions]="tagsAutoCompleteSuggestedItems"></p-autoComplete>
+              </span>
+            </div>
+          </div>
         </p-tabPanel>
         <p-tabPanel header="Review">
           <div class="formgrid grid w-full">
@@ -61,12 +80,25 @@
             </div>
             <div class="field col-6 flex flex-column">
               <label for="movie-user-rating">Rating:</label>
-              <p-knob [readonly]="true" class="m-auto"></p-knob>
+              <p-knob
+                [(ngModel)]="movie.userRating"
+                [valueColor]="userRatingKnobColor"
+                (onChange)="setUserRatingKnobColor($event)"
+                class="m-auto"></p-knob>
               <p-inputNumber
+                [(ngModel)]="movie.userRating"
                 [showButtons]="true"
+                [buttonLayout]="'horizontal'"
+                [decrementButtonClass]="'p-button-danger'"
+                [decrementButtonIcon]="'pi pi-minus'"
+                [incrementButtonClass]="'p-button-success'"
+                [incrementButtonIcon]="'pi pi-plus'"
+                [step]="5"
+                [suffix]="' / 100'"
                 [min]="0"
                 [max]="100"
-                inputId="movie-user-rating" 
+                (onInput)="setUserRatingKnobColor($event)"
+                inputId="movie-user-rating"
                 class="m-auto"></p-inputNumber>
             </div>
             <div class="field col-12 flex flex-column">
