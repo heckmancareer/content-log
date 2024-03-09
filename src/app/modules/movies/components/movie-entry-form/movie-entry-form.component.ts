@@ -3,6 +3,7 @@ import { MovieEntity } from '../../models/movie-entity';
 import { StatusLoggerService } from '../../../../shared/services/status-logger.service';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
 import { CategoriesManagementService } from '../../../../shared/services/categories-management.service';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -28,15 +29,14 @@ export class MovieEntryFormComponent implements OnInit {
     '100': '#008000',
   }
   userRatingKnobColor: string = this.userRatingColorRanges['0'];
-  genresAutoCompleteItems: any[] | undefined; // All available tags
-  genresAutoCompleteSuggestedItems: any[] = []; // Tags that match the current input
-  genresAutoCompleteSelectedItems: any[] | undefined; // Tags that have been selected
-  tagsAutoCompleteItems: any[] | undefined;
-  tagsAutoCompleteSuggestedItems: any[] = [];
-  tagsAutoCompleteSelectedItems: any[] | undefined;
-
-  DUMMY_GENRES = ['horror', 'comedy', 'fiction', 'fantasy', 'ur-mom'];
-  DUMMY_TAGS = ['one', 'two', 'three', 'four', 'five'];
+  genresAutoCompleteItems: string[]  = []; // All available tags
+  genresAutoCompleteSuggestedItems: string[] = []; // Tags that match the current input
+  genresAutoCompleteSelectedItems: string[] = []; // Tags that have been selected
+  genresNewItems: string[] = []; // User entered tags that aren't in the db
+  tagsAutoCompleteItems: string[] = [];
+  tagsAutoCompleteSuggestedItems: string[] = [];
+  tagsAutoCompleteSelectedItems: string[] = [];
+  tagsNewItems: string[] = [];
 
   constructor(
     private statusLoggerService: StatusLoggerService,
@@ -45,6 +45,43 @@ export class MovieEntryFormComponent implements OnInit {
   ngOnInit(): void {
     this.movie.title = 'New Movie';
     this.setUserRatingKnobColor(this.movie.userRating);
+    this.genresAutoCompleteItems = [...this.categoriesManagmenetService.getAllGenres()];
+    this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres()];
+    this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags()];
+    this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags()];
+  }
+
+  filterGenresForAutoComplete($event: AutoCompleteCompleteEvent) {
+    this.genresAutoCompleteSuggestedItems = this.genresAutoCompleteItems.filter(item => {
+      return item.includes($event.query) && !this.genresAutoCompleteSelectedItems.includes(item);
+    })
+  }
+
+  /**
+   * When the user is entering in a new tag, and they press space, it should
+   * be checked to see if the tag entered matches any of the pre-existing tags.
+   * If it does, add that tag. If it doesn't, add that value as a new tag.
+   * @param event
+   */
+  genresAddItemOnKeyUp($event: KeyboardEvent) {
+    if($event.code === 'Space') {
+      let enteredTag = ($event.target as any).value.slice(0, -1);
+      let sanitizedTag = this.categoriesManagmenetService.formatStringToTag(enteredTag);
+      ($event.target as any).value = '';
+
+      /**
+       * If the entered tag is already selected, do nothing.
+       * If it's not selected, but in the list of master items, select it.
+       * If it's not selected, and it's not in the list of master items,
+       * select it, and add it to the new genres array.
+       */
+      if(!this.genresAutoCompleteSelectedItems.includes(sanitizedTag)) {
+        if(!this.genresAutoCompleteItems.includes(sanitizedTag)) {
+          this.genresNewItems.push(sanitizedTag);
+        }
+        this.genresAutoCompleteSelectedItems.push(sanitizedTag);
+      }
+    }
   }
 
   /**

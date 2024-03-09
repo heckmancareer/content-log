@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 /**
  * This service is responsible for retrieving and holding all of the
@@ -8,25 +8,33 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesManagementService {
+export class CategoriesManagementService implements OnInit {
+  genres: Set<string> = new Set<string>(['horror', 'comedy', 'fiction', 'fantasy', 'ur-mom']);
+  tags: Set<string> = new Set<string>(['one', 'two', 'three', 'four', 'five']);
+
 
   constructor() { }
 
-  test() {
-    const testString = `Example String! With Numbers 1234 and Symbols #$%!`;
-    console.log(this.formatStringToTag(testString));
+  ngOnInit(): void {}
+
+  getAllGenres(): string[] {
+    return [...this.genres];
+  }
+
+  getAllTags(): string[] {
+    return [...this.tags];
   }
 
   /**
    * Formats a string into a 'tag' entity. The properties of a tag are:
    * 1. All lower case characters
    * 2. No spaces
-   * 3. Only alphabetical characters
+   * 3. Only alphabetical characters and hyphens
    * 4. No longer than 25 characters
    * @param s String to be converted into tag format.
    * @returns Newly formatted tag.
    */
   formatStringToTag(s: string): string {
-    return s.toLowerCase().replace(/ /g, '-').replace(/[^a-z]/g, '').substring(0, 25);
+    return s.toLowerCase().replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
   }
 }

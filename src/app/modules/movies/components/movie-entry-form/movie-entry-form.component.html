@@ -51,7 +51,10 @@
                 <p-autoComplete
                   [(ngModel)]="genresAutoCompleteSelectedItems"
                   [multiple]="true"
-                  [suggestions]="genresAutoCompleteSuggestedItems"></p-autoComplete>
+                  [dropdown]="true"
+                  [suggestions]="genresAutoCompleteSuggestedItems"
+                  (completeMethod)="filterGenresForAutoComplete($event)"
+                  (onKeyUp)="genresAddItemOnKeyUp($event)"></p-autoComplete>
               </span>
             </div>
             <div class="field col-6 flex flex-column">
