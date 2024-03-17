@@ -33,9 +33,9 @@
                   border-round appearance-none
                   outline-none focus:border-primary"></p-calendar>
             </div>
-            <div class="field col-6">
+            <div class="field col-6 flex flex-column">
               <label for="movie-runtime">Runtime:</label>
-              <input id="movie-runtime" type="text" pInputText class="w-full p-2"/>
+              <p-inputNumber inputId="movie-runtime" [styleClass]="'w-full p-2'"></p-inputNumber>
             </div>
             <div class="field col-12">
               <label for="movie-plotsummary">Plot Summary:</label>
@@ -63,7 +63,10 @@
                 <p-autoComplete
                   [(ngModel)]="tagsAutoCompleteSelectedItems"
                   [multiple]="true"
-                  [suggestions]="tagsAutoCompleteSuggestedItems"></p-autoComplete>
+                  [dropdown]="true"
+                  [suggestions]="tagsAutoCompleteSuggestedItems"
+                  (completeMethod)="filterTagsForAutoComplete($event)"
+                  (onKeyUp)="tagsAddItemOnKeyUp($event)"></p-autoComplete>
               </span>
             </div>
           </div>

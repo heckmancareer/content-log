@@ -84,6 +84,27 @@ export class MovieEntryFormComponent implements OnInit {
     }
   }
 
+  filterTagsForAutoComplete($event: AutoCompleteCompleteEvent) {
+    this.tagsAutoCompleteSuggestedItems = this.tagsAutoCompleteItems.filter(item => {
+      return item.includes($event.query) && !this.tagsAutoCompleteSelectedItems.includes(item);
+    })
+  }
+
+  tagsAddItemOnKeyUp($event: KeyboardEvent) {
+    if($event.code === 'Space') {
+      let enteredTag = ($event.target as any).value.slice(0, -1);
+      let sanitizedTag = this.categoriesManagmenetService.formatStringToTag(enteredTag);
+      ($event.target as any).value = '';
+
+      if(!this.tagsAutoCompleteSelectedItems.includes(sanitizedTag)) {
+        if(!this.tagsAutoCompleteItems.includes(sanitizedTag)) {
+          this.tagsNewItems.push(sanitizedTag);
+        }
+        this.tagsAutoCompleteSelectedItems.push(sanitizedTag);
+      }
+    }
+  }
+
   /**
    * Sets the user rating knob's color using either a 'number'
    * or 'InputNumberInputEvent' object.

@@ -25,6 +25,14 @@ export class CategoriesManagementService implements OnInit {
     return [...this.tags];
   }
 
+  addTags(...tagsToAdd: string[]): void {
+    for(const tag in tagsToAdd) this.tags.add(tag);
+  }
+
+  addGenres(...genresToAdd: string[]): void {
+    for(const genre in genresToAdd) this.genres.add(genre);
+  }
+
   /**
    * Formats a string into a 'tag' entity. The properties of a tag are:
    * 1. All lower case characters

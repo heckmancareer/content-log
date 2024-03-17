@@ -19,7 +19,7 @@ export abstract class BasicEntity {
       console.error('Validation error. Attempted to set userRating to less than 0');
     } else if (value > 100) {
       this._userRating = 100;
-      console.error('Validation error. Attempted to set userRating to greater than 0');
+      console.error('Validation error. Attempted to set userRating to greater than 100');
     } else {
       this._userRating = value;
     }
