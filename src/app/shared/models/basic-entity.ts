@@ -8,6 +8,7 @@ export abstract class BasicEntity {
   userDateCompleted: Date = new Date();
   userReview: string = '';
   userFavorited: boolean = false;
+  imageID: string = '';
 
   _userRating: number = 0;
   get userRating() {

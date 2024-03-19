@@ -4,6 +4,7 @@ import { StatusLoggerService } from '../../../../shared/services/status-logger.s
 import { InputNumberInputEvent } from 'primeng/inputnumber';
 import { CategoriesManagementService } from '../../../../shared/services/categories-management.service';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { AngularElectronInterfaceService } from '../../../../shared/services/angular-electron-interface.service';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -29,18 +30,24 @@ export class MovieEntryFormComponent implements OnInit {
     '100': '#008000',
   }
   userRatingKnobColor: string = this.userRatingColorRanges['0'];
+
   genresAutoCompleteItems: string[]  = []; // All available tags
   genresAutoCompleteSuggestedItems: string[] = []; // Tags that match the current input
-  genresAutoCompleteSelectedItems: string[] = []; // Tags that have been selected
   genresNewItems: string[] = []; // User entered tags that aren't in the db
+
   tagsAutoCompleteItems: string[] = [];
   tagsAutoCompleteSuggestedItems: string[] = [];
-  tagsAutoCompleteSelectedItems: string[] = [];
   tagsNewItems: string[] = [];
+
+  imageUrl: string = '';
+
+  formSubmitted: boolean = false;
+  tabViewActiveIndex: number = 0;
 
   constructor(
     private statusLoggerService: StatusLoggerService,
-    private categoriesManagmenetService: CategoriesManagementService){}
+    private categoriesManagmenetService: CategoriesManagementService,
+    private angularElectronInterfaceService: AngularElectronInterfaceService){}
 
   ngOnInit(): void {
     this.movie.title = 'New Movie';
@@ -53,7 +60,7 @@ export class MovieEntryFormComponent implements OnInit {
 
   filterGenresForAutoComplete($event: AutoCompleteCompleteEvent) {
     this.genresAutoCompleteSuggestedItems = this.genresAutoCompleteItems.filter(item => {
-      return item.includes($event.query) && !this.genresAutoCompleteSelectedItems.includes(item);
+      return item.includes($event.query) && !this.movie.genres.includes(item);
     })
   }
 
@@ -75,18 +82,18 @@ export class MovieEntryFormComponent implements OnInit {
        * If it's not selected, and it's not in the list of master items,
        * select it, and add it to the new genres array.
        */
-      if(!this.genresAutoCompleteSelectedItems.includes(sanitizedTag)) {
+      if(!this.movie.genres.includes(sanitizedTag)) {
         if(!this.genresAutoCompleteItems.includes(sanitizedTag)) {
           this.genresNewItems.push(sanitizedTag);
         }
-        this.genresAutoCompleteSelectedItems.push(sanitizedTag);
+        this.movie.genres.push(sanitizedTag);
       }
     }
   }
 
   filterTagsForAutoComplete($event: AutoCompleteCompleteEvent) {
     this.tagsAutoCompleteSuggestedItems = this.tagsAutoCompleteItems.filter(item => {
-      return item.includes($event.query) && !this.tagsAutoCompleteSelectedItems.includes(item);
+      return item.includes($event.query) && !this.movie.tags.includes(item);
     })
   }
 
@@ -96,11 +103,11 @@ export class MovieEntryFormComponent implements OnInit {
       let sanitizedTag = this.categoriesManagmenetService.formatStringToTag(enteredTag);
       ($event.target as any).value = '';
 
-      if(!this.tagsAutoCompleteSelectedItems.includes(sanitizedTag)) {
+      if(!this.movie.tags.includes(sanitizedTag)) {
         if(!this.tagsAutoCompleteItems.includes(sanitizedTag)) {
           this.tagsNewItems.push(sanitizedTag);
         }
-        this.tagsAutoCompleteSelectedItems.push(sanitizedTag);
+        this.movie.tags.push(sanitizedTag);
       }
     }
   }
@@ -121,5 +128,12 @@ export class MovieEntryFormComponent implements OnInit {
     let colorKey = (Math.floor(targetValue / 10) * 10).toString();
 
     this.userRatingKnobColor = this.userRatingColorRanges[colorKey];
+  }
+
+  onSubmit(movieForm: unknown): void {
+    this.formSubmitted = true;
+
+    this.categoriesManagmenetService.addGenres(...this.genresNewItems);
+    this.categoriesManagmenetService.addTags(...this.tagsNewItems);
   }
 }

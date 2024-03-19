@@ -1,30 +1,56 @@
-<p-card [header]="movie.title" class="card">
+<form #movieForm="ngForm" (ngSubmit)="onSubmit(movieForm)" class="h-full">
+<p-card [header]="movie.title" class="card" [styleClass]="'h-full'">
   <div class="card__body-container flex">
     <div class="card__body-left">
       <span>Image Preview:</span>
       <app-image-uploader></app-image-uploader>
     </div>
     <div class="card__bord-right flex-grow-1 ml-2">
-      <p-tabView>
+      <p-tabView [(activeIndex)]="tabViewActiveIndex">
         <p-tabPanel header="Meta Data">
           <div class="formgrid grid w-full">
             <div class="field col-12">
               <label for="movie-title">Movie Title:</label>
-              <input id="movie-title" type="text" pInputText class="w-full p-2"/>
+              <input
+                [(ngModel)]="movie.title"
+                [required]="true"
+                id="movie-title"
+                name="title"
+                type="text"
+                class="w-full p-2"
+                pInputText/>
             </div>
             <div class="field col-6">
               <label for="movie-writer">Writer:</label>
-              <input id="movie-writer" type="text" pInputText class="w-full p-2"/>
+              <input
+                [(ngModel)]="movie.writer"
+                [required]="true"
+                id="movie-writer"
+                name="writer"
+                type="text"
+                class="w-full p-2"
+                pInputText/>
             </div>
             <div class="field col-6">
               <label for="movie-director">Director:</label>
-              <input id="movie-title" type="text" pInputText class="w-full p-2"/>
+              <input
+                [(ngModel)]="movie.director"
+                [required]="true"
+                id="movie-title"
+                name="director"
+                type="text"
+                class="w-full p-2"
+                pInputText/>
             </div>
             <div class="field col-6 flex flex-column">
               <label for="movie-release-year">Release Year:</label>
               <p-calendar
+                [(ngModel)]="movie.releaseDate"
                 [inputStyleClass]="'w-full p-2'"
                 [styleClass]="'w-full'"
+                [required]="true"
+                id="movie-release-year"
+                name="release-year"
                 view="year"
                 dateFormat="yy"
                 inputId="movie-release-year"
@@ -35,11 +61,17 @@
             </div>
             <div class="field col-6 flex flex-column">
               <label for="movie-runtime">Runtime:</label>
-              <p-inputNumber inputId="movie-runtime" [styleClass]="'w-full p-2'"></p-inputNumber>
+              <p-inputNumber
+                [(ngModel)]="movie.runtime"
+                [style]="{width: '100%', height: '36px'}"
+                [suffix]="' Minutes'"
+                [required]="true"
+                inputId="movie-runtime"
+                name="runtime"></p-inputNumber>
             </div>
             <div class="field col-12">
               <label for="movie-plotsummary">Plot Summary:</label>
-              <textarea pInputTextarea class="w-full" [autoResize]="true"></textarea>
+              <textarea pInputTextarea class="w-full" [autoResize]="true" name="plot-summary"></textarea>
             </div>
           </div>
         </p-tabPanel>
@@ -49,24 +81,26 @@
               <label>Genres:</label>
               <span class="p-fluid">
                 <p-autoComplete
-                  [(ngModel)]="genresAutoCompleteSelectedItems"
+                  [(ngModel)]="movie.genres"
                   [multiple]="true"
                   [dropdown]="true"
                   [suggestions]="genresAutoCompleteSuggestedItems"
                   (completeMethod)="filterGenresForAutoComplete($event)"
-                  (onKeyUp)="genresAddItemOnKeyUp($event)"></p-autoComplete>
+                  (onKeyUp)="genresAddItemOnKeyUp($event)"
+                  name="genres"></p-autoComplete>
               </span>
             </div>
             <div class="field col-6 flex flex-column">
               <label>Tags:</label>
               <span class="p-fluid">
                 <p-autoComplete
-                  [(ngModel)]="tagsAutoCompleteSelectedItems"
+                  [(ngModel)]="movie.tags"
                   [multiple]="true"
                   [dropdown]="true"
                   [suggestions]="tagsAutoCompleteSuggestedItems"
                   (completeMethod)="filterTagsForAutoComplete($event)"
-                  (onKeyUp)="tagsAddItemOnKeyUp($event)"></p-autoComplete>
+                  (onKeyUp)="tagsAddItemOnKeyUp($event)"
+                  name="tags"></p-autoComplete>
               </span>
             </div>
           </div>
@@ -78,6 +112,7 @@
               <p-calendar
                 [inputStyleClass]="'w-full p-2'"
                 [styleClass]="'w-full'"
+                name="user-date-completed"
                 inputId="movie-user-date-completed"
                 class="text-base text-color
                   surface-overlay surface-border
@@ -90,6 +125,7 @@
                 [(ngModel)]="movie.userRating"
                 [valueColor]="userRatingKnobColor"
                 (onChange)="setUserRatingKnobColor($event)"
+                name="user-rating-knob"
                 class="m-auto"></p-knob>
               <p-inputNumber
                 [(ngModel)]="movie.userRating"
@@ -104,21 +140,26 @@
                 [min]="0"
                 [max]="100"
                 (onInput)="setUserRatingKnobColor($event)"
+                name="user-rating-number"
                 inputId="movie-user-rating"
                 class="m-auto"></p-inputNumber>
             </div>
             <div class="field col-12 flex flex-column">
               <label>Review:</label>
-              <p-editor [style]="{width: '100%', height: '500px'}"></p-editor>
+              <p-editor [style]="{width: '100%', height: '500px'}" name="user-review"></p-editor>
             </div>
           </div>
         </p-tabPanel>
       </p-tabView>
       <div class="flex justify-content-end">
-        <p-button class="mr-3" label="Cancel" severity="danger"></p-button>
-        <p-button label="Save" severity="success"></p-button>
+
       </div>
     </div>
   </div>
+  <ng-template pTemplate="footer">
+    <p-button class="mr-3" label="Cancel" severity="danger"></p-button>
+    <p-button label="Save" severity="success" type="submit"></p-button>
+  </ng-template>
 </p-card>
+</form>
 

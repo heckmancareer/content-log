@@ -85,6 +85,7 @@ try {
 ipcMain.on('SAVE-BUFFER-TO-FS', async (event, buffer) => {
   console.log('Hello World!');
   console.log(buffer);
+  console.log(app.getPath('userData'));
 
   const { filePath } = await dialog.showSaveDialog({
     title: 'Save Image',

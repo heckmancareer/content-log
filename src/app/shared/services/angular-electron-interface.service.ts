@@ -33,12 +33,14 @@ export class AngularElectronInterfaceService {
   sendBlobURLToFileSystem(blobURL: string): void {
     let electronInstance = this.electron;
     let reader = new FileReader();
+
     reader.onload = function () {
       if(reader.readyState == 2) {
         let buffer = Buffer.from(reader.result as ArrayBuffer);
         electronInstance.ipcRenderer.send('SAVE-BUFFER-TO-FS', buffer);
       }
     }
+    
     fetch(blobURL).then(response => response.blob()).then(blob => {
       reader.readAsArrayBuffer(blob);
     }).catch(error => {
