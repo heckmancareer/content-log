@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Electron from 'electron';
 
 /**
- * This service is responsable for posting or receiving any updates
+ * This service is responsible for posting or receiving any updates
  * to electron via any of electron's api's.
  */
 @Injectable({
@@ -40,7 +40,7 @@ export class AngularElectronInterfaceService {
         electronInstance.ipcRenderer.send('SAVE-BUFFER-TO-FS', buffer);
       }
     }
-    
+
     fetch(blobURL).then(response => response.blob()).then(blob => {
       reader.readAsArrayBuffer(blob);
     }).catch(error => {
