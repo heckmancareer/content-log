@@ -28,9 +28,10 @@
     <div class="content__menu-bar max-w-full">
       <p-menubar [model]="menuBarConfig[menuBarConfigIndex].menuItems"></p-menubar>
     </div>
-    <div class="content__main-content max-w-full flex-grow-1">
+    <div class="content__main-content max-w-full flex-grow-1 overflow-y-auto">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
 <p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

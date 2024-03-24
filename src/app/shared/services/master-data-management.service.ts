@@ -9,7 +9,7 @@ import { MovieEntity } from '../../modules/movies/models/movie-entity';
   providedIn: 'root'
 })
 export class MasterDataManagementService {
-  private movieMasterSet: MovieEntity[] = [];
+  private movieMasterSet: Record<string, MovieEntity> = {};
 
   constructor() { }
 }

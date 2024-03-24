@@ -1,28 +1,26 @@
-<div class="container">
-  @switch (imageType) {
-    @case('none') {
+<!-- <div class="container">
+  @switch (imageSubmitted) {
+    @case(false) {
       <div class="image-placeholder border-1 border-surface">
         <i class="pi pi-plus-circle" style="font-size: 3rem; color: gray;"></i>
       </div>
     }
-    @case('buffer') {
-      <img [src]="'data:image/png;base64,' + editedImageBuffer!.toString('base64')" class="cropped-image">
-    }
-    @case('path') {
-
+    @case(true) {
+      <img [src]="savedCroppedImage" class="cropped-image">
     }
   }
 
-  @switch (imageType) {
-    @case('none') {
+  @switch (imageSubmitted) {
+    @case(false) {
       <label class="custom-file-upload">
         <input #cropperImageInput type="file" (change)="onFileSelectHandler($event)" />
         <span>Select Image</span>
       </label>
     }
-    @default {
+    @case(true) {
       <div class="m-2 flex">
-        <p-button label="Delete Image" (onClick)="deleteHandler($event)"></p-button>
+        <p-button label="Edit" class="mr-3" (onClick)="editHandler($event)"></p-button>
+        <p-button label="Clear" (onClick)="clearHandler($event)"></p-button>
       </div>
     }
   }
@@ -87,4 +85,4 @@
     <p-button class="mr-3" label="Cancel" severity="danger" (onClick)="cancelHandler($event)"></p-button>
     <p-button class="mr-3" label="Submit" severity="success" (onClick)="submitHandler($event)"></p-button>
   </div>
-</p-dialog>
+</p-dialog> -->

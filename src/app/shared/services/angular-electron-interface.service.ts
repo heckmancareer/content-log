@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Electron from 'electron';
+import { MovieEntity } from '../../modules/movies/models/movie-entity';
 
 /**
  * This service is responsible for posting or receiving any updates
@@ -46,5 +47,17 @@ export class AngularElectronInterfaceService {
     }).catch(error => {
       console.log(error);
     })
+  }
+
+  getGeneratedUUID(): string {
+    return '';
+  }
+
+  getFormattedImageID(uuid: string): string {
+    return '';
+  }
+
+  saveEntityToFs(entity: MovieEntity): boolean {
+    return false;
   }
 }

@@ -7,8 +7,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { PageNotFoundComponent } from './components/';
@@ -32,6 +33,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     InputNumberModule,
     SliderModule,
     ToastModule,
+    ConfirmDialogModule,
   ],
   exports: [
     TranslateModule,
@@ -40,7 +42,8 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     ImageUploaderComponent
   ],
   providers: [
-    MessageService
+    MessageService,
+    ConfirmationService,
   ]
 })
 export class SharedModule {}

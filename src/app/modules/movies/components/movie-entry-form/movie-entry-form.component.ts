@@ -14,6 +14,7 @@ import { AngularElectronInterfaceService } from '../../../../shared/services/ang
 export class MovieEntryFormComponent implements OnInit {
   // Main form object
   movie: MovieEntity = new MovieEntity();
+  movieUUID: string = '';
   //
 
   userRatingColorRanges: any = {

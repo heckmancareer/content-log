@@ -1,5 +1,6 @@
 $sidebar-width: 100px;
 $sidebar-top-height: 60px;
+$menu-bar-height: 57.33px;
 
 :host {
 
@@ -10,7 +11,10 @@ $sidebar-top-height: 60px;
     height: $sidebar-top-height;
   }
   &__menu-bar {
-    height: $sidebar-top-height;
+    height: $menu-bar-height;
+  }
+  &__main-content {
+    height: calc(($sidebar-top-height + $menu-bar-height) - 100vh);
   }
 }
 

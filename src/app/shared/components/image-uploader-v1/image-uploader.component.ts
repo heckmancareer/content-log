@@ -1,13 +1,19 @@
 import { Component, ElementRef, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ImageCroppedEvent, ImageTransform, LoadedImage, Dimensions } from 'ngx-image-cropper';
 import { FileSelectEvent } from 'primeng/fileupload';
-import { StatusLoggerService } from '../../services/status-logger.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 
 const GLOBAL_IMAGE_PANEL_WIDTH: number = 180;
 const GLOBAL_IMAGE_PANEL_HEIGHT: number = 320;
 
+/**
+ * This is the old version of the image uploader component, that manipulated
+ * and saved images based off of blob image urls.
+ *
+ * However, after reviewing the user flow, I decided that it would be best
+ * if this component actually held, and exposed, 'array buffers' for simplicity.
+ * This simplifies submitting images to the back-end, as well avoids requiring the user
+ * to not move the source image before submitting.
+ */
 @Component({
   selector: 'app-image-uploader',
   templateUrl: './image-uploader.component.html',
@@ -20,17 +26,14 @@ export class ImageUploaderComponent {
    * Whenever an image is successfully cropped and submitted, component
    * will emit the new saved image blob url.
    */
-  @Output() onImageSubmission = new EventEmitter<Buffer>();
-
-  editedImageBuffer: Buffer | undefined;
-  imagePath: string = '';
-  imageType: 'buffer' | 'path' | 'none' = 'none';
+  @Output() onImageSubmission = new EventEmitter<string>();
 
   imageDialogVisible: boolean = false;
   imageSubmitted: boolean = false;
   imagePanelWidth = GLOBAL_IMAGE_PANEL_WIDTH;
   imagePanelHeight = GLOBAL_IMAGE_PANEL_HEIGHT;
   imageMaxFileSize: number = 1000000;
+  savedCroppedImage: any = '';
 
   // Variables used by the image cropper component
   activeCroppedImage: any = '';
@@ -44,12 +47,10 @@ export class ImageUploaderComponent {
   zoomMaxValue: number = 3;
   zoomStepValue: number = 0.1;
 
-  constructor(
-    private statusLoggerService: StatusLoggerService,
-    private sanitizer: DomSanitizer,
-    private confirmationDialogService: ConfirmationDialogService){}
+  constructor(){}
 
   public getCurrentCroppedImageBlobURL(): any {
+    return this.savedCroppedImage;
   }
 
   /**
@@ -62,20 +63,19 @@ export class ImageUploaderComponent {
   }
 
   submitHandler($event: unknown): void {
+    this.imageDialogVisible = false;
+    this.savedCroppedImage = this.activeCroppedImage;
+    this.imageSubmitted = true;
+    this.onImageSubmission.emit(this.savedCroppedImage);
+
     let reader = new FileReader();
-    let componentContext = this;
     reader.onload = function() {
       if(reader.readyState == 2) {
         let buffer = Buffer.from(reader.result as ArrayBuffer);
-
-        // Operation was a success
-        componentContext.editedImageBuffer = buffer;
-        componentContext.imageType = 'buffer';
-        componentContext.onImageSubmission.emit(componentContext.editedImageBuffer);
-        componentContext.imageDialogVisible = false;
+        console.log(buffer);
       }
     }
-    fetch(this.activeCroppedImage).then(response => response.blob()).then(blob => {
+    fetch(this.savedCroppedImage).then(response => response.blob()).then(blob => {
       reader.readAsArrayBuffer(blob);
     }).catch(error => {
       console.log(error);
@@ -83,38 +83,30 @@ export class ImageUploaderComponent {
   }
 
   cancelHandler($event: unknown): void {
-    this.cropperResetImage();
-    this.cropperImageInput.nativeElement.value = null;
     this.imageDialogVisible = false;
+    this.activeCroppedImage = this.savedCroppedImage;
+    this.imageSubmitted = this.savedCroppedImage === '' ? false : true;
+    if(!this.imageSubmitted) {
+      this.cropperImageInput.nativeElement.value = null;
+    }
   }
 
-  deleteHandler($event: unknown): void {
-    this.confirmationDialogService.promptConfirmation(
-      'Delete Stored Image',
-      'Are you sure you want to delete the stored image? This action cannot be undone.',
-      true,
-      'Delete',
-      'Cancel',
-      $event as Event
-    ).then(result => {
-      if(result === true) {
-        console.log('Dialog action confirmed!');
-        this.cropperResetImage();
-        this.activeCroppedImage = '';
-        this.imageType = 'none';
-        this.imagePath = '';
-        this.editedImageBuffer = undefined;
-        this.cropperImageInput.nativeElement.value = null;
-      } else {
-        console.log('Dialog action canceled!')
-      }
-    })
+  clearHandler($event: unknown): void {
+    this.cropperResetImage();
+    this.imageSubmitted = false;
+    this.savedCroppedImage = '';
+    this.activeCroppedImage = '';
+    this.cropperImageInput.nativeElement.value = null;
   }
 
   /**
    * IMAGE CROPPER OUTPUT FUNCTIONS
    * Functions that handle the emitted events from the image-cropper component.
    */
+  editHandler($event: unknown): void {
+    this.imageDialogVisible = true;
+  }
+
   imageCropped($event: ImageCroppedEvent): void {
     this.activeCroppedImage = $event.objectUrl;
   }
