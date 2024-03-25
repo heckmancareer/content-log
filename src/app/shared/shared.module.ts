@@ -15,6 +15,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { TagArrayManagerComponent } from './components/tag-array-manager/tag-array-manager.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     PageNotFoundComponent,
     WebviewDirective,
     ImageUploaderComponent,
+    TagArrayManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
     TranslateModule,
     WebviewDirective,
     FormsModule,
-    ImageUploaderComponent
+    ImageUploaderComponent,
+    TagArrayManagerComponent,
   ],
   providers: [
     MessageService,

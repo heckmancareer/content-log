@@ -1,4 +1,4 @@
-<div class="container">
+<div class="component-container">
   @switch (imageType) {
     @case('none') {
       <div class="image-placeholder border-1 border-surface">
@@ -36,8 +36,8 @@
   [blockScroll]="true"
   [closable]="false"
   [style]="{width: '75vw'}">
-  <div class="grid">
-    <div class="col-10 image-cropper-row">
+  <div class="flex">
+    <div class="flex-grow-1 image-cropper-row border-2 border-primary-200 m-2">
       <image-cropper
         [imageChangedEvent]="cropperImageChangedEvent"
         [aspectRatio]="imagePanelWidth / imagePanelHeight"
@@ -46,14 +46,15 @@
         [containWithinAspectRatio]="cropperContainWithinAspectRatio"
         [resizeToWidth]="imagePanelWidth"
         [onlyScaleDown]="true"
-        [transform]="cropperTransform"
+        [allowMoveImage]="true"
+        [(transform)]="cropperTransform"
         format="png"
         (imageCropped)="imageCropped($event)"
         (imageLoaded)="imageLoaded($event)"
         (cropperReady)="cropperReady($event)"
         (loadImageFailed)="loadImageFailed($event)"></image-cropper>
     </div>
-    <div class="col-2 flex flex-column">
+    <div class="flex flex-column" [style]="{width: imagePanelWidth}">
       <span>Image Preview:</span>
       <img [src]="activeCroppedImage" class="cropped-image">
     </div>

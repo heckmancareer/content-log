@@ -61,7 +61,7 @@
                     outline-none focus:border-primary"></p-calendar>
               </div>
               <div class="field col-6 flex flex-column">
-                <label for="movie-runtime">Runtime:</label>
+                <label for="movie-runtime">Runtime (in minutes):</label>
                 <p-inputNumber
                   [(ngModel)]="movie.runtime"
                   [style]="{width: '100%', height: '36px'}"
@@ -79,7 +79,7 @@
           <p-tabPanel header="Categories">
             <div class="formgrid grid w-full">
               <div class="field col-6 flex flex-column">
-                <label>Genres:</label>
+                <!-- <label>Genres:</label>
                 <span class="p-fluid">
                   <p-autoComplete
                     [(ngModel)]="movie.genres"
@@ -89,7 +89,8 @@
                     (completeMethod)="filterGenresForAutoComplete($event)"
                     (onKeyUp)="genresAddItemOnKeyUp($event)"
                     name="genres"></p-autoComplete>
-                </span>
+                </span> -->
+                <app-tag-array-manager></app-tag-array-manager>
               </div>
               <div class="field col-6 flex flex-column">
                 <label>Tags:</label>

@@ -1,8 +1,6 @@
-import { Component, ElementRef, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Output, Input, ViewChild, EventEmitter, OnInit } from '@angular/core';
 import { ImageCroppedEvent, ImageTransform, LoadedImage, Dimensions } from 'ngx-image-cropper';
-import { FileSelectEvent } from 'primeng/fileupload';
 import { StatusLoggerService } from '../../services/status-logger.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 
 const GLOBAL_IMAGE_PANEL_WIDTH: number = 180;
@@ -13,17 +11,17 @@ const GLOBAL_IMAGE_PANEL_HEIGHT: number = 320;
   templateUrl: './image-uploader.component.html',
   styleUrl: './image-uploader.component.scss'
 })
-export class ImageUploaderComponent {
+export class ImageUploaderComponent implements OnInit {
   @ViewChild('cropperImageInput') cropperImageInput!: ElementRef;
-
   /**
    * Whenever an image is successfully cropped and submitted, component
    * will emit the new saved image blob url.
    */
   @Output() onImageSubmission = new EventEmitter<Buffer>();
+  @Output() onImageDeletion = new EventEmitter<boolean>();
+  @Input() imagePath: string = '';
 
   editedImageBuffer: Buffer | undefined;
-  imagePath: string = '';
   imageType: 'buffer' | 'path' | 'none' = 'none';
 
   imageDialogVisible: boolean = false;
@@ -46,10 +44,30 @@ export class ImageUploaderComponent {
 
   constructor(
     private statusLoggerService: StatusLoggerService,
-    private sanitizer: DomSanitizer,
     private confirmationDialogService: ConfirmationDialogService){}
 
-  public getCurrentCroppedImageBlobURL(): any {
+  ngOnInit(): void {
+    if(this.imagePath !== '') {
+      this.imageType = 'path';
+    }
+  }
+
+  public getCurrentEditedImageBuffer(): Buffer | null {
+    if(this.editedImageBuffer && this.imageType === 'buffer') {
+      return this.editedImageBuffer;
+    }
+    this.statusLoggerService.logErrorToConsole(
+      'Error retrieving editedImageBuffer.',
+      false,
+      undefined,
+      'Error when attempting to retrieve editedImageBuffer. Currently not storing imageType of buffer.',
+      this
+    )
+    return null;
+  }
+
+  public switchFromBufferToImagePath(): void {
+    this.imageType = 'path';
   }
 
   /**
@@ -98,15 +116,13 @@ export class ImageUploaderComponent {
       $event as Event
     ).then(result => {
       if(result === true) {
-        console.log('Dialog action confirmed!');
+        if(this.imagePath !== '') this.onImageDeletion.emit(true);
         this.cropperResetImage();
         this.activeCroppedImage = '';
         this.imageType = 'none';
         this.imagePath = '';
         this.editedImageBuffer = undefined;
         this.cropperImageInput.nativeElement.value = null;
-      } else {
-        console.log('Dialog action canceled!')
       }
     })
   }

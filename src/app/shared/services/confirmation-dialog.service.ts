@@ -16,7 +16,21 @@ export class ConfirmationDialogService {
     private primeNGMessageService: MessageService,
   ) { }
 
-
+  /**
+   * Creates a dialog prompt for the user to either confirm
+   * or cancel a certain action. Blocks the application until the
+   * user submits their input.
+   * @param headerText The title text of the dialog.
+   * @param dialogMessage The main text of the dialog.
+   * @param warningColors Whether the confirmation button should be
+   * highlighted in red. Ideal for delete scenarios or actions that
+   * cannot be undone.
+   * @param acceptButtonLabel The text of the confirm button.
+   * @param rejectButtonLabel The text of the cancel button.
+   * @param $event The original event that's triggering the dialog.
+   * @returns Returns a promise of a boolean that resolves when the
+   * user submits input.
+   */
   async promptConfirmation(
     headerText: string,
     dialogMessage: string,
@@ -46,4 +60,5 @@ export class ConfirmationDialogService {
       })
     })
   }
+
 }
