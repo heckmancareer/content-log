@@ -9,7 +9,10 @@ import { SliderModule } from 'primeng/slider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ChipModule } from 'primeng/chip';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { PageNotFoundComponent } from './components/';
@@ -36,6 +39,9 @@ import { TagArrayManagerComponent } from './components/tag-array-manager/tag-arr
     SliderModule,
     ToastModule,
     ConfirmDialogModule,
+    AutoCompleteModule,
+    FieldsetModule,
+    ChipModule,
   ],
   exports: [
     TranslateModule,

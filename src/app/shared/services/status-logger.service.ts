@@ -32,7 +32,7 @@ export class StatusLoggerService {
     summary: string,
     logToToast = false,
     detail?: string,
-    toastSeverity?: string,
+    toastSeverity?: 'success' | 'info' | 'warn' | 'error',
     ...objs: unknown[]) {
       if(logToToast) this.logStatusToToast(toastSeverity ?? 'info', summary, detail ?? undefined)
       let messageString = `${this.logLabel}\n${summary}\n${detail}`;
@@ -72,7 +72,10 @@ export class StatusLoggerService {
       }
   }
 
-  logStatusToToast(toastSeverity: string, toastSummary: string, toastDetail?: string): void {
+  logStatusToToast(
+    toastSeverity: 'success' | 'info' | 'warn' | 'error',
+    toastSummary: string,
+    toastDetail?: string): void {
     this.primeNgMessageService.add({
       severity: toastSeverity,
       summary: toastSummary,

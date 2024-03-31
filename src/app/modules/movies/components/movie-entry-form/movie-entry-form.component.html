@@ -90,7 +90,9 @@
                     (onKeyUp)="genresAddItemOnKeyUp($event)"
                     name="genres"></p-autoComplete>
                 </span> -->
-                <app-tag-array-manager></app-tag-array-manager>
+                <app-tag-array-manager
+                  [typeLabel]="'genres'"
+                  [availableTags]="genresAutoCompleteItems"></app-tag-array-manager>
               </div>
               <div class="field col-6 flex flex-column">
                 <label>Tags:</label>
