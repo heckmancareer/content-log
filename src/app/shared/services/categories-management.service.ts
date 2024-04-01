@@ -43,6 +43,6 @@ export class CategoriesManagementService implements OnInit {
    * @returns Newly formatted tag.
    */
   formatStringToTag(s: string): string {
-    return s.toLowerCase().replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
+    return s.toLowerCase().trim().replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
   }
 }

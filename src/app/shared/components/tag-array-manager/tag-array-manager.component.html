@@ -1,15 +1,29 @@
 <div class="component-container flex flex-column">
   <span class="p-fluid w-full flex flex-column">
     <label class="tag-manager__label">{{typeLabel | titlecase}}:</label>
-    <p-autoComplete
-      [suggestions]="suggestedTags"
-      [dropdown]="true"
-      [placeholder]="placeholderSentence"
-      [emptyMessage]="'No unselected items match this search.'"
-      [showEmptyMessage]="true"
-      (completeMethod)="search($event)"
-      (onSelect)="select($event)"
-      (onKeyUp)="checkKeyUp($event)"></p-autoComplete>
+    @if (showTooltip) {
+      <p-autoComplete
+        [suggestions]="suggestedTags"
+        [dropdown]="true"
+        [placeholder]="placeholderSentence"
+        [emptyMessage]="'No unselected items match this search.'"
+        [showEmptyMessage]="true"
+        [pTooltip]="tooltipSentence"
+        [tooltipPosition]="'bottom'"
+        (completeMethod)="search($event)"
+        (onSelect)="select($event)"
+        (onKeyUp)="checkKeyUp($event)"></p-autoComplete>
+    } @else {
+      <p-autoComplete
+        [suggestions]="suggestedTags"
+        [dropdown]="true"
+        [placeholder]="placeholderSentence"
+        [emptyMessage]="'No unselected items match this search.'"
+        [showEmptyMessage]="true"
+        (completeMethod)="search($event)"
+        (onSelect)="select($event)"
+        (onKeyUp)="checkKeyUp($event)"></p-autoComplete>
+    }
   </span>
   <p-fieldset
     class="tag-manager__inventory"
@@ -26,8 +40,9 @@
       <span>No {{typeLabel | titlecase}} have been added yet.</span>
     }
   </p-fieldset>
-  <p-button
+  <!-- <p-button
     class="mt-2"
     label="Open {{typeLabel | titlecase}} Manager"
-    (onClick)="addRandomTag()"></p-button>
+    (onClick)="addRandomTag()"></p-button> -->
+  <!--TO-DO: Add a tag manager panel that lets users fileter and bulk delete-->
 </div>

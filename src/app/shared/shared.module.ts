@@ -13,6 +13,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ChipModule } from 'primeng/chip';
+import { TooltipModule } from 'primeng/tooltip';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { PageNotFoundComponent } from './components/';
@@ -42,6 +43,7 @@ import { TagArrayManagerComponent } from './components/tag-array-manager/tag-arr
     AutoCompleteModule,
     FieldsetModule,
     ChipModule,
+    TooltipModule
   ],
   exports: [
     TranslateModule,

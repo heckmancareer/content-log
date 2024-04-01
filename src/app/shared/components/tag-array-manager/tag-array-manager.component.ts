@@ -21,8 +21,10 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
   @Input() typeLabel: string = '';
   @Input() availableTags: string[] = [];
   @Input() staticInventoryHeight: number = 300;
+  @Input() showTooltip: boolean = true;
   suggestedTags: string[] = [];
   placeholderSentence: string = `Press 'Enter' or ',' to enter a new tag.`
+  tooltipSentence: string = `Entered values will be formatted to replace spaces with '-', remove all non-alphabetical characters, and have a max length of 25 characters.`
 
   constructor(
     private categoriesManagementService: CategoriesManagementService,
