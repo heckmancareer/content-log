@@ -10,6 +10,7 @@
         [showEmptyMessage]="true"
         [pTooltip]="tooltipSentence"
         [tooltipPosition]="'bottom'"
+        [autoOptionFocus]="false"
         (completeMethod)="search($event)"
         (onSelect)="select($event)"
         (onKeyUp)="checkKeyUp($event)"></p-autoComplete>
@@ -20,6 +21,7 @@
         [placeholder]="placeholderSentence"
         [emptyMessage]="'No unselected items match this search.'"
         [showEmptyMessage]="true"
+        [autoOptionFocus]="false"
         (completeMethod)="search($event)"
         (onSelect)="select($event)"
         (onKeyUp)="checkKeyUp($event)"></p-autoComplete>

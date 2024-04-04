@@ -57,60 +57,7 @@ export class MovieEntryFormComponent implements OnInit {
     this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres()];
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags()];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags()];
-  }
-
-  filterGenresForAutoComplete($event: AutoCompleteCompleteEvent) {
-    this.genresAutoCompleteSuggestedItems = this.genresAutoCompleteItems.filter(item => {
-      return item.includes($event.query) && !this.movie.genres.includes(item);
-    })
-  }
-
-  /**
-   * When the user is entering in a new tag, and they press space, it should
-   * be checked to see if the tag entered matches any of the pre-existing tags.
-   * If it does, add that tag. If it doesn't, add that value as a new tag.
-   * @param event
-   */
-  genresAddItemOnKeyUp($event: KeyboardEvent) {
-    if($event.code === 'Space') {
-      let enteredTag = ($event.target as any).value.slice(0, -1);
-      let sanitizedTag = this.categoriesManagmenetService.formatStringToTag(enteredTag);
-      ($event.target as any).value = '';
-
-      /**
-       * If the entered tag is already selected, do nothing.
-       * If it's not selected, but in the list of master items, select it.
-       * If it's not selected, and it's not in the list of master items,
-       * select it, and add it to the new genres array.
-       */
-      if(!this.movie.genres.includes(sanitizedTag)) {
-        if(!this.genresAutoCompleteItems.includes(sanitizedTag)) {
-          this.genresNewItems.push(sanitizedTag);
-        }
-        this.movie.genres.push(sanitizedTag);
-      }
-    }
-  }
-
-  filterTagsForAutoComplete($event: AutoCompleteCompleteEvent) {
-    this.tagsAutoCompleteSuggestedItems = this.tagsAutoCompleteItems.filter(item => {
-      return item.includes($event.query) && !this.movie.tags.includes(item);
-    })
-  }
-
-  tagsAddItemOnKeyUp($event: KeyboardEvent) {
-    if($event.code === 'Space') {
-      let enteredTag = ($event.target as any).value.slice(0, -1);
-      let sanitizedTag = this.categoriesManagmenetService.formatStringToTag(enteredTag);
-      ($event.target as any).value = '';
-
-      if(!this.movie.tags.includes(sanitizedTag)) {
-        if(!this.tagsAutoCompleteItems.includes(sanitizedTag)) {
-          this.tagsNewItems.push(sanitizedTag);
-        }
-        this.movie.tags.push(sanitizedTag);
-      }
-    }
+    this.movie.genres = new Set(['test', 'testt', 'testtt']);
   }
 
   /**
@@ -133,6 +80,9 @@ export class MovieEntryFormComponent implements OnInit {
 
   onSubmit(movieForm: unknown): void {
     this.formSubmitted = true;
+    console.log(movieForm);
+    console.log(`Resulting object:`);
+    console.log(this.movie);
 
     this.categoriesManagmenetService.addGenres(...this.genresNewItems);
     this.categoriesManagmenetService.addTags(...this.tagsNewItems);

@@ -91,13 +91,14 @@
                     name="genres"></p-autoComplete>
                 </span> -->
                 <app-tag-array-manager
+                  [(ngModel)]="movie.genres"
                   [typeLabel]="'genres'"
-                  [availableTags]="genresAutoCompleteItems"></app-tag-array-manager>
+                  [availableTags]="genresAutoCompleteItems"
+                  name="genres"></app-tag-array-manager>
               </div>
               <div class="field col-6 flex flex-column">
-                <label>Tags:</label>
                 <span class="p-fluid">
-                  <p-autoComplete
+                  <!-- <p-autoComplete
                     [(ngModel)]="movie.tags"
                     [multiple]="true"
                     [dropdown]="true"
@@ -105,7 +106,12 @@
                     (completeMethod)="filterTagsForAutoComplete($event)"
                     (onKeyUp)="tagsAddItemOnKeyUp($event)"
                     name="tags">
-                  </p-autoComplete>
+                  </p-autoComplete> -->
+                  <app-tag-array-manager
+                    [(ngModel)]="movie.tags"
+                    [typeLabel]="'tags'"
+                    [availableTags]="tagsAutoCompleteItems"
+                    name="tags"></app-tag-array-manager>
                 </span>
               </div>
             </div>
@@ -115,6 +121,7 @@
               <div class="field col-6 flex flex-column">
                 <label for="movie-user-date-completed">Date Watched:</label>
                 <p-calendar
+                  [(ngModel)]="movie.userDateCompleted"
                   [inputStyleClass]="'w-full p-2'"
                   [styleClass]="'w-full'"
                   name="user-date-completed"
@@ -151,7 +158,9 @@
               </div>
               <div class="field col-12 flex flex-column">
                 <label>Review:</label>
-                <p-editor [style]="{width: '100%', height: '200px'}" name="user-review"></p-editor>
+                <p-editor
+                  [(ngModel)]="movie.userReview"
+                  [style]="{width: '100%', height: '200px'}" name="user-review"></p-editor>
               </div>
             </div>
           </p-tabPanel>

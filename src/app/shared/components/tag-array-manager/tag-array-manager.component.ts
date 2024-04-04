@@ -23,13 +23,18 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
   @Input() staticInventoryHeight: number = 300;
   @Input() showTooltip: boolean = true;
   suggestedTags: string[] = [];
-  placeholderSentence: string = `Press 'Enter' or ',' to enter a new tag.`
+  placeholderSentence: string = `Press 'Enter' or ',' to enter a new item.`
   tooltipSentence: string = `Entered values will be formatted to replace spaces with '-', remove all non-alphabetical characters, and have a max length of 25 characters.`
 
   constructor(
     private categoriesManagementService: CategoriesManagementService,
     private statusLoggerService: StatusLoggerService){}
 
+  /**
+   * Event handler for when text is entered into the search field. Returns
+   * items that match the given query, AND haven't already been selected.
+   * @param $event The event passed by the AutoComplete component.
+   */
   search($event: AutoCompleteCompleteEvent): void {
     this.suggestedTags = this.availableTags.filter(item => {
       return item.includes($event.query) && !this._selectedTags.has(item);
@@ -37,18 +42,33 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
   }
 
   select($event: AutoCompleteSelectEvent): void {
-    this.updateValue($event.value);
+
   }
 
+  /**
+   * Event handler for when either a comma, or enter key, has been pressed,
+   * to submit a tag to be added to the set.
+   * @param $event
+   */
   checkKeyUp($event: KeyboardEvent): void {
     if($event.code === 'Comma' || $event.code === 'Enter') {
       let enteredTag = ($event.target as any).value;
       let sanitizedTag = this.categoriesManagementService.formatStringToTag(enteredTag);
+      if(this._selectedTags.has(sanitizedTag)) {
+        this.statusLoggerService.logMessageToConsole(
+          'Duplicate Tag Submitted',
+          true,
+          `Submitted item '${sanitizedTag}', which was already present in the form.`,
+          'warn',
+        );
+        ($event.target as any).value = '';
+        return;
+      }
       if(enteredTag !== sanitizedTag) {
         this.statusLoggerService.logStatusToToast(
           'warn',
-          'Tag Formatted',
-          `Tag was formatted to '${sanitizedTag}'`);
+          'Item Formatted',
+          `Item was formatted to '${sanitizedTag}'`);
       }
       ($event.target as any).value = '';
       this.updateValue(sanitizedTag);
@@ -78,14 +98,14 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
    * INTERFACE IMPLEMENTATION
    * Values implemented for the ControlValueAccessor interface.
    */
-  private _selectedTags: Set<string> = new Set<string>(['tag', 'tagg', 'taggg', 'taggggg']);
+  private _selectedTags: Set<string> = new Set<string>();
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
   writeValue(value: any): void {
     console.log('writeValue called');
-    if(value !== undefined && value !== null && Array.isArray(value)) {
+    if(value !== undefined && value !== null && value instanceof Set) {
       this._selectedTags = new Set(value);
     }
   }
