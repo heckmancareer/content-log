@@ -72,24 +72,17 @@
               </div>
               <div class="field col-12">
                 <label for="movie-plotsummary">Plot Summary:</label>
-                <textarea pInputTextarea class="w-full" [autoResize]="true" name="plot-summary"></textarea>
+                <textarea
+                  [(ngModel)]="movie.plotSummary"
+                  pInputTextarea class="w-full"
+                  [autoResize]="true"
+                  name="plot-summary"></textarea>
               </div>
             </div>
           </p-tabPanel>
           <p-tabPanel header="Categories">
             <div class="formgrid grid w-full">
               <div class="field col-6 flex flex-column">
-                <!-- <label>Genres:</label>
-                <span class="p-fluid">
-                  <p-autoComplete
-                    [(ngModel)]="movie.genres"
-                    [multiple]="true"
-                    [dropdown]="true"
-                    [suggestions]="genresAutoCompleteSuggestedItems"
-                    (completeMethod)="filterGenresForAutoComplete($event)"
-                    (onKeyUp)="genresAddItemOnKeyUp($event)"
-                    name="genres"></p-autoComplete>
-                </span> -->
                 <app-tag-array-manager
                   [(ngModel)]="movie.genres"
                   [typeLabel]="'genres'"
@@ -98,15 +91,6 @@
               </div>
               <div class="field col-6 flex flex-column">
                 <span class="p-fluid">
-                  <!-- <p-autoComplete
-                    [(ngModel)]="movie.tags"
-                    [multiple]="true"
-                    [dropdown]="true"
-                    [suggestions]="tagsAutoCompleteSuggestedItems"
-                    (completeMethod)="filterTagsForAutoComplete($event)"
-                    (onKeyUp)="tagsAddItemOnKeyUp($event)"
-                    name="tags">
-                  </p-autoComplete> -->
                   <app-tag-array-manager
                     [(ngModel)]="movie.tags"
                     [typeLabel]="'tags'"

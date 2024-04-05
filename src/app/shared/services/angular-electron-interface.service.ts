@@ -49,15 +49,33 @@ export class AngularElectronInterfaceService {
     })
   }
 
-  getGeneratedUUID(): string {
-    return '';
+  getGeneratedUUID(): Promise<string> {
+    let electronInstance = this.electron;
+    return new Promise((resolve, reject) => {
+      electronInstance.ipcRenderer.invoke('GET-ENTITY-UUID').then((result: string) => {
+        resolve(result);
+      }).catch((error: unknown) => {
+        console.log(`Error retrieving UUID.`);
+        console.log(error);
+        reject();
+      })
+    })
   }
 
-  getFormattedImageID(uuid: string): string {
-    return '';
+  /**
+   * An imageID is composed of an entity's name, after it's been limited to 25 characters,
+   * substitutes whitespaces with hyphens, removed all non-numeric characters, changed to lower
+   * case, followed by an underscore, then the movie uuid.
+   * @param uuid The movie's uuid.
+   * @returns A string for the imageID, as described above.
+   */
+  getFormattedImageID(uuid: string, entityName: string): string {
+    let formattedEntityName = entityName.toLowerCase().trim()
+      .replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
+    return `${formattedEntityName}_${uuid}`;
   }
 
-  saveEntityToFs(entity: MovieEntity): boolean {
+  sendEntityToFs(uuid: string, entity: any): boolean {
     return false;
   }
 }

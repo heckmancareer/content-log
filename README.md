@@ -128,7 +128,7 @@ E2E Test scripts can be found in `e2e` folder.
 |---------------|---------------------------|
 | `npm run e2e` | Execute end to end tests  |
 
-Note: To make it work behind a proxy, you can add this proxy exception in your terminal  
+Note: To make it work behind a proxy, you can add this proxy exception in your terminal
 `export {no_proxy,NO_PROXY}="127.0.0.1,localhost"`
 
 ## Debug with VsCode
@@ -161,7 +161,7 @@ Please refer to [HOW_TO file](./HOW_TO.md)
 - Angular 15 & Electron 24 : Branch [angular15](https://github.com/maximegris/angular-electron/tree/angular15)
 - Angular 16 & Electron 25 : Branch [angular16](https://github.com/maximegris/angular-electron/tree/angular16)
 - Angular 17 & Electron 27 : (main)
-- 
+-
 [maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: https://github.com/maximegris/angular-electron/blob/main/LICENSE.md

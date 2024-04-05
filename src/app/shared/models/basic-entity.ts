@@ -2,8 +2,8 @@ export abstract class BasicEntity {
   title: string = '';
   releaseDate: Date = new Date();
   releaseYear: number = this.releaseDate.getUTCFullYear();
-  genres: string[] = [];
-  tags: string[] = [];
+  genres: Set<string> = new Set<string>();
+  tags: Set<string> = new Set<string>();
   gridImageIdentifier: string = '';
   userDateCompleted: Date = new Date();
   userReview: string = '';

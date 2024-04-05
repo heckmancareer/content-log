@@ -5,6 +5,7 @@ import { InputNumberInputEvent } from 'primeng/inputnumber';
 import { CategoriesManagementService } from '../../../../shared/services/categories-management.service';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { AngularElectronInterfaceService } from '../../../../shared/services/angular-electron-interface.service';
+import { EDITOR_OPTIONS } from './quill-editor-config';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -31,6 +32,7 @@ export class MovieEntryFormComponent implements OnInit {
     '100': '#008000',
   }
   userRatingKnobColor: string = this.userRatingColorRanges['0'];
+  editorOptions: any = EDITOR_OPTIONS;
 
   genresAutoCompleteItems: string[]  = []; // All available tags
   genresAutoCompleteSuggestedItems: string[] = []; // Tags that match the current input
@@ -83,6 +85,9 @@ export class MovieEntryFormComponent implements OnInit {
     console.log(movieForm);
     console.log(`Resulting object:`);
     console.log(this.movie);
+    console.log(`UUID: `);
+
+
 
     this.categoriesManagmenetService.addGenres(...this.genresNewItems);
     this.categoriesManagmenetService.addTags(...this.tagsNewItems);

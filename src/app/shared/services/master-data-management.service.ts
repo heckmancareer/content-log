@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MovieEntity } from '../../modules/movies/models/movie-entity';
+import { EntityType } from '../models/entity-type';
 
 /**
  * This service is responsible for holding all data about all content
@@ -12,4 +13,13 @@ export class MasterDataManagementService {
   private movieMasterSet: Record<string, MovieEntity> = {};
 
   constructor() { }
+
+  hasEntity(uuid: string, entityType: EntityType): boolean {
+    switch(entityType) {
+      case EntityType.Movie:
+        return this.movieMasterSet[uuid] !== undefined;
+    }
+
+    return false;
+  }
 }
