@@ -87,6 +87,7 @@
                   [(ngModel)]="movie.genres"
                   [typeLabel]="'genres'"
                   [availableTags]="genresAutoCompleteItems"
+                  (onNewTagCreated)="genresNewItems.push($event)"
                   name="genres"></app-tag-array-manager>
               </div>
               <div class="field col-6 flex flex-column">
@@ -95,6 +96,7 @@
                     [(ngModel)]="movie.tags"
                     [typeLabel]="'tags'"
                     [availableTags]="tagsAutoCompleteItems"
+                    (onNewTagCreated)="tagsNewItems.push($event)"
                     name="tags"></app-tag-array-manager>
                 </span>
               </div>

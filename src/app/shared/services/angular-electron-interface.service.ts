@@ -75,7 +75,16 @@ export class AngularElectronInterfaceService {
     return `${formattedEntityName}_${uuid}`;
   }
 
-  sendEntityToFs(uuid: string, entity: any): boolean {
-    return false;
+  sendEntityToFs(uuid: string, entity: any): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      electronInstance.ipcRenderer.invoke('SAVE-ENTITY', uuid, entity, entity).then((result: boolean) => {
+        resolve(true);
+      }).catch((error: unknown) => {
+        console.log(`Error saving entity.`)
+        console.log(error);
+        reject(false);
+      })
+    });
   }
 }

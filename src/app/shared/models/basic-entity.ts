@@ -1,14 +1,7 @@
+import { EntityType } from "./entity-type";
+
 export abstract class BasicEntity {
-  title: string = '';
-  releaseDate: Date = new Date();
-  releaseYear: number = this.releaseDate.getUTCFullYear();
-  genres: Set<string> = new Set<string>();
-  tags: Set<string> = new Set<string>();
-  gridImageIdentifier: string = '';
-  userDateCompleted: Date = new Date();
-  userReview: string = '';
-  userFavorited: boolean = false;
-  imageID: string = '';
+  abstract entityType: EntityType;
 
   _userRating: number = 0;
   get userRating() {
@@ -25,4 +18,15 @@ export abstract class BasicEntity {
       this._userRating = value;
     }
   }
+
+  title: string = '';
+  releaseDate: Date = new Date();
+  releaseYear: number = this.releaseDate.getUTCFullYear();
+  genres: Set<string> = new Set<string>();
+  tags: Set<string> = new Set<string>();
+  gridImageIdentifier: string = '';
+  userDateCompleted: Date = new Date();
+  userReview: string = '';
+  userFavorited: boolean = false;
+  imageID: string = '';
 }

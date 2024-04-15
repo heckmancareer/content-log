@@ -3,9 +3,9 @@ import { MovieEntity } from '../../models/movie-entity';
 import { StatusLoggerService } from '../../../../shared/services/status-logger.service';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
 import { CategoriesManagementService } from '../../../../shared/services/categories-management.service';
-import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { AngularElectronInterfaceService } from '../../../../shared/services/angular-electron-interface.service';
 import { EDITOR_OPTIONS } from './quill-editor-config';
+import { EntityEditingService } from '../../../../shared/services/entity-editing.service';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -50,7 +50,8 @@ export class MovieEntryFormComponent implements OnInit {
   constructor(
     private statusLoggerService: StatusLoggerService,
     private categoriesManagmenetService: CategoriesManagementService,
-    private angularElectronInterfaceService: AngularElectronInterfaceService){}
+    private angularElectronInterfaceService: AngularElectronInterfaceService,
+    private entityEditingService: EntityEditingService){}
 
   ngOnInit(): void {
     this.movie.title = 'New Movie';

@@ -110,3 +110,11 @@ ipcMain.on('SAVE-BUFFER-TO-FS', async (event, buffer) => {
 ipcMain.handle('GET-ENTITY-UUID', async(event) => {
   return uuidv4();
 })
+
+ipcMain.handle('SAVE-ENTITY', async(event, uuid, entity) => {
+
+})
+
+ipcMain.handle('SAVE-IMAGE-BUFFER', async(event, imageBuffer) => {
+
+})
