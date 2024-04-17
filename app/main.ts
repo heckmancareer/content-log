@@ -112,7 +112,11 @@ ipcMain.handle('GET-ENTITY-UUID', async(event) => {
 })
 
 ipcMain.handle('SAVE-ENTITY', async(event, uuid, entity) => {
-
+  console.log('Entity received for saving!');
+  console.log(uuid);
+  console.log(event);
+  console.log(entity);
+  return true;
 })
 
 ipcMain.handle('SAVE-IMAGE-BUFFER', async(event, imageBuffer) => {

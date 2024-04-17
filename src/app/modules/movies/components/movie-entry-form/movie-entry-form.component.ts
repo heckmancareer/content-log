@@ -83,14 +83,9 @@ export class MovieEntryFormComponent implements OnInit {
 
   onSubmit(movieForm: unknown): void {
     this.formSubmitted = true;
-    console.log(movieForm);
-    console.log(`Resulting object:`);
-    console.log(this.movie);
-    console.log(`UUID: `);
-
-
-
     this.categoriesManagmenetService.addGenres(...this.genresNewItems);
     this.categoriesManagmenetService.addTags(...this.tagsNewItems);
+
+    this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie);
   }
 }

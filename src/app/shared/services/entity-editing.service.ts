@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MasterDataManagementService } from './master-data-management.service';
 import { AngularElectronInterfaceService } from './angular-electron-interface.service';
+import { StatusLoggerService } from './status-logger.service';
 
 /**
  * This service is responsible for handling edits to entities
@@ -13,25 +14,32 @@ export class EntityEditingService {
 
   constructor(
     private masterDataManagement: MasterDataManagementService,
-    private angularElectronInterface: AngularElectronInterfaceService
+    private angularElectronInterface: AngularElectronInterfaceService,
+    private logger: StatusLoggerService
   ) { }
 
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       let currentUUID = uuid;
+      let isNewEntity = false;
       // If UUID is blank, or does not exist in data, then it's a new entity.
       // So get a new UUID, and generate the image name.
-      if(uuid === '' || !this.masterDataManagement.hasEntity(uuid, entity)) {
+      if(uuid === '') {
         await this.angularElectronInterface.getGeneratedUUID().then((result) => {
           currentUUID = result;
-          entity.imageID = this.angularElectronInterface.getFormattedImageID(currentUUID, entity.title);
+          isNewEntity = true;
         })
       }
       // Send the entity to electron to be saved.
       await this.angularElectronInterface.sendEntityToFs(currentUUID, entity).then((result) =>{
+        if(isNewEntity) {
+          this.masterDataManagement.addNewEntity(currentUUID, entity);
+        } else {
+          this.masterDataManagement.updateEntity(currentUUID, entity);
+        }
         resolve(true);
       }).catch((error) => {
-        reject(false);
+        reject(error);
       });
     })
   }

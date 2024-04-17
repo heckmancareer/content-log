@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Electron from 'electron';
 import { MovieEntity } from '../../modules/movies/models/movie-entity';
+import { StatusLoggerService } from './status-logger.service';
 
 /**
  * This service is responsible for posting or receiving any updates
@@ -23,7 +24,7 @@ export class AngularElectronInterfaceService {
     return this._electron;
   }
 
-  constructor() {}
+  constructor(private logger: StatusLoggerService) {}
 
   /**
    * Saves an image blob url to the file system.
@@ -75,15 +76,39 @@ export class AngularElectronInterfaceService {
     return `${formattedEntityName}_${uuid}`;
   }
 
+  /**
+   * With a given uuid and entity object, sends them to Electron for them
+   * to be saved to the file system for persistent state.
+   * @param uuid
+   * @param entity
+   * @returns A Promise. Resolves true if the Electron invocation is successful. Rejects
+   * if there's an error.
+   */
   sendEntityToFs(uuid: string, entity: any): Promise<boolean> {
     let electronInstance = this.electron;
     return new Promise(async (resolve, reject) => {
-      electronInstance.ipcRenderer.invoke('SAVE-ENTITY', uuid, entity, entity).then((result: boolean) => {
-        resolve(true);
+      electronInstance.ipcRenderer.invoke('SAVE-ENTITY', uuid, entity).then((result: boolean) => {
+        if(result === true) {
+          resolve(true);
+        } else {
+          this.logger.logMessageToConsole(
+            `sendEntityToFs resolved false.`,
+            false,
+            `When sending entity to the fs to be saved, it resolved false.`,
+            undefined,
+            entity
+          )
+          resolve(false);
+        }
       }).catch((error: unknown) => {
-        console.log(`Error saving entity.`)
-        console.log(error);
-        reject(false);
+        this.logger.logErrorToConsole(
+          `sendEntityToFs errored out.`,
+          false,
+          error as Error,
+          `There was a problem calling sendEntityToFs in AngularElectron Service`,
+          entity
+        )
+        reject(error);
       })
     });
   }

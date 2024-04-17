@@ -27,13 +27,12 @@ export class MasterDataManagementService {
    * Adds an entity to its respective Record for its entity type.
    * @param uuid The UUID of the entity.
    * @param entity The object of the entity.
-   * @param entityType The entity type of the entity.
-   * @returns True if the entity is added successfully, or false if there's an error.
+   * @returns True if the entity is added. Returns false if the entity already exists, or if there's an error.
    */
   addNewEntity<T extends BasicEntity>(
     uuid: string,
-    entity: new () => T,
-    entityType: EntityType): boolean {
+    entity: new () => T,): boolean {
+      let entityType = (entity as any).entityType
       switch(entityType) {
         case EntityType.Movie:
           if(this.movieMasterSet[uuid]) {
@@ -45,4 +44,21 @@ export class MasterDataManagementService {
       }
       return false;
   }
+
+  updateEntity<T extends BasicEntity>(
+    uuid: string,
+    entity: new() => T,): boolean {
+      let entityType = (entity as any).entityType
+      switch(entityType) {
+        case EntityType.Movie:
+          if(!this.movieMasterSet[uuid]) {
+            this.movieMasterSet[uuid] = (entity as unknown) as MovieEntity;
+            return true;
+          } else {
+            return false;
+          }
+      }
+      return false;
+  }
+
 }

@@ -1,6 +1,5 @@
-import { Duration } from 'luxon';
-import { BasicEntity } from '../../../shared/models/basic-entity';
-import { EntityType } from '../../../shared/models/entity-type';
+import { BasicEntity } from './basic-entity';
+import { EntityType } from './entity-type';
 
 export class MovieEntity extends BasicEntity {
   _runtimeInMinutes: number = 0;
