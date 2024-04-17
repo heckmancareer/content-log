@@ -30,6 +30,8 @@ export class EntityEditingService {
           isNewEntity = true;
         })
       }
+      // Ensure that the image ID for the entity is up to date.
+      entity.imageID = this.angularElectronInterface.getFormattedImageID(currentUUID, entity.title);
       // Send the entity to electron to be saved.
       await this.angularElectronInterface.sendEntityToFs(currentUUID, entity).then((result) =>{
         if(isNewEntity) {

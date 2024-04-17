@@ -24,7 +24,6 @@ export abstract class BasicEntity {
   releaseYear: number = this.releaseDate.getUTCFullYear();
   genres: Set<string> = new Set<string>();
   tags: Set<string> = new Set<string>();
-  gridImageIdentifier: string = '';
   userDateCompleted: Date = new Date();
   userReview: string = '';
   userFavorited: boolean = false;
