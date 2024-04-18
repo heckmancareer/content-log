@@ -7,6 +7,8 @@
 /app-builds
 /release
 main.js
+save.js
+entity-store.js
 src/**/*.js
 *.js.map
 

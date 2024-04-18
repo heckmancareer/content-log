@@ -2,6 +2,8 @@ import {app, BrowserWindow, ipcMain, screen, dialog} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import { registerAllIpcSaveFunctions } from './src/handlers/save';
+import { register } from 'module';
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -114,3 +116,5 @@ ipcMain.handle('GET-ENTITY-UUID', async(event) => {
 ipcMain.handle('SAVE-IMAGE-BUFFER', async(event, imageBuffer) => {
 
 })
+
+registerAllIpcSaveFunctions();
