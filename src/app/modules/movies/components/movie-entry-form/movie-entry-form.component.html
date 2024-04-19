@@ -4,7 +4,8 @@
     <div class="card__body-container flex" style="height: 550px">
       <div class="card__body-left">
         <span>Image Preview:</span>
-        <app-image-uploader></app-image-uploader>
+        <app-image-uploader
+          (onImageSubmission)="setNewSubmittedImageBuffer($event)"></app-image-uploader>
       </div>
       <div class="card__bord-right flex-grow-1 ml-2">
         <p-tabView [(activeIndex)]="tabViewActiveIndex">

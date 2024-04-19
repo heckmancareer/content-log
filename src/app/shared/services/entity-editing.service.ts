@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MasterDataManagementService } from './master-data-management.service';
 import { AngularElectronInterfaceService } from './angular-electron-interface.service';
 import { StatusLoggerService } from './status-logger.service';
+import { EntityType } from '../models/entity-type';
 
 /**
  * This service is responsible for handling edits to entities
@@ -43,6 +44,16 @@ export class EntityEditingService {
       }).catch((error) => {
         reject(error);
       });
+    })
+  }
+
+  submitImageBufferForSaving(buffer: Buffer, entityType: EntityType, imageID: string): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      await this.angularElectronInterface.sendImageBufferToFS(buffer, entityType, imageID).then((result) => {
+        resolve(true);
+      }).catch((error) => {
+        reject(error);
+      })
     })
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Electron from 'electron';
 import { MovieEntity } from '../../modules/movies/models/movie-entity';
 import { StatusLoggerService } from './status-logger.service';
+import { EntityType } from '../models/entity-type';
 
 /**
  * This service is responsible for posting or receiving any updates
@@ -111,5 +112,20 @@ export class AngularElectronInterfaceService {
         reject(error);
       })
     });
+  }
+
+  sendImageBufferToFS(buffer: Buffer, entityType: EntityType, imageID: string): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      electronInstance.ipcRenderer.invoke('SAVE-IMAGE-BUFFER', buffer, entityType, imageID).then((result: boolean) => {
+        if(result === true) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch((error: unknown) => {
+        reject(error);
+      })
+    })
   }
 }

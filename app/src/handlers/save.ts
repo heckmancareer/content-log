@@ -10,4 +10,23 @@ export function registerAllIpcSaveFunctions() {
     return true;
   })
 
+  ipcMain.handle('SAVE-IMAGE-BUFFER', async(event, imageBuffer, entityType, imageID) => {
+    let baseImagePath = path.join(app.getPath('userData'), 'images', entityType);
+    let fullImagePath = path.join(baseImagePath, `${imageID}.png`);
+    ensureDirectoryExists(baseImagePath);
+    fs.writeFile(fullImagePath, imageBuffer, err => {
+      if(err) {
+        console.error(err);
+      } else {
+        console.log('File save success.');
+      }
+    })
+  })
+
+}
+
+function ensureDirectoryExists(path: string): void {
+  if(!fs.existsSync(path)) {
+    fs.mkdirSync(path, {recursive: true});
+  }
 }

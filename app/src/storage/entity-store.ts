@@ -19,7 +19,6 @@ class EntityStore {
 
   public saveEntity(uuid: string, entity: any) {
     this.store.set(uuid, entity);
-    console.log(`Saving entity ${uuid} in store ${this.entityType} was successful.`);
   }
 
   public getEntity(uuid: string): any {
@@ -53,12 +52,16 @@ class EntityStoreManager {
     switch(entity.entityType) {
       case 'movie':
         this.movieStore?.saveEntity(uuid, entity);
+        break;
       case 'tv-show':
         this.tvShowStore?.saveEntity(uuid, entity);
+        break;
       case 'video-game':
         this.videoGameStore?.saveEntity(uuid, entity);
+        break;
       case 'book':
         this.bookStore?.saveEntity(uuid, entity);
+        break;
     }
   }
 }

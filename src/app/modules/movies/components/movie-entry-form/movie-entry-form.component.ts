@@ -6,6 +6,7 @@ import { CategoriesManagementService } from '../../../../shared/services/categor
 import { AngularElectronInterfaceService } from '../../../../shared/services/angular-electron-interface.service';
 import { EDITOR_OPTIONS } from './quill-editor-config';
 import { EntityEditingService } from '../../../../shared/services/entity-editing.service';
+import { EntityType } from '../../../../shared/models/entity-type';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -43,6 +44,7 @@ export class MovieEntryFormComponent implements OnInit {
   tagsNewItems: string[] = [];
 
   imageUrl: string = '';
+  newSubmittedImageBuffer: Buffer | undefined;
 
   formSubmitted: boolean = false;
   tabViewActiveIndex: number = 0;
@@ -81,11 +83,20 @@ export class MovieEntryFormComponent implements OnInit {
     this.userRatingKnobColor = this.userRatingColorRanges[colorKey];
   }
 
+  setNewSubmittedImageBuffer($event: Buffer): void {
+    this.newSubmittedImageBuffer = $event;
+  }
+
   onSubmit(movieForm: unknown): void {
     this.formSubmitted = true;
     this.categoriesManagmenetService.addGenres(...this.genresNewItems);
     this.categoriesManagmenetService.addTags(...this.tagsNewItems);
 
-    this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie);
+    this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
+      if(result === true && this.newSubmittedImageBuffer) {
+        this.entityEditingService.submitImageBufferForSaving
+          (this.newSubmittedImageBuffer, EntityType.Movie, this.movie.imageID);
+      }
+    });
   }
 }
