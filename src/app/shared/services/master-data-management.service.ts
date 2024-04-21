@@ -12,6 +12,9 @@ import { BasicEntity } from '../models/basic-entity';
 })
 export class MasterDataManagementService {
   private movieMasterSet: Record<string, MovieEntity> = {};
+  private videoGameMasterSet: undefined;
+  private tvShowMasterSet: undefined;
+  private bookMasterSet: undefined;
 
   constructor() { }
 
@@ -59,6 +62,14 @@ export class MasterDataManagementService {
           }
       }
       return false;
+  }
+
+  /**
+   * Makes a call to retrieve all entity data from electron.
+   * Intended to be run early in the application lifecycle.
+   */
+  loadInAllEntities(): void {
+
   }
 
 }

@@ -13,11 +13,31 @@ import { EntityType } from '../models/entity-type';
 })
 export class EntityEditingService {
 
+  private currentEntityUUID: string | undefined;
+
   constructor(
     private masterDataManagement: MasterDataManagementService,
     private angularElectronInterface: AngularElectronInterfaceService,
     private logger: StatusLoggerService
   ) { }
+
+  clearCurrentEntityUUID(): void {
+    this.currentEntityUUID = undefined;
+  }
+
+  getCurrentEntityUUID(): string | void {
+    if(this.currentEntityUUID) {
+      return this.currentEntityUUID;
+    } else {
+      this.logger.logErrorToConsole(
+        'No current entity being edited',
+        false,
+        undefined,
+        'getCurrentEntityUUID was called from the Entity Editing service, but no UUID is currently set.'
+      )
+      return;
+    }
+  }
 
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {
     return new Promise(async (resolve, reject) => {

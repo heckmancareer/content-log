@@ -17,8 +17,10 @@ export function registerAllIpcSaveFunctions() {
     fs.writeFile(fullImagePath, imageBuffer, err => {
       if(err) {
         console.error(err);
+        return false;
       } else {
         console.log('File save success.');
+        return true;
       }
     })
   })

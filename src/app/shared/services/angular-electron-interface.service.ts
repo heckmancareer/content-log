@@ -27,30 +27,6 @@ export class AngularElectronInterfaceService {
 
   constructor(private logger: StatusLoggerService) {}
 
-  /**
-   * Saves an image blob url to the file system.
-   * Given an image blob url, convert it to a buffer then send it to Electron
-   * via the ipc renderer to have it saved to the file system.
-   * @param blobURL
-   */
-  sendBlobURLToFileSystem(blobURL: string): void {
-    let electronInstance = this.electron;
-    let reader = new FileReader();
-
-    reader.onload = function () {
-      if(reader.readyState == 2) {
-        let buffer = Buffer.from(reader.result as ArrayBuffer);
-        electronInstance.ipcRenderer.send('SAVE-BUFFER-TO-FS', buffer);
-      }
-    }
-
-    fetch(blobURL).then(response => response.blob()).then(blob => {
-      reader.readAsArrayBuffer(blob);
-    }).catch(error => {
-      console.log(error);
-    })
-  }
-
   getGeneratedUUID(): Promise<string> {
     let electronInstance = this.electron;
     return new Promise((resolve, reject) => {
@@ -75,6 +51,12 @@ export class AngularElectronInterfaceService {
     let formattedEntityName = entityName.toLowerCase().trim()
       .replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
     return `${formattedEntityName}_${uuid}`;
+  }
+
+  getAllEntitiesOfType(entityType: EntityType): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+
+    })
   }
 
   /**

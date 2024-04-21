@@ -85,30 +85,6 @@ try {
   // throw e;
 }
 
-ipcMain.on('SAVE-BUFFER-TO-FS', async (event, buffer) => {
-  console.log('Hello World!');
-  console.log(buffer);
-  console.log(app.getPath('userData'));
-
-  const { filePath } = await dialog.showSaveDialog({
-    title: 'Save Image',
-    buttonLabel: 'Save',
-    filters: [
-      { name: 'PNG', extensions: ['png']}
-    ]
-  });
-
-  if(filePath) {
-    fs.writeFile(filePath, buffer, err => {
-      if(err) {
-        console.error(err);
-      } else {
-        console.log('File save success.');
-      }
-    })
-  }
-})
-
 ipcMain.handle('GET-ENTITY-UUID', async(event) => {
   return uuidv4();
 })

@@ -25,7 +25,7 @@ class EntityStore {
     return this.store.get(uuid);
   }
 
-  public getAllEntities(): any[] {
+  public getAllEntities(): any {
     return Object.values(this.store.store);
   }
 }
@@ -47,7 +47,7 @@ class EntityStoreManager {
     this.bookStore = new EntityStore('book');
   }
 
-  public saveEntity(uuid: string, entity: any) {
+  public saveEntity(uuid: string, entity: any): void {
     console.log(entity)
     switch(entity.entityType) {
       case 'movie':
@@ -61,6 +61,23 @@ class EntityStoreManager {
         break;
       case 'book':
         this.bookStore?.saveEntity(uuid, entity);
+        break;
+    }
+  }
+
+  public getEntitiesOfType(entityType: string): any {
+    switch(entityType) {
+      case 'movie':
+        this.movieStore?.getAllEntities();
+        break;
+      case 'tv-show':
+        this.tvShowStore?.getAllEntities();
+        break;
+      case 'video-game':
+        this.videoGameStore?.getAllEntities();
+        break;
+      case 'book':
+        this.bookStore?.getAllEntities();
         break;
     }
   }
