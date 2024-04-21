@@ -54,8 +54,14 @@ export class AngularElectronInterfaceService {
   }
 
   getAllEntitiesOfType(entityType: EntityType): Promise<Record<string, any>> {
+    let electronInstance = this.electron;
     return new Promise(async (resolve, reject) => {
-
+      electronInstance.ipcRenderer.invoke('GET-ALL-ENTITIES-OF-TYPE', entityType)
+        .then((result: Record<string, any>) => {
+          resolve(result);
+      }).catch((error: unknown) => {
+        reject(error);
+      })
     })
   }
 

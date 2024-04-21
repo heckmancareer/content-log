@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { registerAllIpcSaveFunctions } from './src/handlers/save';
 import { register } from 'module';
+import { registerAllIpcGetFunctions } from './src/handlers/get-handlers';
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -90,3 +91,4 @@ ipcMain.handle('GET-ENTITY-UUID', async(event) => {
 })
 
 registerAllIpcSaveFunctions();
+registerAllIpcGetFunctions();

@@ -8,6 +8,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { MasterDataManagementService } from '../../shared/services/master-data-management.service';
+import { EntityType } from '../../shared/models/entity-type';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -27,8 +29,8 @@ export class CoreComponent implements OnInit, OnDestroy {
     private electronService: ElectronService,
     private translate: TranslateService,
     private primengConfig: PrimeNGConfig,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private masterDataManagementService: MasterDataManagementService
   ) {
     this.translate.setDefaultLang('en');
     console.log('APP_CONFIG', APP_CONFIG);
@@ -63,6 +65,12 @@ export class CoreComponent implements OnInit, OnDestroy {
           }
         }
       }
+    })
+
+    console.log(`Firing data retrieval.`);
+    this.masterDataManagementService.loadInAllEntities().then((result: boolean) => {
+      console.log(`Movie data loaded:`);
+      console.log(this.masterDataManagementService.getEntitySetReference(EntityType.Movie));
     })
   }
 

@@ -47,39 +47,28 @@ class EntityStoreManager {
     this.bookStore = new EntityStore('book');
   }
 
-  public saveEntity(uuid: string, entity: any): void {
-    console.log(entity)
-    switch(entity.entityType) {
-      case 'movie':
-        this.movieStore?.saveEntity(uuid, entity);
-        break;
-      case 'tv-show':
-        this.tvShowStore?.saveEntity(uuid, entity);
-        break;
-      case 'video-game':
-        this.videoGameStore?.saveEntity(uuid, entity);
-        break;
-      case 'book':
-        this.bookStore?.saveEntity(uuid, entity);
-        break;
+  private entityTypeToStore(entityType: string): EntityStore | undefined {
+    switch(entityType) {
+      case('movie'):
+        return this.movieStore;
+      case('video-game'):
+        return this.videoGameStore;
+      case('tv-show'):
+        return this.tvShowStore;
+      case('book'):
+        return this.bookStore;
     }
+    return undefined;
+  }
+
+  public saveEntity(uuid: string, entity: any): void {
+    let targetStore = this.entityTypeToStore(entity.entityType);
+    targetStore?.saveEntity(uuid, entity);
   }
 
   public getEntitiesOfType(entityType: string): any {
-    switch(entityType) {
-      case 'movie':
-        this.movieStore?.getAllEntities();
-        break;
-      case 'tv-show':
-        this.tvShowStore?.getAllEntities();
-        break;
-      case 'video-game':
-        this.videoGameStore?.getAllEntities();
-        break;
-      case 'book':
-        this.bookStore?.getAllEntities();
-        break;
-    }
+    let targetStore = this.entityTypeToStore(entityType);
+    return targetStore?.getAllEntities();
   }
 }
 
