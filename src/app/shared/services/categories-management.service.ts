@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import { EntityType } from '../models/entity-type';
 
 /**
  * This service is responsible for retrieving and holding all of the
@@ -9,28 +10,60 @@ import { Injectable, OnInit } from '@angular/core';
   providedIn: 'root'
 })
 export class CategoriesManagementService implements OnInit {
-  genres: Set<string> = new Set<string>(['horror', 'comedy', 'fiction', 'fantasy', 'ur-mom']);
-  tags: Set<string> = new Set<string>(['one', 'two', 'three', 'four', 'five']);
+  movieGenres: Set<string> = new Set<string>();
+  movieTags: Set<string> = new Set<string>();
+  tvShowGenres: Set<string> = new Set<string>();
+  tvShowTags: Set<string> = new Set<string>();
+  videoGameGenres: Set<string> = new Set<string>();
+  videoGameTags: Set<string> = new Set<string>();
+  bookGenres: Set<string> = new Set<string>();
+  bookTags: Set<string> = new Set<string>();
 
 
   constructor() { }
 
   ngOnInit(): void {}
 
-  getAllGenres(): string[] {
-    return [...this.genres];
+  private entityTypeToGenreSet(entityType: EntityType): Set<string> {
+    switch(entityType) {
+      case EntityType.Movie:
+        return this.movieGenres;
+      case EntityType.Book:
+        return this.bookGenres;
+      case EntityType.TVShow:
+        return this.tvShowGenres;
+      case EntityType.VideoGame:
+        return this.videoGameGenres;
+    }
   }
 
-  getAllTags(): string[] {
-    return [...this.tags];
+  private entityTypeToTagSet(entityType: EntityType): Set<string> {
+    switch(entityType) {
+      case EntityType.Movie:
+        return this.movieTags;
+      case EntityType.Book:
+        return this.bookTags;
+      case EntityType.TVShow:
+        return this.tvShowTags;
+      case EntityType.VideoGame:
+        return this.videoGameTags;
+    }
   }
 
-  addTags(...tagsToAdd: string[]): void {
-    for(const tag in tagsToAdd) this.tags.add(tag);
+  getAllGenres(entityType: EntityType): string[] {
+    return [...this.entityTypeToGenreSet(entityType)];
   }
 
-  addGenres(...genresToAdd: string[]): void {
-    for(const genre in genresToAdd) this.genres.add(genre);
+  getAllTags(entityType: EntityType): string[] {
+    return [...this.entityTypeToTagSet(entityType)];
+  }
+
+  addTags(entityType: EntityType, ...tagsToAdd: string[]): void {
+    for(const tag in tagsToAdd) this.entityTypeToGenreSet(entityType).add(tag);
+  }
+
+  addGenres(entityType: EntityType, ...genresToAdd: string[]): void {
+    for(const genre in genresToAdd) this.entityTypeToTagSet(entityType).add(genre);
   }
 
   /**

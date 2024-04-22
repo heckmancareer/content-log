@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { MoviesInventoryPageComponent } from './pages/movies-inventory-page/movies-inventory-page.component';
 import { NewMoviePageComponent } from './pages/new-movie-page/new-movie-page.component';
+import { GenericEntityViewPageComponent } from '../../shared/pages/generic-entity-view-page/generic-entity-view-page.component';
+import { EntityType } from '../../shared/models/entity-type';
 
 const routes: Routes = [
   {
     path: '',
-    component: MoviesInventoryPageComponent
+    component: GenericEntityViewPageComponent,
+    data: {
+      entityType: EntityType.Movie
+    }
   },
   {
     path: 'new-movie',

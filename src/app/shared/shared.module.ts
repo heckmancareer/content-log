@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { TagArrayManagerComponent } from './components/tag-array-manager/tag-array-manager.component';
+import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page/generic-entity-view-page.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { TagArrayManagerComponent } from './components/tag-array-manager/tag-arr
     WebviewDirective,
     ImageUploaderComponent,
     TagArrayManagerComponent,
+    GenericEntityViewPageComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,7 @@ import { TagArrayManagerComponent } from './components/tag-array-manager/tag-arr
     FormsModule,
     ImageUploaderComponent,
     TagArrayManagerComponent,
+    GenericEntityViewPageComponent
   ],
   providers: [
     MessageService,
