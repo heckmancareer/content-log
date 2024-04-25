@@ -26,7 +26,7 @@ class EntityStore {
   }
 
   public getAllEntities(): any {
-    return Object.values(this.store.store);
+    return this.store.store;
   }
 }
 

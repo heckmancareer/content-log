@@ -58,10 +58,10 @@ export class MovieEntryFormComponent implements OnInit {
   ngOnInit(): void {
     this.movie.title = 'New Movie';
     this.setUserRatingKnobColor(this.movie.userRating);
-    this.genresAutoCompleteItems = [...this.categoriesManagmenetService.getAllGenres()];
-    this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres()];
-    this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags()];
-    this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags()];
+    this.genresAutoCompleteItems = [...this.categoriesManagmenetService.getAllGenres(EntityType.Movie)];
+    this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres(EntityType.Movie)];
+    this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
+    this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.movie.genres = new Set(['test', 'testt', 'testtt']);
   }
 
@@ -89,8 +89,8 @@ export class MovieEntryFormComponent implements OnInit {
 
   onSubmit(movieForm: unknown): void {
     this.formSubmitted = true;
-    this.categoriesManagmenetService.addGenres(...this.genresNewItems);
-    this.categoriesManagmenetService.addTags(...this.tagsNewItems);
+    this.categoriesManagmenetService.addGenres(EntityType.Movie, ...this.genresNewItems);
+    this.categoriesManagmenetService.addTags(EntityType.Movie, ...this.tagsNewItems);
 
     this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
       if(result === true && this.newSubmittedImageBuffer) {

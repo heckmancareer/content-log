@@ -1,9 +1,74 @@
 <div class="page-container">
-  <div class="grid-container w-full grid">
-    <div class="filter-bar col-4">
-
+  <div class="grid-container w-full px-4">
+    <div class="filter-bar">
+      <h1>Movies</h1>
+      <p-card header="Filters">
+        <span class="filter-bar__container">
+          <div class="mb-3 font-semibold">Title: </div>
+          <span class="p-float-label">
+            <input pInputText id="title" class="p-inputtext-sm" />
+            <label for="title">Movie Title</label>
+          </span>
+          <p-divider></p-divider>
+          @if(currentEntityType === 'movie') {
+            <div class="mb-3 font-semibold">Writer & Director: </div>
+            <span class="p-float-label mb-4">
+              <input pInputText id="writer" class="p-inputtext-sm" />
+              <label for="title">Writer</label>
+            </span>
+            <span class="p-float-label">
+              <input pInputText id="director" class="p-inputtext-sm" />
+              <label for="title">Director</label>
+            </span>
+            <p-divider></p-divider>
+          }
+          <div class="mb-3 font-semibold">Release Date: </div>
+          <span>
+            <span class="p-float-label mb-4">
+              <p-calendar
+                [styleClass]="'p-inputtext-sm'"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                inputId="release-date-start"></p-calendar>
+              <label for="release-date-start">From Release Date</label>
+            </span>
+          </span>
+          <span>
+            <span class="p-float-label">
+              <p-calendar
+                [styleClass]="'p-inputtext-sm'"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                inputId="release-date-end"></p-calendar>
+              <label for="release-date-end">To Release Date</label>
+            </span>
+          </span>
+          <p-divider></p-divider>
+          <div class="mb-3 font-semibold">Completion Date: </div>
+          <span>
+            <span class="p-float-label mb-4">
+              <p-calendar
+                [styleClass]="'p-inputtext-sm'"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                inputId="complete-start-date"></p-calendar>
+              <label for="complete-start-date">From Completion Date</label>
+            </span>
+          </span>
+          <span>
+            <span class="p-float-label">
+              <p-calendar
+                [styleClass]="'p-inputtext-sm'"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                inputId="complete-end-date"></p-calendar>
+              <label for="complete-end-date">To Completion Date</label>
+            </span>
+          </span>
+        </span>
+      </p-card>
     </div>
-    <div class="entity-grid col-8">
+    <div class="entity-grid">
 
     </div>
   </div>

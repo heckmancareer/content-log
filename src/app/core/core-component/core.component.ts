@@ -66,12 +66,6 @@ export class CoreComponent implements OnInit, OnDestroy {
         }
       }
     })
-
-    console.log(`Firing data retrieval.`);
-    this.masterDataManagementService.loadInAllEntities().then((result: boolean) => {
-      console.log(`Movie data loaded:`);
-      console.log(this.masterDataManagementService.getEntitySetReference(EntityType.Movie));
-    })
   }
 
   ngOnDestroy(): void {

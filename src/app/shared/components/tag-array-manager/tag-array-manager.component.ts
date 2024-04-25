@@ -76,13 +76,10 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
   }
 
   removeChip($event: MouseEvent, tagToRemove: string): void {
-    console.log($event);
-    console.log(`Received ${tagToRemove} to delete.`)
     if(this._selectedTags.has(tagToRemove)) {
       this._selectedTags.delete(tagToRemove);
       this.onChange(Array.from(this._selectedTags));
       this.onTouched();
-      console.log(this._selectedTags);
     }
   }
 
@@ -104,14 +101,12 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
   onTouched: any = () => {};
 
   writeValue(value: any): void {
-    console.log('writeValue called');
     if(value !== undefined && value !== null && value instanceof Set) {
       this._selectedTags = new Set(value);
     }
   }
 
   updateValue(newValue: string): void {
-    console.log('updateValue called.');
     this._selectedTags.add(newValue);
     if(this.availableTags.indexOf(newValue) === -1) {
       this.onNewTagCreated.emit(newValue);
@@ -119,16 +114,13 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
 
     this.onChange(Array.from(this._selectedTags));
     this.onTouched();
-    console.log(this._selectedTags);
   }
 
   registerOnChange(fn: any): void {
-    console.log('registerOnChange called.');
     this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
-    console.log('registerOnTouched called.');
     this.onTouched = fn;
   }
 }

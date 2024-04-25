@@ -106,6 +106,17 @@ export class MasterDataManagementService {
     return this.entityTypeToMasterSet(entityType);
   }
 
+  getAllGenresOrTagsFromEntitySet(entityType: EntityType, v: 'genres' | 'tags'): Set<string> {
+    let entitySet = this.entityTypeToMasterSet(entityType);
+    let returnedValues = new Set<string>();
+    for(const entity in entitySet) {
+      entitySet[entity][v].forEach((value: string) => {
+        returnedValues.add(value);
+      })
+    }
+    return returnedValues;
+  }
+
   /**
    * Makes a call to retrieve all entity data from electron.
    * Intended to be run early in the application lifecycle.
@@ -118,4 +129,8 @@ export class MasterDataManagementService {
     return true;
   }
 
+}
+
+export function initializeData(dataService: MasterDataManagementService) {
+  return (): Promise<any> => dataService.loadInAllEntities();
 }

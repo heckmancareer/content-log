@@ -39,6 +39,10 @@ export class EntityEditingService {
     }
   }
 
+  setCurrentEntityUUID(uuid: string): void {
+    this.currentEntityUUID = uuid;
+  }
+
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       let currentUUID = uuid;

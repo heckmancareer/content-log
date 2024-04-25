@@ -72,7 +72,6 @@ export class ImageUploaderComponent {
     reader.onload = function() {
       if(reader.readyState == 2) {
         let buffer = Buffer.from(reader.result as ArrayBuffer);
-        console.log(buffer);
       }
     }
     fetch(this.savedCroppedImage).then(response => response.blob()).then(blob => {

@@ -13,6 +13,7 @@ export class GenericEntityViewPageComponent implements OnInit {
   loadingState: boolean = true;
   activatedRouteData: any = {};
 
+  entityKeys: string[] = [];
   entities: Record<string, any> = {};
 
   constructor(
@@ -29,7 +30,7 @@ export class GenericEntityViewPageComponent implements OnInit {
       this.activatedRouteData = data;
       this.currentEntityType = data.entityType;
       this.entities = this.masterDataManagementService.getEntitySetReference(this.currentEntityType);
-      console.log(this.entities);
+      this.entityKeys = Object.keys(this.entities);
       this.loadingState = false;
     })
   }
