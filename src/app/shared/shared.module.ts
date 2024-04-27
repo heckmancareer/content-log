@@ -17,8 +17,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
-import { InputText, InputTextModule } from 'primeng/inputtext';
-import { Calendar, CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
@@ -54,6 +55,7 @@ import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page
     DividerModule,
     InputTextModule,
     CalendarModule,
+    MultiSelectModule,
   ],
   exports: [
     TranslateModule,

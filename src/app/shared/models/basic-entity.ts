@@ -24,6 +24,7 @@ export abstract class BasicEntity {
   releaseYear: number = this.releaseDate.getUTCFullYear();
   genres: Set<string> = new Set<string>();
   tags: Set<string> = new Set<string>();
+  userDateStarted: Date = new Date();
   userDateCompleted: Date = new Date();
   userReview: string = '';
   userFavorited: boolean = false;

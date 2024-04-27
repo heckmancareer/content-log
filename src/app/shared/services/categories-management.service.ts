@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { EntityType } from '../models/entity-type';
+import { MasterDataManagementService } from './master-data-management.service';
 
 /**
  * This service is responsible for retrieving and holding all of the
@@ -20,7 +21,7 @@ export class CategoriesManagementService implements OnInit {
   bookTags: Set<string> = new Set<string>();
 
 
-  constructor() { }
+  constructor(private masterDataManagementService: MasterDataManagementService) { }
 
   ngOnInit(): void {}
 
@@ -64,6 +65,38 @@ export class CategoriesManagementService implements OnInit {
 
   addGenres(entityType: EntityType, ...genresToAdd: string[]): void {
     for(const genre in genresToAdd) this.entityTypeToTagSet(entityType).add(genre);
+  }
+
+  /**
+   * Retrieves an Entity Set from Master Data Management service to
+   * extract all of their relevant tags or genres to store.
+   * @param entityType Entity Type enumeration to denote which entities to parse.
+   * @param v String equal to 'genres' or 'tags' to denote which Set to store
+   * the values in.
+   */
+  extractGenresOrTagsFromEntitySet(entityType: EntityType, v: 'genres' | 'tags'): Set<string> {
+    let entitySet = this.masterDataManagementService.getEntitySetReference(entityType);
+    let returnedValues = new Set<string>();
+    for(const entity in entitySet) {
+      entitySet[entity][v].forEach((value: string) => {
+        returnedValues.add(value);
+      })
+    }
+    return returnedValues;
+  }
+
+  /**
+   * Function to be called early in the application's lifecycle, after the entity
+   * data has been loaded into Master Data Management service, to get all of the
+   * tags and genres for all entity types.
+   */
+  async loadInAllGenresAndTags(): Promise<void> {
+    let entityTypes = Object.values(EntityType);
+    for(const eType of entityTypes) {
+      this.addGenres(eType, ...this.extractGenresOrTagsFromEntitySet(eType, 'genres'));
+      this.addTags(eType, ...this.extractGenresOrTagsFromEntitySet(eType, 'tags'));
+    }
+    return;
   }
 
   /**

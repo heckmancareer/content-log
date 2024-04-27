@@ -65,6 +65,24 @@
               <label for="complete-end-date">To Completion Date</label>
             </span>
           </span>
+          <p-divider></p-divider>
+          <div class="mb-3 font-semibold">Genres & Tags: </div>
+          <span>
+            <span class="p-float-label mb-4">
+              <p-multiSelect
+                [styleClass]="'w-full'"
+                inputId="genres-select"></p-multiSelect>
+              <label for="genres-select">Genres</label>
+            </span>
+          </span>
+          <span>
+            <span class="p-float-label">
+              <p-multiSelect
+                inputId="tags-select"
+                [styleClass]="'w-full'"></p-multiSelect>
+              <label for="tags-select">Tags</label>
+            </span>
+          </span>
         </span>
       </p-card>
     </div>

@@ -16,6 +16,9 @@ export class GenericEntityViewPageComponent implements OnInit {
   entityKeys: string[] = [];
   entities: Record<string, any> = {};
 
+  filterGenres: string[] = [];
+  filterTags: string[] = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private masterDataManagementService: MasterDataManagementService){}
