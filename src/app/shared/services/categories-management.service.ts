@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { EntityType } from '../models/entity-type';
 import { MasterDataManagementService } from './master-data-management.service';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * This service is responsible for retrieving and holding all of the
@@ -19,6 +20,10 @@ export class CategoriesManagementService implements OnInit {
   videoGameTags: Set<string> = new Set<string>();
   bookGenres: Set<string> = new Set<string>();
   bookTags: Set<string> = new Set<string>();
+
+  private areCategoriesDataLoaded: boolean = false;
+  private readinessSource = new BehaviorSubject<boolean>(false);
+  public categoriesReadiness = this.readinessSource.asObservable();
 
 
   constructor(private masterDataManagementService: MasterDataManagementService) { }
@@ -51,6 +56,10 @@ export class CategoriesManagementService implements OnInit {
     }
   }
 
+  areCategoriesReady(): boolean {
+    return this.areCategoriesDataLoaded;
+  }
+
   getAllGenres(entityType: EntityType): string[] {
     return [...this.entityTypeToGenreSet(entityType)];
   }
@@ -60,11 +69,15 @@ export class CategoriesManagementService implements OnInit {
   }
 
   addTags(entityType: EntityType, ...tagsToAdd: string[]): void {
-    for(const tag in tagsToAdd) this.entityTypeToGenreSet(entityType).add(tag);
+    for(let i = 0; i < tagsToAdd.length; i++) {
+      this.entityTypeToTagSet(entityType).add(tagsToAdd[i]);
+    }
   }
 
   addGenres(entityType: EntityType, ...genresToAdd: string[]): void {
-    for(const genre in genresToAdd) this.entityTypeToTagSet(entityType).add(genre);
+    for(let i = 0; i < genresToAdd.length; i++) {
+      this.entityTypeToGenreSet(entityType).add(genresToAdd[i]);
+    }
   }
 
   /**
@@ -74,7 +87,7 @@ export class CategoriesManagementService implements OnInit {
    * @param v String equal to 'genres' or 'tags' to denote which Set to store
    * the values in.
    */
-  extractGenresOrTagsFromEntitySet(entityType: EntityType, v: 'genres' | 'tags'): Set<string> {
+  extractCategoriesFromEntitySet(entityType: EntityType, v: 'genres' | 'tags'): Set<string> {
     let entitySet = this.masterDataManagementService.getEntitySetReference(entityType);
     let returnedValues = new Set<string>();
     for(const entity in entitySet) {
@@ -91,11 +104,14 @@ export class CategoriesManagementService implements OnInit {
    * tags and genres for all entity types.
    */
   async loadInAllGenresAndTags(): Promise<void> {
+    this.readinessSource.next(false);
     let entityTypes = Object.values(EntityType);
     for(const eType of entityTypes) {
-      this.addGenres(eType, ...this.extractGenresOrTagsFromEntitySet(eType, 'genres'));
-      this.addTags(eType, ...this.extractGenresOrTagsFromEntitySet(eType, 'tags'));
+      this.addGenres(eType, ...this.extractCategoriesFromEntitySet(eType, 'genres'));
+      this.addTags(eType, ...this.extractCategoriesFromEntitySet(eType, 'tags'));
     }
+    this.areCategoriesDataLoaded = true;
+    this.readinessSource.next(true);
     return;
   }
 

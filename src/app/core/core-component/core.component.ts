@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { MasterDataManagementService } from '../../shared/services/master-data-management.service';
 import { EntityType } from '../../shared/models/entity-type';
+import { CategoriesManagementService } from '../../shared/services/categories-management.service';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -30,7 +31,8 @@ export class CoreComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private primengConfig: PrimeNGConfig,
     private router: Router,
-    private masterDataManagementService: MasterDataManagementService
+    private masterDataManagementService: MasterDataManagementService,
+    private categoriesManagementService: CategoriesManagementService
   ) {
     this.translate.setDefaultLang('en');
     console.log('APP_CONFIG', APP_CONFIG);
@@ -44,6 +46,8 @@ export class CoreComponent implements OnInit, OnDestroy {
       console.log('Run in browser');
     }
 
+    // Begin async work to parse data for genres and tags.
+    this.categoriesManagementService.loadInAllGenresAndTags();
   }
 
   ngOnInit(): void {

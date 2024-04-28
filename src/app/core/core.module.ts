@@ -54,7 +54,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
       useFactory: initializeData,
       deps: [MasterDataManagementService],
       multi: true
-    }
+    },
   ],
   bootstrap: [CoreComponent]
 })

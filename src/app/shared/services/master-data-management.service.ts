@@ -115,6 +115,7 @@ export class MasterDataManagementService {
     // this.tvShowMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
     // this.videoGameMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
     // this.bookMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
+    console.log(this.movieMasterSet);
     return true;
   }
 
