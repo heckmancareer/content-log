@@ -22,8 +22,8 @@ export class CategoriesManagementService implements OnInit {
   bookTags: Set<string> = new Set<string>();
 
   private areCategoriesDataLoaded: boolean = false;
-  private readinessSource = new BehaviorSubject<boolean>(false);
-  public categoriesReadiness = this.readinessSource.asObservable();
+  private readinessSource$ = new BehaviorSubject<boolean>(false);
+  public categoriesReadiness = this.readinessSource$.asObservable();
 
 
   constructor(private masterDataManagementService: MasterDataManagementService) { }
@@ -104,14 +104,14 @@ export class CategoriesManagementService implements OnInit {
    * tags and genres for all entity types.
    */
   async loadInAllGenresAndTags(): Promise<void> {
-    this.readinessSource.next(false);
+    this.readinessSource$.next(false);
     let entityTypes = Object.values(EntityType);
     for(const eType of entityTypes) {
       this.addGenres(eType, ...this.extractCategoriesFromEntitySet(eType, 'genres'));
       this.addTags(eType, ...this.extractCategoriesFromEntitySet(eType, 'tags'));
     }
     this.areCategoriesDataLoaded = true;
-    this.readinessSource.next(true);
+    this.readinessSource$.next(true);
     return;
   }
 

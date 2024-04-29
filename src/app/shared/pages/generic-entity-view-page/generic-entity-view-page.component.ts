@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MasterDataManagementService } from '../../services/master-data-management.service';
 import { EntityType } from '../../models/entity-type';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil, Subject, finalize, switchMap, of } from 'rxjs';
 import { CategoriesManagementService } from '../../services/categories-management.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { CategoriesManagementService } from '../../services/categories-managemen
   styleUrl: './generic-entity-view-page.component.scss'
 })
 export class GenericEntityViewPageComponent implements OnInit {
+  private destroy$ = new Subject<void>();
   routeSub!: Subscription;
-  categoriesSub!: Subscription;
   currentEntityType: EntityType = EntityType.Movie;
   loadingState: boolean = true;
   activatedRouteData: any = {};
@@ -34,21 +34,31 @@ export class GenericEntityViewPageComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loadingState = true;
-    this.routeSub = this.activatedRoute.data.subscribe((data) => {
-      this.activatedRouteData = data;
-      this.currentEntityType = data.entityType;
-      this.entities = this.masterDataManagementService.getEntitySetReference(this.currentEntityType);
-      this.entityKeys = Object.keys(this.entities);
 
-      // Check to see if the Categories Management service is done loading.
-      // If so, get all genres and tags.
-      // If not, subscribe to its readiness, and wait for an event to be emitted.
-      if(!this.categoriesManagementService.areCategoriesReady()) {
-        this.categoriesSub = this.categoriesManagementService.categoriesReadiness.subscribe(ready => {
+    this.routeSub = this.activatedRoute.data.pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.loadingState = false),
+      switchMap((data) => {
+        this.activatedRouteData = data;
+        this.currentEntityType = data.entityType;
+        this.entities = this.masterDataManagementService.getEntitySetReference(this.currentEntityType);
+        this.entityKeys = Object.keys(this.entities);
+
+        if(!this.categoriesManagementService.areCategoriesReady()) {
+          return this.categoriesManagementService.categoriesReadiness;
+        } else {
           this.retrieveCategories();
-        })
-      } else {
-        this.retrieveCategories();
+          return of(null);
+        }
+      })
+    ).subscribe({
+      next: (ready) => {
+        if(ready) this.retrieveCategories();
+        console.log(this.filterGenres);
+        console.log(this.filterTags);
+      },
+      error: (error) => {
+        console.error(`Error in subscription for categories.`);
       }
     })
   }
@@ -60,6 +70,7 @@ export class GenericEntityViewPageComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
-    if(this.categoriesSub) this.categoriesSub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -71,6 +71,7 @@
             <span class="p-float-label mb-4">
               <p-multiSelect
                 [styleClass]="'w-full'"
+                [options]="filterGenres"
                 inputId="genres-select"></p-multiSelect>
               <label for="genres-select">Genres</label>
             </span>
@@ -79,7 +80,10 @@
             <span class="p-float-label">
               <p-multiSelect
                 inputId="tags-select"
-                [styleClass]="'w-full'"></p-multiSelect>
+                [styleClass]="'w-full'"
+                [options]="filterTags">
+              
+              </p-multiSelect>
               <label for="tags-select">Tags</label>
             </span>
           </span>
