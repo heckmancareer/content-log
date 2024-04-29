@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, screen, dialog} from 'electron';
+import {app, ipcMain} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { ENTITY_MANAGER } from '../storage/entity-store';

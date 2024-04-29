@@ -1,7 +1,6 @@
 import {app, BrowserWindow, ipcMain, screen, dialog} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
-import { v4 as uuidv4 } from 'uuid';
 import { registerAllIpcSaveFunctions } from './src/handlers/save';
 import { register } from 'module';
 import { registerAllIpcGetFunctions } from './src/handlers/get-handlers';
@@ -85,10 +84,6 @@ try {
   // Catch Error
   // throw e;
 }
-
-ipcMain.handle('GET-ENTITY-UUID', async(event) => {
-  return uuidv4();
-})
 
 registerAllIpcSaveFunctions();
 registerAllIpcGetFunctions();

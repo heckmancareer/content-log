@@ -1,7 +1,9 @@
 <div class="page-container">
-  <div class="grid-container w-full px-4">
-    <div class="filter-bar">
+  <div class="grid-container w-full px-4 py-2">
+    <div class="page-title">
       <h1>Movies</h1>
+    </div>
+    <div class="filter-bar">
       <p-card header="Filters">
         <span class="filter-bar__container">
           <div class="mb-3 font-semibold">Title: </div>
@@ -82,7 +84,7 @@
                 inputId="tags-select"
                 [styleClass]="'w-full'"
                 [options]="filterTags">
-              
+
               </p-multiSelect>
               <label for="tags-select">Tags</label>
             </span>
@@ -91,7 +93,10 @@
       </p-card>
     </div>
     <div class="entity-grid">
+      <div class="entity-grid__sort-bar">
+        <h2>Sort By:</h2>
 
+      </div>
     </div>
   </div>
 </div>

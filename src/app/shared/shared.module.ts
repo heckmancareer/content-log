@@ -20,6 +20,8 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
@@ -56,6 +58,7 @@ import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page
     InputTextModule,
     CalendarModule,
     MultiSelectModule,
+    DropdownModule,
   ],
   exports: [
     TranslateModule,

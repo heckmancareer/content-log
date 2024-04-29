@@ -83,6 +83,7 @@ export class CategoriesManagementService implements OnInit {
   /**
    * Retrieves an Entity Set from Master Data Management service to
    * extract all of their relevant tags or genres to store.
+   * ASSUMES ENTITY DATA HAS BEEN LOADED IN
    * @param entityType Entity Type enumeration to denote which entities to parse.
    * @param v String equal to 'genres' or 'tags' to denote which Set to store
    * the values in.

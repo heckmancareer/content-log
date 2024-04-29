@@ -4,6 +4,7 @@ import { MasterDataManagementService } from '../../services/master-data-manageme
 import { EntityType } from '../../models/entity-type';
 import { Subscription, takeUntil, Subject, finalize, switchMap, of } from 'rxjs';
 import { CategoriesManagementService } from '../../services/categories-management.service';
+import { MOVIE_ENTITY_SORT } from './sort-values';
 
 @Component({
   selector: 'app-generic-entity-view-page',
@@ -22,6 +23,8 @@ export class GenericEntityViewPageComponent implements OnInit {
 
   filterGenres: string[] = [];
   filterTags: string[] = [];
+
+  sortOptions: any = MOVIE_ENTITY_SORT;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,8 +57,6 @@ export class GenericEntityViewPageComponent implements OnInit {
     ).subscribe({
       next: (ready) => {
         if(ready) this.retrieveCategories();
-        console.log(this.filterGenres);
-        console.log(this.filterTags);
       },
       error: (error) => {
         console.error(`Error in subscription for categories.`);

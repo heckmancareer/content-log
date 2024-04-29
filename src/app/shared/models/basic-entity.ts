@@ -25,8 +25,16 @@ export abstract class BasicEntity {
   genres: Set<string> = new Set<string>();
   tags: Set<string> = new Set<string>();
   userDateStarted: Date = new Date();
-  userDateCompleted: Date = new Date();
+  userDateCompleted: Date | undefined;
+  userDateAdded: Date | undefined;
+  completionStatus: EntityCompletionStatus = EntityCompletionStatus.NotStarted;
   userReview: string = '';
   userFavorited: boolean = false;
   imageID: string = '';
+}
+
+export enum EntityCompletionStatus {
+  NotStarted = 'not-started',
+  InProgress = 'in-progress',
+  Completed = 'completed'
 }

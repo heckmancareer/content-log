@@ -13,13 +13,16 @@
   height: 100%;
   display: grid;
   grid-template-columns: 260px 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 80px 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
+    "title title"
     "filter-block entity-grid";
 }
 
 .filter-block { grid-area: filter-block; }
 
 .entity-grid { grid-area: entity-grid; }
+
+.page-title { grid-area: title }
