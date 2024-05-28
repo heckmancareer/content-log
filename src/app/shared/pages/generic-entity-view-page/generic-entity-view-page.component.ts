@@ -25,6 +25,19 @@ export class GenericEntityViewPageComponent implements OnInit {
   filterTags: string[] = [];
 
   sortOptions: any = MOVIE_ENTITY_SORT;
+  selectedSortOption: string | undefined;
+  sortOrder: any[] = [
+    {
+      label: 'Ascending',
+      value: 'ascending'
+    },
+    {
+      label: 'Descending',
+      value: 'descending'
+    }
+  ]
+  sortOrderDisabled: boolean = true;
+  selectedSortOrder: string | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,

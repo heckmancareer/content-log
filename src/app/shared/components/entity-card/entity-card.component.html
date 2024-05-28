@@ -1,0 +1,15 @@
+<p-card [style]="{height: '100%'}">
+  <ng-template pTemplate="header">
+    @if(loadingImage) {
+      <div class="w-full flex justify-content-center pt-8">
+        <p-progressSpinner></p-progressSpinner>
+      </div>
+    } @else {
+      <p-image [src]="fullImagePath" width="180"></p-image>
+    }
+  </ng-template>
+  <p class="card-body">
+    This movie is {{entity.title}}!
+  </p>
+  <ng-template pTemplate="footer"></ng-template>
+</p-card>

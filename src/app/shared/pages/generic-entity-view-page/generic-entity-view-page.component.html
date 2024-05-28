@@ -92,10 +92,34 @@
         </span>
       </p-card>
     </div>
-    <div class="entity-grid">
-      <div class="entity-grid__sort-bar">
+    <div class="entity-grid flex flex-column pl-4">
+      <div class="entity-grid__sort-bar flex
+        align-items-center gap-3 border-500 border-solid
+        border-x-none border-top-none">
         <h2>Sort By:</h2>
-
+        <span class="p-float-label">
+          <p-dropdown
+            [(ngModel)]="selectedSortOption"
+            [style]="{width: '200px'}"
+            [inputId]="'sort-by'"
+            [options]="sortOptions"
+            [optionLabel]="'label'"
+            [optionValue]="'field'"></p-dropdown>
+          <label for="sort-by">Attribute to Sort By</label>
+        </span>
+        <p-selectButton
+          [(ngModel)]="selectedSortOrder"
+          [style]="{width: '300px'}"
+          [options]="sortOrder"
+          [disabled]="sortOrderDisabled"
+          optionLabel="label"
+          optionValue="value"></p-selectButton>
+      </div>
+      <div class="entity-grid__grid-body">
+        @for (entity of entityKeys; track $index) {
+          <app-entity-card
+            [entity]="entities[entity]"></app-entity-card>
+        }
       </div>
     </div>
   </div>

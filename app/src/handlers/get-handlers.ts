@@ -13,4 +13,8 @@ export function registerAllIpcGetFunctions() {
   ipcMain.handle('GET-ENTITY-UUID', async(event) => {
     return uuidv4();
   })
+
+  ipcMain.handle('GET-IMAGE-PATH', async (event) => {
+    return path.join(app.getPath('userData'), 'images');
+  })
 }

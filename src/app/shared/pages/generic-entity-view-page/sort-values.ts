@@ -41,7 +41,6 @@ export const MOVIE_ENTITY_SORT: SortLabel[] = [
   },
 ]
 
-
 type SortLabel = {
   field: string,
   label: string

@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as Electron from 'electron';
-import { MovieEntity } from '../../modules/movies/models/movie-entity';
 import { StatusLoggerService } from './status-logger.service';
 import { EntityType } from '../models/entity-type';
 
@@ -13,6 +11,7 @@ import { EntityType } from '../models/entity-type';
 })
 export class AngularElectronInterfaceService {
   private _electron: any;
+  electronImagePath: string | undefined;
 
   private get electron(): any {
     if(!this._electron) {
@@ -38,6 +37,20 @@ export class AngularElectronInterfaceService {
         reject();
       })
     })
+  }
+
+  getElectronImagePath(): string {
+    return this.electronImagePath as string;
+  }
+
+  async loadInElectronImagePath(): Promise<string> {
+    if(!this.electronImagePath) {
+      let electronInstance = this.electron;
+      await electronInstance.ipcRenderer.invoke('GET-IMAGE-PATH').then((result: string) => {
+        this.electronImagePath = result;
+      })
+    }
+    return this.electronImagePath as string;
   }
 
   /**

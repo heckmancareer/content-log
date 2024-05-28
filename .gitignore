@@ -9,6 +9,7 @@
 main.js
 save.js
 entity-store.js
+get-handlers.js
 src/**/*.js
 *.js.map
 
@@ -51,3 +52,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+app/src/handlers/get-handlers.js

@@ -1,0 +1,10 @@
+$card-width: 180px;
+$card-height: 400px;
+
+$global-cover-width: 180px;
+$global-cover-height: 320px;
+
+:host {
+  flex: 0 0 $card-width;
+  height: $card-height;
+}

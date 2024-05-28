@@ -22,12 +22,15 @@ import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ImageModule } from 'primeng/image';
 
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { TagArrayManagerComponent } from './components/tag-array-manager/tag-array-manager.component';
 import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page/generic-entity-view-page.component';
+import { EntityCardComponent } from './components/entity-card/entity-card.component';
 
 
 @NgModule({
@@ -37,6 +40,7 @@ import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page
     ImageUploaderComponent,
     TagArrayManagerComponent,
     GenericEntityViewPageComponent,
+    EntityCardComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +63,9 @@ import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page
     CalendarModule,
     MultiSelectModule,
     DropdownModule,
+    SelectButtonModule,
+    ProgressSpinnerModule,
+    ImageModule
   ],
   exports: [
     TranslateModule,
@@ -66,7 +73,8 @@ import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page
     FormsModule,
     ImageUploaderComponent,
     TagArrayManagerComponent,
-    GenericEntityViewPageComponent
+    GenericEntityViewPageComponent,
+    EntityCardComponent,
   ],
   providers: [
     MessageService,

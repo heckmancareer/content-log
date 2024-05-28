@@ -17,7 +17,7 @@ export class MasterDataManagementService {
   private tvShowMasterSet: Record<string, MovieEntity> = {};
   private bookMasterSet: Record<string, MovieEntity> = {};
 
-  constructor(private angularElectronInterface: AngularElectronInterfaceService) { }
+  constructor(private angularElectronInterface: AngularElectronInterfaceService) {}
 
   /**
    * Given an entity type, returns the corresponding masterSet variable.
@@ -121,6 +121,11 @@ export class MasterDataManagementService {
 
 }
 
-export function initializeData(dataService: MasterDataManagementService) {
-  return (): Promise<any> => dataService.loadInAllEntities();
+export function initializeData(
+  dataService: MasterDataManagementService,
+  angularElectron: AngularElectronInterfaceService) {
+  return async (): Promise<any> => {
+    await angularElectron.loadInElectronImagePath();
+    return dataService.loadInAllEntities()
+  };
 }

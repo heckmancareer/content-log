@@ -21,6 +21,7 @@ import { CoreComponent } from './core-component/core.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MasterDataManagementService, initializeData } from '../shared/services/master-data-management.service';
+import { AngularElectronInterfaceService } from '../shared/services/angular-electron-interface.service';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -52,7 +53,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     {
       provide: APP_INITIALIZER,
       useFactory: initializeData,
-      deps: [MasterDataManagementService],
+      deps: [MasterDataManagementService, AngularElectronInterfaceService],
       multi: true
     },
   ],

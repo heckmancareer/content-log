@@ -23,6 +23,13 @@
 
 .filter-block { grid-area: filter-block; }
 
-.entity-grid { grid-area: entity-grid; }
+.entity-grid {
+  grid-area: entity-grid;
+  &__grid-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
 
 .page-title { grid-area: title }
