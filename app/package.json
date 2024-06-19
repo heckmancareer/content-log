@@ -7,5 +7,9 @@
   },
   "version": "14.0.0",
   "main": "main.js",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "electron-store": "8.2.0",
+    "uuid": "9.0.1"
+  }
 }
