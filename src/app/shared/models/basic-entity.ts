@@ -32,6 +32,7 @@ export abstract class BasicEntity {
   userReview: string = '';
   userFavorited: boolean = false;
   imageID: string = '';
+  hasImage: boolean = false;
 }
 
 export enum EntityCompletionStatus {

@@ -1,20 +1,37 @@
-<p-card [style]="{height: '100%'}">
+<!-- <p-card [style]="{height: '100%'}">
   <ng-template pTemplate="header">
     @if(loadingImage) {
       <div class="w-full flex justify-content-center pt-8">
         <p-progressSpinner></p-progressSpinner>
       </div>
     } @else {
-      <p-image [src]="fullImagePath" width="180"
-        [imageStyle]="{'border-top-right-radius': '6px',
-          'border-top-left-radius': '6px'
-        }"></p-image>
+      @if(entity.hasImage) {
+        <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+      } @else {
+        <div class="card-image-cover image-placeholder border-1 border-surface">
+          <i class="pi pi-ban" style="font-size: 3rem; color: gray;"></i>
+        </div>
+      }
     }
   </ng-template>
   <ng-template pTemplate="content">
-    <span class="entity-title">
+    <span class="entity-title text-xl font-bold">
       {{entity.title}}
     </span>
   </ng-template>
   <ng-template pTemplate="footer"></ng-template>
-</p-card>
+</p-card> -->
+<div class="card shadow-4">
+  @if(entity.hasImage) {
+    <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+  } @else {
+    <div class="card__image-cover image-placeholder border-1 border-surface">
+      <i class="pi pi-ban" style="font-size: 3rem; color: gray;"></i>
+    </div>
+  }
+  <div class="card__title-text p-2">
+    <span class="entity-title text-xl font-bold">
+      {{entity.title}}
+    </span>
+  </div>
+</div>

@@ -4,6 +4,13 @@ $card-height: 450px;
 $global-cover-width: 180px;
 $global-cover-height: 320px;
 
+:host ::ng-deep .card-image-cover {
+  width: $global-cover-width;
+  height: $global-cover-height;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
 :host {
   flex: 0 0 $card-width;
   height: $card-height;
@@ -15,4 +22,29 @@ $global-cover-height: 320px;
 
 :host ::ng-deep .p-card-content {
   padding: 0;
+}
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.card {
+  width: $card-width;
+  height: $card-height;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 6px;
+  &__image-cover {
+    width: $global-cover-width;
+    height: $global-cover-height;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+  &__title-text {
+    flex-grow: 1;
+  }
 }

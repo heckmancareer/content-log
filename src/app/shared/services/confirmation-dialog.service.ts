@@ -37,11 +37,10 @@ export class ConfirmationDialogService {
     warningColors: boolean = false,
     acceptButtonLabel: string = 'Confirm',
     rejectButtonLabel: string = 'Cancel',
-    $event: Event,
+    $event?: Event,
   ): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.primeNGConfirmationService.confirm({
-        target: $event.target as EventTarget,
+      const confirmationConfig: any = {
         message: dialogMessage,
         header: headerText,
         icon: 'pi pi-exclamation-triangle',
@@ -57,7 +56,13 @@ export class ConfirmationDialogService {
         reject: () => {
           resolve(false);
         }
-      })
+      }
+
+      if($event) {
+        confirmationConfig.target = $event.target as EventTarget;
+      }
+
+      this.primeNGConfirmationService.confirm(confirmationConfig);
     })
   }
 

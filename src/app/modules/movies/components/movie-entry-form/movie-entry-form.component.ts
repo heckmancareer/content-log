@@ -7,6 +7,8 @@ import { AngularElectronInterfaceService } from '../../../../shared/services/ang
 import { EDITOR_OPTIONS } from './quill-editor-config';
 import { EntityEditingService } from '../../../../shared/services/entity-editing.service';
 import { EntityType } from '../../../../shared/models/entity-type';
+import { NavigationService } from '../../../../shared/services/navigation.service';
+import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -53,7 +55,10 @@ export class MovieEntryFormComponent implements OnInit {
     private statusLoggerService: StatusLoggerService,
     private categoriesManagmenetService: CategoriesManagementService,
     private angularElectronInterfaceService: AngularElectronInterfaceService,
-    private entityEditingService: EntityEditingService){}
+    private entityEditingService: EntityEditingService,
+    private navigationService: NavigationService,
+    private confirmationDialogService: ConfirmationDialogService,
+  ){}
 
   ngOnInit(): void {
     this.movie.title = 'New Movie';
@@ -90,13 +95,38 @@ export class MovieEntryFormComponent implements OnInit {
     this.formSubmitted = true;
     this.categoriesManagmenetService.addGenres(EntityType.Movie, ...this.genresNewItems);
     this.categoriesManagmenetService.addTags(EntityType.Movie, ...this.tagsNewItems);
-    console.log(this.movie)
+    if(this.newSubmittedImageBuffer) this.movie.hasImage = true;
 
     this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
       if(result === true && this.newSubmittedImageBuffer) {
         this.entityEditingService.submitImageBufferForSaving
           (this.newSubmittedImageBuffer, EntityType.Movie, this.movie.imageID);
       }
+      if(result === true) {
+        this.statusLoggerService.logMessageToConsole(
+          `Saved movie successfully.`,
+          true,
+          undefined,
+          "success",
+          this.movie
+        )
+        this.navigationService.navigateToPreviousPage();
+      }
     });
+  }
+
+  onCancel(): void {
+    this.confirmationDialogService.promptConfirmation(
+      'Cancel Editing Movie',
+      'Are you sure you want to navigate away from the form? Changes will not be saved.',
+      true,
+      'Leave Page',
+      'Stay on Page',
+    ).then(result => {
+      if(result === true) {
+        this.entityEditingService.clearCurrentEntityUUID();
+        this.navigationService.navigateToPreviousPage();
+      }
+    })
   }
 }
