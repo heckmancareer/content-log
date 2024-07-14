@@ -16,7 +16,6 @@ export class EntityCardComponent implements OnInit {
   ngOnInit(): void {
     let baseImagePath = this.angularElectron.getElectronImagePath();
     this.fullImagePath = `${baseImagePath}\\${this.entity.entityType}\\${this.entity.imageID}.png`
-    console.log(this.fullImagePath)
     this.loadingImage = false;
   }
 }

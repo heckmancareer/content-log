@@ -14,7 +14,7 @@ $menu-bar-height: 57.33px;
     height: $menu-bar-height;
   }
   &__main-content {
-    height: calc(($sidebar-top-height + $menu-bar-height) - 100vh);
+    min-height: calc(($sidebar-top-height + $menu-bar-height) - 100vh);
   }
 }
 

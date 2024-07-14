@@ -5,11 +5,16 @@
         <p-progressSpinner></p-progressSpinner>
       </div>
     } @else {
-      <p-image [src]="fullImagePath" width="180"></p-image>
+      <p-image [src]="fullImagePath" width="180"
+        [imageStyle]="{'border-top-right-radius': '6px',
+          'border-top-left-radius': '6px'
+        }"></p-image>
     }
   </ng-template>
-  <p class="card-body">
-    This movie is {{entity.title}}!
-  </p>
+  <ng-template pTemplate="content">
+    <span class="entity-title">
+      {{entity.title}}
+    </span>
+  </ng-template>
   <ng-template pTemplate="footer"></ng-template>
 </p-card>

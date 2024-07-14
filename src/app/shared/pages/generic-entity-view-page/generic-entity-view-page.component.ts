@@ -77,14 +77,21 @@ export class GenericEntityViewPageComponent implements OnInit {
     })
   }
 
-  private retrieveCategories(): void {
-    this.filterGenres = this.categoriesManagementService.getAllGenres(this.currentEntityType);
-    this.filterTags = this.categoriesManagementService.getAllTags(this.currentEntityType);
-  }
-
   ngOnDestroy(): void {
     this.routeSub.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  private retrieveCategories(): void {
+    this.filterGenres = this.categoriesManagementService.getAllGenres(this.currentEntityType);
+    this.filterTags = this.categoriesManagementService.getAllTags(this.currentEntityType);
+  }
+
+  resetSort(): void {
+    this.selectedSortOption = undefined;
+    this.selectedSortOrder = undefined;
+    this.sortOrderDisabled = true;
+  }
+
 }

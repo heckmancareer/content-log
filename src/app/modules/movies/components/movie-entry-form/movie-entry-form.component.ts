@@ -62,7 +62,6 @@ export class MovieEntryFormComponent implements OnInit {
     this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres(EntityType.Movie)];
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
-    this.movie.genres = new Set(['test', 'testt', 'testtt']);
   }
 
   /**
@@ -91,6 +90,7 @@ export class MovieEntryFormComponent implements OnInit {
     this.formSubmitted = true;
     this.categoriesManagmenetService.addGenres(EntityType.Movie, ...this.genresNewItems);
     this.categoriesManagmenetService.addTags(EntityType.Movie, ...this.tagsNewItems);
+    console.log(this.movie)
 
     this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
       if(result === true && this.newSubmittedImageBuffer) {

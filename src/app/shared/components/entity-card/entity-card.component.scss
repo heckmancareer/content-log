@@ -8,3 +8,11 @@ $global-cover-height: 320px;
   flex: 0 0 $card-width;
   height: $card-height;
 }
+
+:host ::ng-deep .p-card-body {
+  padding: 0;
+}
+
+:host ::ng-deep .p-card-content {
+  padding: 0;
+}

@@ -109,13 +109,15 @@
         </span>
         <p-selectButton
           [(ngModel)]="selectedSortOrder"
-          [style]="{width: '300px'}"
           [options]="sortOrder"
           [disabled]="sortOrderDisabled"
           optionLabel="label"
           optionValue="value"></p-selectButton>
+        <p-button
+          [label]="'Reset Sort'"
+          (onClick)="resetSort"></p-button>
       </div>
-      <div class="entity-grid__grid-body">
+      <div class="entity-grid__grid-body pt-3">
         @for (entity of entityKeys; track $index) {
           <app-entity-card
             [entity]="entities[entity]"></app-entity-card>
