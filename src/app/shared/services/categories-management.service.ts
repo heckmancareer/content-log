@@ -92,9 +92,11 @@ export class CategoriesManagementService implements OnInit {
     let entitySet = this.masterDataManagementService.getEntitySetReference(entityType);
     let returnedValues = new Set<string>();
     for(const entity in entitySet) {
-      entitySet[entity][v].forEach((value: string) => {
-        returnedValues.add(value);
-      })
+      if(entitySet[entity][v] && Object.keys(entitySet[entity][v]).length !== 0) {
+        entitySet[entity][v].forEach((value: string) => {
+          returnedValues.add(value);
+        })
+      }
     }
     return returnedValues;
   }

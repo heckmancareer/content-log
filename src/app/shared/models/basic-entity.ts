@@ -22,11 +22,12 @@ export abstract class BasicEntity {
   title: string = '';
   releaseDate: Date = new Date();
   releaseYear: number = this.releaseDate.getUTCFullYear();
-  genres: Set<string> = new Set<string>();
-  tags: Set<string> = new Set<string>();
+  genres: Set<string> = new Set<string>([]);
+  tags: Set<string> = new Set<string>([]);
   userDateStarted: Date = new Date();
   userDateCompleted: Date | undefined;
   userDateAdded: Date | undefined;
+  userDateLasteEdited: Date | undefined;
   completionStatus: EntityCompletionStatus = EntityCompletionStatus.NotStarted;
   userReview: string = '';
   userFavorited: boolean = false;

@@ -50,6 +50,7 @@ export class MasterDataManagementService {
       if(masterSet[uuid]) {
         return false;
       } else {
+        masterSet[uuid] = {};
         Object.assign(masterSet[uuid], entity);
         return true;
       }
