@@ -116,17 +116,6 @@ export class MovieEntryFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.confirmationDialogService.promptConfirmation(
-      'Cancel Editing Movie',
-      'Are you sure you want to navigate away from the form? Changes will not be saved.',
-      true,
-      'Leave Page',
-      'Stay on Page',
-    ).then(result => {
-      if(result === true) {
-        this.entityEditingService.clearCurrentEntityUUID();
-        this.navigationService.navigateToPreviousPage();
-      }
-    })
+    this.navigationService.navigateToPreviousPage();
   }
 }

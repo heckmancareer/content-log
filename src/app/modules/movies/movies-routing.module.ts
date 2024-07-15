@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewMoviePageComponent } from './pages/new-movie-page/new-movie-page.component';
 import { GenericEntityViewPageComponent } from '../../shared/pages/generic-entity-view-page/generic-entity-view-page.component';
 import { EntityType } from '../../shared/models/entity-type';
+import { unsavedChangesConfirmationGuard } from '../../shared/guards/unsaved-changes-confirmation.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'new-movie',
-    component: NewMoviePageComponent
+    component: NewMoviePageComponent,
+    canDeactivate: [unsavedChangesConfirmationGuard]
   }
 ];
 
