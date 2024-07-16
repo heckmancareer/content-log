@@ -33,5 +33,10 @@
     <span class="entity-title text-xl font-bold">
       {{entity.title}}
     </span>
+    @if(displaySortOption && displaySortOption !== 'title') {
+      <span class="entity-sort-option text-l">
+        {{entity[sortOption]}}
+      </span>
+    }
   </div>
 </div>

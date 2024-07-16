@@ -122,7 +122,9 @@
       <div class="entity-grid__grid-body pt-3">
         @for (entity of entityKeys; track $index) {
           <app-entity-card
-            [entity]="entities[entity]"></app-entity-card>
+            [entity]="entities[entity]"
+            [displaySortOption]="!sortOrderDisabled"
+            [sortOption]="selectedSortOption"></app-entity-card>
         }
       </div>
     </div>

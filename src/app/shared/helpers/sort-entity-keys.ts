@@ -18,6 +18,15 @@ export function sortEntityKeys(
     let valueA = entities[a][sortField];
     let valueB = entities[b][sortField];
     let comparison = 0;
+    if(valueA === undefined && valueB === undefined) {
+      return 0;
+    }
+    if(valueA === undefined) {
+      return sortOrder === 'ascending' ? -1: 1;
+    }
+    if(valueB === undefined) {
+      return sortOrder === 'descending' ? 1 : -1;
+    }
 
     if (valueA instanceof Date || (typeof valueA === 'string' && !isNaN(Date.parse(valueA)))) {
       comparison = new Date(valueA).getTime() - new Date(valueB).getTime();
