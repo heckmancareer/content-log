@@ -5,6 +5,7 @@ import { EntityType } from '../../models/entity-type';
 import { Subscription, takeUntil, Subject, finalize, switchMap, of } from 'rxjs';
 import { CategoriesManagementService } from '../../services/categories-management.service';
 import { MOVIE_ENTITY_SORT } from './sort-values';
+import { sortEntityKeys } from '../../helpers/sort-entity-keys';
 
 @Component({
   selector: 'app-generic-entity-view-page',
@@ -37,7 +38,7 @@ export class GenericEntityViewPageComponent implements OnInit {
     }
   ]
   sortOrderDisabled: boolean = true;
-  selectedSortOrder: string | undefined;
+  selectedSortOrder: 'ascending' | 'descending' = 'ascending';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -88,10 +89,23 @@ export class GenericEntityViewPageComponent implements OnInit {
     this.filterTags = this.categoriesManagementService.getAllTags(this.currentEntityType);
   }
 
+  onSortOptionSelect($event: unknown): void {
+    this.sortOrderDisabled = false;
+    this.invokeSorting();
+  }
+
+  onSortOrderSelect($event: unknown): void {
+    this.invokeSorting();
+  }
+
   resetSort(): void {
     this.selectedSortOption = undefined;
-    this.selectedSortOrder = undefined;
+    this.selectedSortOrder = 'ascending';
     this.sortOrderDisabled = true;
+  }
+
+  invokeSorting(): void {
+    this.entityKeys = sortEntityKeys(this.entities, this.entityKeys, this.selectedSortOption as string, this.selectedSortOrder)
   }
 
 }

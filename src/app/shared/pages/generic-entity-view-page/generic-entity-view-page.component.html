@@ -104,7 +104,8 @@
             [inputId]="'sort-by'"
             [options]="sortOptions"
             [optionLabel]="'label'"
-            [optionValue]="'field'"></p-dropdown>
+            [optionValue]="'field'"
+            (onChange)="onSortOptionSelect($event)"></p-dropdown>
           <label for="sort-by">Attribute to Sort By</label>
         </span>
         <p-selectButton
@@ -112,10 +113,11 @@
           [options]="sortOrder"
           [disabled]="sortOrderDisabled"
           optionLabel="label"
-          optionValue="value"></p-selectButton>
+          optionValue="value"
+          (onChange)="onSortOrderSelect($event)"></p-selectButton>
         <p-button
           [label]="'Reset Sort'"
-          (onClick)="resetSort"></p-button>
+          (onClick)="resetSort()"></p-button>
       </div>
       <div class="entity-grid__grid-body pt-3">
         @for (entity of entityKeys; track $index) {

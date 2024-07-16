@@ -11,6 +11,7 @@
         [pTooltip]="tooltipSentence"
         [tooltipPosition]="'bottom'"
         [autoOptionFocus]="false"
+        [completeOnFocus]="true"
         (completeMethod)="search($event)"
         (onSelect)="select($event)"
         (onKeyUp)="checkKeyUp($event)"></p-autoComplete>
