@@ -1,26 +1,3 @@
-<!-- <p-card [style]="{height: '100%'}">
-  <ng-template pTemplate="header">
-    @if(loadingImage) {
-      <div class="w-full flex justify-content-center pt-8">
-        <p-progressSpinner></p-progressSpinner>
-      </div>
-    } @else {
-      @if(entity.hasImage) {
-        <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
-      } @else {
-        <div class="card-image-cover image-placeholder border-1 border-surface">
-          <i class="pi pi-ban" style="font-size: 3rem; color: gray;"></i>
-        </div>
-      }
-    }
-  </ng-template>
-  <ng-template pTemplate="content">
-    <span class="entity-title text-xl font-bold">
-      {{entity.title}}
-    </span>
-  </ng-template>
-  <ng-template pTemplate="footer"></ng-template>
-</p-card> -->
 <div class="card shadow-4">
   @if(entity.hasImage) {
     <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
@@ -35,8 +12,13 @@
     </span>
     @if(displaySortOption && displaySortOption !== 'title') {
       <span class="entity-sort-option text-color-secondary">
-        {{entity[sortOption] | sortOptionFormatter}}
+        {{entity[sortOption] | sortOptionFormatter: sortOption}}
       </span>
     }
   </div>
+  <p-knob
+    [(ngModel)]="entity['_userRating']"
+    [size]="60"
+    [valueColor]="userRatingSelectedColor"
+    class="rating-knob"></p-knob>
 </div>

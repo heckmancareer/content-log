@@ -17,24 +17,27 @@ export class SortOptionFormatterPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {
     if(value === undefined || value === null || value === '') return 'N/A'
 
-    // Format dates
-    if(value instanceof Date || (typeof value === 'string' && !isNaN(Date.parse(value)))) {
-      let date = new Date(value);
-      return this.formateDate(date);
+
+    switch(args[0]) {
+      case 'releaseDate' || 'userDateStarted' || 'userDateCompleted' || 'userDateAdded' || 'userDateLasteEdited':
+        let date = new Date(value as  string);
+        return this.formatDate(date);
+        break;
+      case 'completionStatus':
+        return this.formatEnumString(value as string);
+        break;
+      case '_runtimeInMinutes':
+        return `${value} minutes`
+        break;
+      case '_userRating' || 'releaseYear':
+        return `${value}`
+        break;
     }
-    // Format Numbers
-    if(typeof value === 'number') {
-      return `${value}`;
-    }
-    // Format EntityCompletionStatus
-    if (Object.values(EntityCompletionStatus).includes(value as EntityCompletionStatus)) {
-      return this.formatEnumString(value as string);
-    }
-    
-    return null;
+
+    return value;
   }
 
-  private formateDate(date: Date): string {
+  private formatDate(date: Date): string {
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
@@ -44,12 +47,12 @@ export class SortOptionFormatterPipe implements PipeTransform {
     const month = months[date.getMonth()];
     const year = date.getFullYear();
 
-    const daySuffix = this.formateDateSuffix(day);
+    const daySuffix = this.formatDateSuffix(day);
 
     return `${month} ${day}${daySuffix}, ${year}`;
   }
 
-  private formateDateSuffix(day: number): string {
+  private formatDateSuffix(day: number): string {
     if (day > 3 && day < 21) return 'th';
     switch (day % 10) {
       case 1: return 'st';

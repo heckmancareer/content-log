@@ -16,12 +16,8 @@ $global-cover-height: 320px;
   height: $card-height;
 }
 
-:host ::ng-deep .p-card-body {
-  padding: 0;
-}
-
-:host ::ng-deep .p-card-content {
-  padding: 0;
+:host ::ng-deep .p-knob-text {
+  fill: white !important;
 }
 
 .image-placeholder {
@@ -36,6 +32,7 @@ $global-cover-height: 320px;
 }
 
 .card {
+  position: relative;
   width: $card-width;
   height: $card-height;
   display: flex;
@@ -53,4 +50,12 @@ $global-cover-height: 320px;
     display: flex;
     flex-direction: column;
   }
+}
+
+.rating-knob {
+  position: absolute;
+  top: 250px;
+  left: 5px;
+  background-color: black;
+  border-radius: 50%;
 }

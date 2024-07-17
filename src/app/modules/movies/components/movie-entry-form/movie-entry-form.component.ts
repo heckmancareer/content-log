@@ -9,6 +9,7 @@ import { EntityEditingService } from '../../../../shared/services/entity-editing
 import { EntityType } from '../../../../shared/models/entity-type';
 import { NavigationService } from '../../../../shared/services/navigation.service';
 import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
+import { RATING_KNOB_COLORS } from '../../../../shared/constants/rating-knob-colors';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -21,19 +22,7 @@ export class MovieEntryFormComponent implements OnInit {
   movieUUID: string = '';
   //
 
-  userRatingColorRanges: any = {
-    '0': '#FF0000',
-    '10': '#FF0000',
-    '20': '#FF4500',
-    '30': '#FF8C00',
-    '40': '#FFD700',
-    '50': '#FFFF00',
-    '60': '#BDB76B',
-    '70': '#ADD8E6',
-    '80': '#87CEEB',
-    '90': '#90EE90',
-    '100': '#008000',
-  }
+  userRatingColorRanges: any = RATING_KNOB_COLORS
   userRatingKnobColor: string = this.userRatingColorRanges['0'];
   editorOptions: any = EDITOR_OPTIONS;
 

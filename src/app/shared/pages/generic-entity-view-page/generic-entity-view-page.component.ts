@@ -102,6 +102,7 @@ export class GenericEntityViewPageComponent implements OnInit {
     this.selectedSortOption = undefined;
     this.selectedSortOrder = 'ascending';
     this.sortOrderDisabled = true;
+    this.entityKeys = Object.keys(this.entities);
   }
 
   invokeSorting(): void {

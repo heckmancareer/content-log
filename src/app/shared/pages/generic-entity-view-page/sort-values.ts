@@ -1,6 +1,6 @@
 const BASIC_ENTITY_SORT: SortLabel[] = [
   {
-    field: 'userRating',
+    field: '_userRating',
     label: 'User Rating'
   },
   {
@@ -28,7 +28,7 @@ const BASIC_ENTITY_SORT: SortLabel[] = [
 export const MOVIE_ENTITY_SORT: SortLabel[] = [
   ...BASIC_ENTITY_SORT,
   {
-    field: 'runtime',
+    field: '_runtimeInMinutes',
     label: 'Runtime'
   },
   {

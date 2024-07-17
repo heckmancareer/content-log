@@ -24,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ImageModule } from 'primeng/image';
+import { KnobModule } from 'primeng/knob';
 
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
@@ -68,6 +69,7 @@ import { SortOptionFormatterPipe } from './pipes/sort-option-formatter.pipe';
     ProgressSpinnerModule,
     ImageModule,
     SortOptionFormatterPipe,
+    KnobModule,
   ],
   exports: [
     TranslateModule,
