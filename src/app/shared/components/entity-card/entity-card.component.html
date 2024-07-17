@@ -34,8 +34,8 @@
       {{entity.title}}
     </span>
     @if(displaySortOption && displaySortOption !== 'title') {
-      <span class="entity-sort-option text-l">
-        {{entity[sortOption]}}
+      <span class="entity-sort-option text-color-secondary">
+        {{entity[sortOption] | sortOptionFormatter}}
       </span>
     }
   </div>

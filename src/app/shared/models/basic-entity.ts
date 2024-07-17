@@ -27,7 +27,7 @@ export abstract class BasicEntity {
   userDateStarted: Date = new Date();
   userDateCompleted: Date | undefined;
   userDateAdded: Date | undefined;
-  userDateLasteEdited: Date | undefined;
+  userDateLastEdited: Date | undefined;
   completionStatus: EntityCompletionStatus = EntityCompletionStatus.NotStarted;
   userReview: string = '';
   userFavorited: boolean = false;

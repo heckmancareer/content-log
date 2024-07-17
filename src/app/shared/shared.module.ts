@@ -31,6 +31,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
 import { TagArrayManagerComponent } from './components/tag-array-manager/tag-array-manager.component';
 import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page/generic-entity-view-page.component';
 import { EntityCardComponent } from './components/entity-card/entity-card.component';
+import { SortOptionFormatterPipe } from './pipes/sort-option-formatter.pipe';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { EntityCardComponent } from './components/entity-card/entity-card.compon
     DropdownModule,
     SelectButtonModule,
     ProgressSpinnerModule,
-    ImageModule
+    ImageModule,
+    SortOptionFormatterPipe,
   ],
   exports: [
     TranslateModule,

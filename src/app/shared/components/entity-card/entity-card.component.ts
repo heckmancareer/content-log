@@ -4,7 +4,7 @@ import { AngularElectronInterfaceService } from '../../services/angular-electron
 @Component({
   selector: 'app-entity-card',
   templateUrl: './entity-card.component.html',
-  styleUrl: './entity-card.component.scss'
+  styleUrl: './entity-card.component.scss',
 })
 export class EntityCardComponent implements OnInit, OnChanges {
   @Input('entity') entity!: any;

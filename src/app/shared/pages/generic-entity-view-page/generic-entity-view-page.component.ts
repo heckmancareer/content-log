@@ -105,14 +105,7 @@ export class GenericEntityViewPageComponent implements OnInit {
   }
 
   invokeSorting(): void {
-    console.log(`Sort Option: ${this.selectedSortOption}`);
-    console.log(`Sort Order: ${this.selectedSortOrder}`);
-    console.log(`Entity Keys before sort:`)
-    console.log(this.entityKeys);
-    console.log(this.entities)
-    this.entityKeys = sortEntityKeys(this.entities, this.entityKeys, this.selectedSortOption as string, this.selectedSortOrder)
-    console.log(`Entity Keys after sort:`);
-    console.log(this.entityKeys);
+    this.entityKeys = sortEntityKeys(this.entities, this.entityKeys, this.selectedSortOption as string, this.selectedSortOrder);
   }
 
 }
