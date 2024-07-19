@@ -11,8 +11,11 @@ export class EntityCardComponent implements OnInit, OnChanges {
   @Input('entity') entity!: any;
   @Input('displaySortOption') displaySortOption!: any;
   @Input('sortOption') sortOption!: any;
+  @Input('dialogEnabled') dialogEnabled!: boolean;
   loadingImage: boolean = true;
   fullImagePath: string | undefined;
+
+  dialogVisible: boolean = false;
 
   userRatingColors: any = RATING_KNOB_COLORS;
   userRatingSelectedColor: string = this.userRatingColors['0']
@@ -29,6 +32,10 @@ export class EntityCardComponent implements OnInit, OnChanges {
       this.renderImage();
       this.setUserRatingKnobColor();
     }
+  }
+
+  showDialog(): void {
+    if(this.dialogEnabled) this.dialogVisible = true;
   }
 
   private renderImage(): void {

@@ -13,6 +13,5 @@ export class MovieEntity extends BasicEntity {
 
   director: string = '';
   writer: string = '';
-  plotSummary: string = '';
   entityType: EntityType = EntityType.Movie;
 }

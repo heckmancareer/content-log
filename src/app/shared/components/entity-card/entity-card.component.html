@@ -1,4 +1,4 @@
-<div class="card shadow-4">
+<div class="card shadow-4" (click)="showDialog()">
   @if(entity.hasImage) {
     <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
   } @else {
@@ -10,7 +10,7 @@
     <span class="entity-title text-xl font-bold">
       {{entity.title}}
     </span>
-    @if(displaySortOption && displaySortOption !== 'title') {
+    @if(displaySortOption && sortOption !== 'title' && sortOption !== '_userRating') {
       <span class="entity-sort-option text-color-secondary">
         {{entity[sortOption] | sortOptionFormatter: sortOption}}
       </span>
@@ -22,3 +22,25 @@
     [valueColor]="userRatingSelectedColor"
     class="rating-knob"></p-knob>
 </div>
+@if(dialogEnabled) {
+  <p-dialog
+  [(visible)]="dialogVisible"
+  [style]="{width: '800px'}"
+  [draggable]="false"
+  [modal]="true"
+  [dismissableMask]="true"
+  [header]="entity.title">
+  <div class="dialog-body flex">
+    <div class="dialog-body__image-column">
+      <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+    </div>
+    <div class="dialog-body__info-body">
+      @if(entity.plotSummary && entity.plotSummary !== '') {
+        <span class="info-description text-sm">
+          {{entity.plotSummary}}
+        </span>
+      }
+    </div>
+  </div>
+</p-dialog>
+}

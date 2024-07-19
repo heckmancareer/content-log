@@ -39,6 +39,7 @@ $global-cover-height: 320px;
   flex-direction: column;
   background-color: white;
   border-radius: 6px;
+  cursor: pointer;
   &__image-cover {
     width: $global-cover-width;
     height: $global-cover-height;
@@ -52,10 +53,29 @@ $global-cover-height: 320px;
   }
 }
 
+:hover .card {
+  &__title-text {
+    color: var(--primary-color);
+  }
+}
+
 .rating-knob {
   position: absolute;
   top: 250px;
   left: 5px;
   background-color: black;
   border-radius: 50%;
+}
+
+.dialog-body {
+  &__image-column {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__info-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
 }

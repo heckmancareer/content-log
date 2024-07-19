@@ -38,7 +38,7 @@ export class GenericEntityViewPageComponent implements OnInit {
     }
   ]
   sortOrderDisabled: boolean = true;
-  selectedSortOrder: 'ascending' | 'descending' = 'ascending';
+  selectedSortOrder: 'ascending' | 'descending' = 'descending';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -90,6 +90,7 @@ export class GenericEntityViewPageComponent implements OnInit {
   }
 
   onSortOptionSelect($event: unknown): void {
+    console.log(this.selectedSortOption);
     this.sortOrderDisabled = false;
     this.invokeSorting();
   }
@@ -100,7 +101,7 @@ export class GenericEntityViewPageComponent implements OnInit {
 
   resetSort(): void {
     this.selectedSortOption = undefined;
-    this.selectedSortOrder = 'ascending';
+    this.selectedSortOrder = 'descending';
     this.sortOrderDisabled = true;
     this.entityKeys = Object.keys(this.entities);
   }
