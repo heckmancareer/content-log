@@ -3,6 +3,7 @@ import { MasterDataManagementService } from './master-data-management.service';
 import { AngularElectronInterfaceService } from './angular-electron-interface.service';
 import { StatusLoggerService } from './status-logger.service';
 import { EntityType } from '../models/entity-type';
+import { BasicEntity } from '../models/basic-entity';
 
 /**
  * This service is responsible for handling edits to entities
@@ -14,16 +15,13 @@ import { EntityType } from '../models/entity-type';
 export class EntityEditingService {
 
   private currentEntityUUID: string | undefined;
+  private currentEntity: any | undefined;
 
   constructor(
     private masterDataManagement: MasterDataManagementService,
     private angularElectronInterface: AngularElectronInterfaceService,
     private logger: StatusLoggerService
   ) { }
-
-  clearCurrentEntityUUID(): void {
-    this.currentEntityUUID = undefined;
-  }
 
   getCurrentEntityUUID(): string | void {
     if(this.currentEntityUUID) {
@@ -41,6 +39,19 @@ export class EntityEditingService {
 
   setCurrentEntityUUID(uuid: string): void {
     this.currentEntityUUID = uuid;
+  }
+
+  clearCurrentEntity(): void {
+    this.currentEntityUUID = '';
+    this.currentEntity = undefined;
+  }
+
+  getCurrentEntity(): any {
+    return this.currentEntity;
+  }
+
+  setCurrentEntity<T extends BasicEntity>(entity: T): void {
+    this.currentEntity = Object.assign({}, entity);
   }
 
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {

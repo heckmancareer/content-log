@@ -6,6 +6,7 @@ import { Subscription, takeUntil, Subject, finalize, switchMap, of } from 'rxjs'
 import { CategoriesManagementService } from '../../services/categories-management.service';
 import { MOVIE_ENTITY_SORT } from './sort-values';
 import { sortEntityKeys } from '../../helpers/sort-entity-keys';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-generic-entity-view-page',
@@ -43,7 +44,9 @@ export class GenericEntityViewPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private masterDataManagementService: MasterDataManagementService,
-    private categoriesManagementService: CategoriesManagementService){}
+    private categoriesManagementService: CategoriesManagementService,
+    private navigationService: NavigationService,
+  ){}
 
   /**
    * On Init, get the data parameter associated with the route
@@ -106,7 +109,11 @@ export class GenericEntityViewPageComponent implements OnInit {
     this.entityKeys = Object.keys(this.entities);
   }
 
-  invokeSorting(): void {
+  navigateToEntityEdit(entity: any, entityUUID: string) {
+    this.navigationService.navigateToEntityEditing(entity.entityType, entity, entityUUID);
+  }
+
+  private invokeSorting(): void {
     this.entityKeys = sortEntityKeys(this.entities, this.entityKeys, this.selectedSortOption as string, this.selectedSortOrder);
   }
 

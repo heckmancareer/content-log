@@ -3,14 +3,14 @@ import { ElectronService } from '../services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../../../environments/environment';
 import { CATEGORIES } from '../../shared/constants/content-log-categories';
-import { MENU_BAR } from '../../shared/constants/menu-bar-options';
+import { getMenuBarConfig } from '../../shared/constants/menu-bar-options';
 import { PrimeNGConfig } from 'primeng/api';
-import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
+import { NavigationEnd, Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { MasterDataManagementService } from '../../shared/services/master-data-management.service';
-import { EntityType } from '../../shared/models/entity-type';
 import { CategoriesManagementService } from '../../shared/services/categories-management.service';
+import { NavigationService } from '../../shared/services/navigation.service';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -19,7 +19,7 @@ import { CategoriesManagementService } from '../../shared/services/categories-ma
 export class CoreComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
   contentCategories = CATEGORIES
-  menuBarConfig = MENU_BAR
+  menuBarConfig: any;
   sidebarActiveRoute: boolean[] = Object.keys(CATEGORIES).map(() => false);
   highlightColor: string = ''
   breadcrumbMenuItems: MenuItem[] | undefined
@@ -31,6 +31,7 @@ export class CoreComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private primengConfig: PrimeNGConfig,
     private router: Router,
+    private navigation: NavigationService,
     private masterDataManagementService: MasterDataManagementService,
     private categoriesManagementService: CategoriesManagementService
   ) {
@@ -70,6 +71,7 @@ export class CoreComponent implements OnInit, OnDestroy {
         }
       }
     })
+    this.menuBarConfig = getMenuBarConfig(this.navigation)
   }
 
   ngOnDestroy(): void {
