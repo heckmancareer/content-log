@@ -120,12 +120,13 @@
           (onClick)="resetSort()"></p-button>
       </div>
       <div class="entity-grid__grid-body pt-3">
-        @for (entity of entityKeys; track $index) {
+        @for (entityKey of entityKeys; track $index) {
           <app-entity-card
-            [entity]="entities[entity]"
+            [entity]="entities[entityKey]"
             [displaySortOption]="!sortOrderDisabled"
             [sortOption]="selectedSortOption"
-            [dialogEnabled]="true"></app-entity-card>
+            [dialogEnabled]="true"
+            (onEditEntityClick)="navigateToEntityEdit(entities[entityKey], entityKey)"></app-entity-card>
         }
       </div>
     </div>

@@ -25,6 +25,8 @@ export class NavigationService {
     if(entityToEdit) this.entityEditingService.setCurrentEntity(entityToEdit);
     switch(entityToEditType) {
       case EntityType.Movie:
+        console.log(this.entityEditingService.getCurrentEntity())
+        console.log(this.entityEditingService.getCurrentEntityUUID());
         this.router.navigateByUrl(`/movies/new-movie`);
         break;
     }

@@ -33,6 +33,7 @@
   <div class="dialog-body flex">
     <div class="dialog-body__image-column">
       <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+      <p-button (onClick)="editEntityClick()"></p-button>
     </div>
     <div class="dialog-body__info-body">
       @if(entity.plotSummary && entity.plotSummary !== '') {

@@ -43,10 +43,8 @@ export class MovieEntryFormComponent implements OnInit {
   constructor(
     private statusLoggerService: StatusLoggerService,
     private categoriesManagmenetService: CategoriesManagementService,
-    private angularElectronInterfaceService: AngularElectronInterfaceService,
     private entityEditingService: EntityEditingService,
     private navigationService: NavigationService,
-    private confirmationDialogService: ConfirmationDialogService,
   ){}
 
   ngOnInit(): void {
@@ -56,6 +54,12 @@ export class MovieEntryFormComponent implements OnInit {
     this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres(EntityType.Movie)];
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
+    if(this.entityEditingService.hasCurrentEntity()) {
+      this.movie = this.entityEditingService.getCurrentEntity() as MovieEntity;
+      this.movieUUID = this.entityEditingService.getCurrentEntityUUID() as string;
+      console.log(this.movie)
+      console.log(this.movieUUID)
+    }
   }
 
   /**

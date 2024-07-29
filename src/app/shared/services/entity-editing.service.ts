@@ -42,7 +42,7 @@ export class EntityEditingService {
   }
 
   clearCurrentEntity(): void {
-    this.currentEntityUUID = '';
+    this.currentEntityUUID = undefined;
     this.currentEntity = undefined;
   }
 
@@ -52,6 +52,10 @@ export class EntityEditingService {
 
   setCurrentEntity<T extends BasicEntity>(entity: T): void {
     this.currentEntity = Object.assign({}, entity);
+  }
+
+  hasCurrentEntity(): boolean {
+    return this.currentEntity !== undefined && this.currentEntityUUID !== undefined;
   }
 
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {

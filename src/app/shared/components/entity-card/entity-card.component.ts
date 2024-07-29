@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { AngularElectronInterfaceService } from '../../services/angular-electron-interface.service';
 import { RATING_KNOB_COLORS } from '../../constants/rating-knob-colors';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-entity-card',
@@ -12,6 +13,7 @@ export class EntityCardComponent implements OnInit, OnChanges {
   @Input('displaySortOption') displaySortOption!: any;
   @Input('sortOption') sortOption!: any;
   @Input('dialogEnabled') dialogEnabled!: boolean;
+  @Output('onEditEntityClick') onEditEntityClicked = new EventEmitter<boolean>();
   loadingImage: boolean = true;
   fullImagePath: string | undefined;
 
@@ -20,7 +22,10 @@ export class EntityCardComponent implements OnInit, OnChanges {
   userRatingColors: any = RATING_KNOB_COLORS;
   userRatingSelectedColor: string = this.userRatingColors['0']
 
-  constructor(private angularElectron: AngularElectronInterfaceService){}
+  constructor(
+    private angularElectron: AngularElectronInterfaceService,
+    private navigationService: NavigationService
+  ){}
 
   ngOnInit(): void {
     this.renderImage();
@@ -36,6 +41,11 @@ export class EntityCardComponent implements OnInit, OnChanges {
 
   showDialog(): void {
     if(this.dialogEnabled) this.dialogVisible = true;
+  }
+
+  editEntityClick(): void {
+    this.dialogVisible = false;
+    this.onEditEntityClicked.emit(true);
   }
 
   private renderImage(): void {
