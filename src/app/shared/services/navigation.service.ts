@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BasicEntity } from '../models/basic-entity';
 import { EntityEditingService } from './entity-editing.service';
 import { EntityType } from '../models/entity-type';
+import { MovieEntity } from '../../modules/movies/models/movie-entity';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,11 @@ export class NavigationService {
     this.location.back();
   }
 
-  navigateToEntityEditing<T extends BasicEntity>(entityToEditType: EntityType, entityToEdit?: T, entityToEditUUID?: string): void {
-    if(entityToEditUUID) this.entityEditingService.setCurrentEntityUUID(entityToEditUUID);
-    if(entityToEdit) this.entityEditingService.setCurrentEntity(entityToEdit);
+  navigateToEntityEditing(entityToEditType: EntityType, entityToEdit?: unknown, entityToEditUUID?: string): void {
     switch(entityToEditType) {
       case EntityType.Movie:
-        console.log(this.entityEditingService.getCurrentEntity())
-        console.log(this.entityEditingService.getCurrentEntityUUID());
+        if(entityToEditUUID) this.entityEditingService.setCurrentEntityUUID(entityToEditUUID);
+        if(entityToEdit) this.entityEditingService.setCurrentMovieEntity(entityToEdit as MovieEntity);
         this.router.navigateByUrl(`/movies/new-movie`);
         break;
     }

@@ -104,6 +104,7 @@ export class TagArrayManagerComponent implements ControlValueAccessor {
     if(value !== undefined && value !== null && value instanceof Set) {
       this._selectedTags = new Set(value);
     }
+
   }
 
   updateValue(newValue: string): void {

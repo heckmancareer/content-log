@@ -55,10 +55,12 @@ export class MovieEntryFormComponent implements OnInit {
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     if(this.entityEditingService.hasCurrentEntity()) {
-      this.movie = this.entityEditingService.getCurrentEntity() as MovieEntity;
+      this.movie = this.entityEditingService.getCurrentEntity();
       this.movieUUID = this.entityEditingService.getCurrentEntityUUID() as string;
+      this.setUserRatingKnobColor(this.movie.userRating);
       console.log(this.movie)
       console.log(this.movieUUID)
+      console.log(this.movie.runtime);
     }
   }
 
@@ -89,6 +91,7 @@ export class MovieEntryFormComponent implements OnInit {
     this.categoriesManagmenetService.addGenres(EntityType.Movie, ...this.genresNewItems);
     this.categoriesManagmenetService.addTags(EntityType.Movie, ...this.tagsNewItems);
     if(this.newSubmittedImageBuffer) this.movie.hasImage = true;
+    this.movie.userDateLastEdited = new Date();
 
     this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
       if(result === true && this.newSubmittedImageBuffer) {

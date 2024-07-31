@@ -3,7 +3,7 @@ import { EntityType } from "./entity-type";
 export abstract class BasicEntity {
   abstract entityType: EntityType;
 
-  _userRating: number = 0;
+  private _userRating: number = 0;
   get userRating() {
     return this._userRating;
   }
@@ -34,6 +34,9 @@ export abstract class BasicEntity {
   userFavorited: boolean = false;
   imageID: string = '';
   hasImage: boolean = false;
+
+  constructor() {
+  }
 }
 
 export enum EntityCompletionStatus {

@@ -4,6 +4,7 @@ import { AngularElectronInterfaceService } from './angular-electron-interface.se
 import { StatusLoggerService } from './status-logger.service';
 import { EntityType } from '../models/entity-type';
 import { BasicEntity } from '../models/basic-entity';
+import { MovieEntity } from '../../modules/movies/models/movie-entity';
 
 /**
  * This service is responsible for handling edits to entities
@@ -52,6 +53,14 @@ export class EntityEditingService {
 
   setCurrentEntity<T extends BasicEntity>(entity: T): void {
     this.currentEntity = Object.assign({}, entity);
+  }
+
+  setCurrentMovieEntity(entity: MovieEntity): void {
+    console.log(`Object before assignment: `);
+    console.log(entity);
+    this.currentEntity = MovieEntity.fromPlainObject(entity);
+    console.log(`Object after assignment: `);
+    console.log(this.currentEntity)
   }
 
   hasCurrentEntity(): boolean {
