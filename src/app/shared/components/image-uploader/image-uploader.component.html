@@ -12,19 +12,14 @@
 
     }
   }
-
-  @switch (imageType) {
-    @case('none') {
-      <label class="custom-file-upload">
-        <input #cropperImageInput type="file" (change)="onFileSelectHandler($event)" />
-        <span>Select Image</span>
-      </label>
-    }
-    @default {
-      <div class="m-2 flex">
-        <p-button label="Delete Image" (onClick)="deleteHandler($event)"></p-button>
-      </div>
-    }
+  <label [ngClass]="{'hidden': imageType !== 'none'}" class="custom-file-upload">
+    <input #cropperImageInput type="file" (change)="onFileSelectHandler($event)" />
+    <span>Select Image</span>
+  </label>
+  @if (imageType !== 'none') {
+    <div class="m-2 flex">
+      <p-button label="Delete Image" (onClick)="deleteHandler($event)"></p-button>
+    </div>
   }
 </div>
 

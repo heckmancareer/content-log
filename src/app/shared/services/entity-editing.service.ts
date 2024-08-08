@@ -67,6 +67,14 @@ export class EntityEditingService {
     return this.currentEntity !== undefined && this.currentEntityUUID !== undefined;
   }
 
+  /**
+   * Function to submit an entity to the file system to be saved.
+   * If this is a new entity, submit an empty string for the UUID. Then
+   * one will be generated.
+   * @param uuid
+   * @param entity
+   * @returns
+   */
   submitEntityForSaving(uuid: string, entity: any): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       let currentUUID = uuid;

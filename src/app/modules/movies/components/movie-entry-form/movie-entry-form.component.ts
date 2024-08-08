@@ -8,7 +8,6 @@ import { EDITOR_OPTIONS } from './quill-editor-config';
 import { EntityEditingService } from '../../../../shared/services/entity-editing.service';
 import { EntityType } from '../../../../shared/models/entity-type';
 import { NavigationService } from '../../../../shared/services/navigation.service';
-import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
 import { RATING_KNOB_COLORS } from '../../../../shared/constants/rating-knob-colors';
 
 @Component({
@@ -55,12 +54,15 @@ export class MovieEntryFormComponent implements OnInit {
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     if(this.entityEditingService.hasCurrentEntity()) {
+      // This is a pre-existing entity
       this.movie = this.entityEditingService.getCurrentEntity();
       this.movieUUID = this.entityEditingService.getCurrentEntityUUID() as string;
       this.setUserRatingKnobColor(this.movie.userRating);
-      console.log(this.movie)
-      console.log(this.movieUUID)
-      console.log(this.movie.runtime);
+
+      this.movie.releaseDate = new Date(this.movie.releaseDate);
+      if(this.movie.userDateCompleted) {
+        this.movie.userDateCompleted = new Date(this.movie.userDateCompleted);
+      }
     }
   }
 

@@ -122,6 +122,7 @@ export class ImageUploaderComponent implements OnInit {
         this.imageType = 'none';
         this.imagePath = '';
         this.editedImageBuffer = undefined;
+        console.log(this.cropperImageInput)
         this.cropperImageInput.nativeElement.value = null;
       }
     })

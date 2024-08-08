@@ -45,17 +45,15 @@
                   pInputText/>
               </div>
               <div class="field col-6 flex flex-column">
-                <label for="movie-release-year">Release Year:</label>
+                <label for="movie-release-year">Release Date:</label>
                 <p-calendar
                   [(ngModel)]="movie.releaseDate"
                   [inputStyleClass]="'w-full p-2'"
                   [styleClass]="'w-full'"
                   [required]="true"
-                  id="movie-release-year"
-                  name="release-year"
-                  view="year"
-                  dateFormat="yy"
-                  inputId="movie-release-year"
+                  id="movie-release-date"
+                  name="release-date"
+                  inputId="movie-release-date"
                   class="text-base text-color
                     surface-overlay surface-border
                     border-round appearance-none

@@ -22,7 +22,6 @@ export abstract class BasicEntity {
   title: string = '';
   plotSummary: string = '';
   releaseDate: Date = new Date();
-  releaseYear: number = this.releaseDate.getUTCFullYear();
   genres: Set<string> = new Set<string>([]);
   tags: Set<string> = new Set<string>([]);
   userDateStarted: Date = new Date();
