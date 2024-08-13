@@ -18,13 +18,13 @@ export function sortEntityKeys(
     let valueA = entities[a][sortField];
     let valueB = entities[b][sortField];
     let comparison = 0;
-    if(valueA === undefined && valueB === undefined) {
+    if((valueA === undefined && valueB === undefined) || (valueA === null && valueB === null)) {
       return 0;
     }
-    if(valueA === undefined) {
+    if(valueA === undefined || valueA === null) {
       return sortOrder === 'ascending' ? -1: 1;
     }
-    if(valueB === undefined) {
+    if(valueB === undefined || valueB === null) {
       return sortOrder === 'descending' ? 1 : -1;
     }
 

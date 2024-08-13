@@ -12,10 +12,6 @@ const BASIC_ENTITY_SORT: SortLabel[] = [
     label: 'Release Date'
   },
   {
-    field: 'releaseYear',
-    label: 'Release Year'
-  },
-  {
     field: 'userDateStarted',
     label: 'Date Started'
   },

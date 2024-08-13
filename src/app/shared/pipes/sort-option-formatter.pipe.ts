@@ -17,9 +17,12 @@ export class SortOptionFormatterPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {
     if(value === undefined || value === null || value === '') return 'N/A'
 
-
     switch(args[0]) {
-      case 'releaseDate' || 'userDateStarted' || 'userDateCompleted' || 'userDateAdded' || 'userDateLasteEdited':
+      case 'releaseDate':
+      case 'userDateStarted':
+      case 'userDateCompleted':
+      case 'userDateAdded':
+      case 'userDateLastEdited':
         let date = new Date(value as  string);
         return this.formatDate(date);
         break;
