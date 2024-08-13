@@ -75,8 +75,9 @@
                 <label for="movie-plotsummary">Plot Summary:</label>
                 <textarea
                   [(ngModel)]="movie.plotSummary"
-                  pInputTextarea class="w-full"
-                  [autoResize]="true"
+                  pInputTextarea
+                  class="w-full"
+                  maxlength="750"
                   name="plot-summary"></textarea>
               </div>
             </div>
@@ -85,7 +86,7 @@
             <div class="formgrid grid w-full">
               <div class="field col-6 flex flex-column">
                 <app-tag-array-manager
-                  [(ngModel)]="movie.genres"
+                  [(selectedTags)]="movie.genres"
                   [typeLabel]="'genres'"
                   [availableTags]="genresAutoCompleteItems"
                   (onNewTagCreated)="genresNewItems.push($event)"
@@ -94,7 +95,7 @@
               <div class="field col-6 flex flex-column">
                 <span class="p-fluid">
                   <app-tag-array-manager
-                    [(ngModel)]="movie.tags"
+                    [(selectedTags)]="movie.tags"
                     [typeLabel]="'tags'"
                     [availableTags]="tagsAutoCompleteItems"
                     (onNewTagCreated)="tagsNewItems.push($event)"

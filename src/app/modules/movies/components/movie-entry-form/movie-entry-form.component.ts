@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MovieEntity } from '../../models/movie-entity';
 import { StatusLoggerService } from '../../../../shared/services/status-logger.service';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
