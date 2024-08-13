@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { AngularElectronInterfaceService } from '../../services/angular-electron-interface.service';
 import { RATING_KNOB_COLORS } from '../../constants/rating-knob-colors';
 import { NavigationService } from '../../services/navigation.service';
+import { MasterDataManagementService } from '../../services/master-data-management.service';
 
 @Component({
   selector: 'app-entity-card',
@@ -24,6 +25,7 @@ export class EntityCardComponent implements OnInit, OnChanges {
 
   constructor(
     private angularElectron: AngularElectronInterfaceService,
+    private masterDataManagement: MasterDataManagementService,
     private navigationService: NavigationService
   ){}
 

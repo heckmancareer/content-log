@@ -9,7 +9,7 @@
       <img [src]="'data:image/png;base64,' + editedImageBuffer!.toString('base64')" class="cropped-image">
     }
     @case('path') {
-
+      <img [src]="imagePath" class="cropped-image">
     }
   }
   <label [ngClass]="{'hidden': imageType !== 'none'}" class="custom-file-upload">

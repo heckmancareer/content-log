@@ -73,6 +73,7 @@ export class MasterDataManagementService {
         return false;
       } else {
         delete masterSet[uuid];
+        masterSet[uuid] = {};
         Object.assign(masterSet[uuid], entity);
         return true;
       }
@@ -123,6 +124,12 @@ export class MasterDataManagementService {
     return true;
   }
 
+  getEntityFullImagePath<T extends BasicEntity>(entity: T): string | false {
+    if(entity == undefined || !entity.hasImage) return false;
+    let baseImagePath = this.angularElectronInterface.getElectronImagePath();
+    let fullImagePath = `${baseImagePath}\\${entity.entityType}\\${entity.imageID}.png`
+    return fullImagePath;
+  }
 }
 
 export function initializeData(

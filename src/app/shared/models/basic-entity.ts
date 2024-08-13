@@ -24,10 +24,10 @@ export abstract class BasicEntity {
   releaseDate: Date = new Date();
   genres: Set<string> = new Set<string>([]);
   tags: Set<string> = new Set<string>([]);
-  userDateStarted: Date = new Date();
-  userDateCompleted: Date | undefined;
-  userDateAdded: Date | undefined;
-  userDateLastEdited: Date | undefined;
+  userDateStarted: Date | null = null;
+  userDateCompleted: Date | null = null;
+  userDateAdded: Date = new Date();
+  userDateLastEdited: Date = new Date();
   completionStatus: EntityCompletionStatus = EntityCompletionStatus.NotStarted;
   userReview: string = '';
   userFavorited: boolean = false;

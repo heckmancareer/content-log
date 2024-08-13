@@ -51,6 +51,11 @@ export class EntityEditingService {
     return this.currentEntity;
   }
 
+  getCurrentEntityFullImagePath(): string {
+    let pathFetch = this.masterDataManagement.getEntityFullImagePath(this.currentEntity);
+    return pathFetch ? pathFetch : '';
+  }
+
   setCurrentEntity<T extends BasicEntity>(entity: T): void {
     this.currentEntity = Object.assign({}, entity);
   }

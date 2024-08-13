@@ -1,4 +1,4 @@
-import { Component, ElementRef, Output, Input, ViewChild, EventEmitter, OnInit } from '@angular/core';
+import { Component, ElementRef, Output, Input, ViewChild, EventEmitter, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { ImageCroppedEvent, ImageTransform, LoadedImage, Dimensions } from 'ngx-image-cropper';
 import { StatusLoggerService } from '../../services/status-logger.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
@@ -47,8 +47,12 @@ export class ImageUploaderComponent implements OnInit {
     private confirmationDialogService: ConfirmationDialogService){}
 
   ngOnInit(): void {
-    if(this.imagePath !== '') {
-      this.imageType = 'path';
+    this.checkForImagePath();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.imagePath) {
+      this.checkForImagePath();
     }
   }
 
@@ -116,16 +120,21 @@ export class ImageUploaderComponent implements OnInit {
       $event as Event
     ).then(result => {
       if(result === true) {
-        if(this.imagePath !== '') this.onImageDeletion.emit(true);
+        this.onImageDeletion.emit(true);
         this.cropperResetImage();
         this.activeCroppedImage = '';
         this.imageType = 'none';
         this.imagePath = '';
         this.editedImageBuffer = undefined;
-        console.log(this.cropperImageInput)
         this.cropperImageInput.nativeElement.value = null;
       }
     })
+  }
+
+  private checkForImagePath(): void {
+    if(this.imagePath !== '' && this.imagePath) {
+      this.imageType = 'path';
+    }
   }
 
   /**

@@ -53,6 +53,7 @@ export class MovieEntryFormComponent implements OnInit {
     this.genresAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllGenres(EntityType.Movie)];
     this.tagsAutoCompleteItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
     this.tagsAutoCompleteSuggestedItems = [...this.categoriesManagmenetService.getAllTags(EntityType.Movie)];
+
     if(this.entityEditingService.hasCurrentEntity()) {
       // This is a pre-existing entity
       this.movie = this.entityEditingService.getCurrentEntity();
@@ -62,6 +63,9 @@ export class MovieEntryFormComponent implements OnInit {
       this.movie.releaseDate = new Date(this.movie.releaseDate);
       if(this.movie.userDateCompleted) {
         this.movie.userDateCompleted = new Date(this.movie.userDateCompleted);
+      }
+      if(this.movie.hasImage) {
+        this.imageUrl = this.entityEditingService.getCurrentEntityFullImagePath();
       }
     }
   }
@@ -86,6 +90,13 @@ export class MovieEntryFormComponent implements OnInit {
 
   setNewSubmittedImageBuffer($event: Buffer): void {
     this.newSubmittedImageBuffer = $event;
+    this.movie.hasImage = true;
+    this.imageUrl = '';
+  }
+
+  imageDeletionHandler($event: boolean): void {
+    this.movie.hasImage = false;
+    this.imageUrl = '';
   }
 
   onSubmit(movieForm: unknown): void {
@@ -94,6 +105,7 @@ export class MovieEntryFormComponent implements OnInit {
     this.categoriesManagmenetService.addTags(EntityType.Movie, ...this.tagsNewItems);
     if(this.newSubmittedImageBuffer) this.movie.hasImage = true;
     this.movie.userDateLastEdited = new Date();
+    this.movie.userDateStarted = this.movie.userDateCompleted;
 
     this.entityEditingService.submitEntityForSaving(this.movieUUID, this.movie).then((result: boolean) => {
       if(result === true && this.newSubmittedImageBuffer) {

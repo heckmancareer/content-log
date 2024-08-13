@@ -5,7 +5,9 @@
       <div class="card__body-left">
         <span>Image Preview:</span>
         <app-image-uploader
-          (onImageSubmission)="setNewSubmittedImageBuffer($event)"></app-image-uploader>
+          [imagePath]="imageUrl"
+          (onImageSubmission)="setNewSubmittedImageBuffer($event)"
+          (onImageDeletion)="imageDeletionHandler($event)"></app-image-uploader>
       </div>
       <div class="card__bord-right flex-grow-1 ml-2">
         <p-tabView [(activeIndex)]="tabViewActiveIndex">
@@ -109,6 +111,7 @@
                   [(ngModel)]="movie.userDateCompleted"
                   [inputStyleClass]="'w-full p-2'"
                   [styleClass]="'w-full'"
+                  id="movie-user-date-completed"
                   name="user-date-completed"
                   inputId="movie-user-date-completed"
                   class="text-base text-color
