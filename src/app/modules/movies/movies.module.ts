@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { MoviesInventoryPageComponent } from './pages/movies-inventory-page/movies-inventory-page.component';
-import { NewMoviePageComponent } from './pages/new-movie-page/new-movie-page.component';
+import { MovieEditPageComponent } from './pages/movie-edit-page/movie-edit-page.component';
 
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,7 +20,7 @@ import { MovieEntryFormComponent } from './components/movie-entry-form/movie-ent
 @NgModule({
   declarations: [
     MoviesInventoryPageComponent,
-    NewMoviePageComponent,
+    MovieEditPageComponent,
     MovieEntryFormComponent
   ],
   imports: [

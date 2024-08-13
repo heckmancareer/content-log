@@ -11,6 +11,8 @@ import { MovieEntity } from '../../modules/movies/models/movie-entity';
 })
 export class NavigationService {
 
+  ignoreNextUnsavedGuard: boolean = false;
+
   constructor(
     private location: Location,
     private entityEditingService: EntityEditingService,
@@ -29,5 +31,26 @@ export class NavigationService {
         this.router.navigateByUrl(`/movies/new-movie`);
         break;
     }
+  }
+
+
+  /**
+   * The flag 'ignoreNextUnsavedGuard' is used by the system to check to see
+   * if navigation should ignore the next instance of 'Are you sure you want to leave this page?'.
+   * Whenever this is checked, if it returns true, it's turned off to false and the flag needs
+   * to be set again.
+   * @returns {boolean}
+   */
+  checkIgnore(): boolean {
+    if(this.ignoreNextUnsavedGuard) {
+      this.ignoreNextUnsavedGuard = false;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  enableIgnore(): void {
+    this.ignoreNextUnsavedGuard = true;
   }
 }

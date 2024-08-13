@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule, provideRouter } from '@angular/router';
-import { NewMoviePageComponent } from './pages/new-movie-page/new-movie-page.component';
+import { MovieEditPageComponent } from './pages/movie-edit-page/movie-edit-page.component';
 import { GenericEntityViewPageComponent } from '../../shared/pages/generic-entity-view-page/generic-entity-view-page.component';
 import { EntityType } from '../../shared/models/entity-type';
 import { unsavedChangesConfirmationGuard } from '../../shared/guards/unsaved-changes-confirmation.guard';
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'new-movie',
-    component: NewMoviePageComponent,
+    component: MovieEditPageComponent,
     canDeactivate: [unsavedChangesConfirmationGuard],
   }
 ];

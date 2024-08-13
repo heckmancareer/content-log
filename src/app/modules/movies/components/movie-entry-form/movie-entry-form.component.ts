@@ -120,6 +120,7 @@ export class MovieEntryFormComponent implements OnInit {
           "success",
           this.movie
         )
+        this.navigationService.enableIgnore();
         this.navigationService.navigateToPreviousPage();
       }
     });

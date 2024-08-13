@@ -3,17 +3,19 @@ import { CanComponentDeactivate } from '../../../../shared/guards/unsaved-change
 import { Observable } from 'rxjs';
 import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
 import { EntityEditingService } from '../../../../shared/services/entity-editing.service';
+import { NavigationService } from '../../../../shared/services/navigation.service';
 
 @Component({
   selector: 'app-new-movie-page',
-  templateUrl: './new-movie-page.component.html',
-  styleUrl: './new-movie-page.component.scss'
+  templateUrl: './movie-edit-page.component.html',
+  styleUrl: './movie-edit-page.component.scss'
 })
-export class NewMoviePageComponent implements CanComponentDeactivate, OnDestroy {
+export class MovieEditPageComponent implements CanComponentDeactivate, OnDestroy {
 
   constructor(
     private confirmationDialogService: ConfirmationDialogService,
     private entityEditingService: EntityEditingService,
+    private navigationService: NavigationService
   ){}
 
   ngOnDestroy(): void {
@@ -21,6 +23,7 @@ export class NewMoviePageComponent implements CanComponentDeactivate, OnDestroy 
   }
 
   canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if(this.navigationService.checkIgnore()) return true;
     return this.confirmationDialogService.promptConfirmation(
       'Cancel Editing Movie',
       'Are you sure you want to navigate away from the form? Changes will not be saved.',

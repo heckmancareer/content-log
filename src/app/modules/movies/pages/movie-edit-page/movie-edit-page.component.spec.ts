@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewMoviePageComponent } from './new-movie-page.component';
+import { MovieEditPageComponent } from './movie-edit-page.component';
 
-describe('NewMoviePageComponent', () => {
-  let component: NewMoviePageComponent;
-  let fixture: ComponentFixture<NewMoviePageComponent>;
+describe('MovieEditPageComponent', () => {
+  let component: MovieEditPageComponent;
+  let fixture: ComponentFixture<MovieEditPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewMoviePageComponent]
+      imports: [MovieEditPageComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(NewMoviePageComponent);
+
+    fixture = TestBed.createComponent(MovieEditPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
