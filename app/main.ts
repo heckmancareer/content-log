@@ -1,9 +1,9 @@
 import {app, BrowserWindow, ipcMain, screen, dialog} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
-import { registerAllIpcSaveFunctions } from './src/handlers/save';
-import { register } from 'module';
+import { registerAllIpcSaveFunctions } from './src/handlers/save'
 import { registerAllIpcGetFunctions } from './src/handlers/get-handlers';
+import { registerAllIpcUpdateFunctions } from './src/handlers/update-handlers';
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
@@ -88,3 +88,4 @@ try {
 
 registerAllIpcSaveFunctions();
 registerAllIpcGetFunctions();
+registerAllIpcUpdateFunctions();

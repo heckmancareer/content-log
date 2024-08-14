@@ -93,7 +93,19 @@ export class EntityEditingService {
         })
       }
       // Ensure that the image ID for the entity is up to date.
-      entity.imageID = this.angularElectronInterface.getFormattedImageID(currentUUID, entity.title);
+      let currentImageID = this.angularElectronInterface.getFormattedImageID(currentUUID, entity.title);
+      // If entity has image, and it has a new imageID from a change in title, then go find the image in
+      // the fs and rename it to the new imageID. On success, update
+      if(entity.hasImage && entity.imageID !== '' && entity.imageID !== currentImageID) {
+        await this.angularElectronInterface.updateImageNameInFS(entity.entityType, entity.imageID, currentImageID)
+          .then((result) => {
+            console.log(`Image id should be updated from ${entity.imageID} to ${currentImageID}`);
+        }).catch((error) => {
+          console.log(error);
+          reject(error);
+        })
+      }
+      entity.imageID = currentImageID;
       // Send the entity to electron to be saved.
       await this.angularElectronInterface.sendEntityToFs(currentUUID, entity).then((result) =>{
         if(isNewEntity) {
@@ -111,6 +123,16 @@ export class EntityEditingService {
   submitImageBufferForSaving(buffer: Buffer, entityType: EntityType, imageID: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       await this.angularElectronInterface.sendImageBufferToFS(buffer, entityType, imageID).then((result) => {
+        resolve(true);
+      }).catch((error) => {
+        reject(error);
+      })
+    })
+  }
+
+  submitImageIDForDeletion(entityType: EntityType, imageID: string): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      await this.angularElectronInterface.deleteImageFromFS(entityType, imageID).then((result) => {
         resolve(true);
       }).catch((error) => {
         reject(error);

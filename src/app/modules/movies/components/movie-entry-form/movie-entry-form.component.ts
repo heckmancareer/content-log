@@ -95,8 +95,15 @@ export class MovieEntryFormComponent implements OnInit {
   }
 
   imageDeletionHandler($event: boolean): void {
-    this.movie.hasImage = false;
-    this.imageUrl = '';
+    if(this.movie.hasImage && this.imageUrl !== '') {
+      this.entityEditingService.submitImageIDForDeletion(this.movie.entityType, this.movie.imageID).then((result: boolean) => {
+        if(result === true) {
+          this.movie.hasImage = false;
+          this.imageUrl = '';
+        }
+      })
+    }
+    this.newSubmittedImageBuffer = undefined;
   }
 
   onSubmit(movieForm: unknown): void {

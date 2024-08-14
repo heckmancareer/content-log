@@ -6,6 +6,7 @@ import { ENTITY_MANAGER } from '../storage/entity-store';
 export function registerAllIpcSaveFunctions() {
 
   ipcMain.handle('SAVE-ENTITY', async(event, uuid, entity) => {
+    console.log(`SAVE-ENTITY called.`)
     ENTITY_MANAGER.saveEntity(uuid, entity);
     return true;
   })

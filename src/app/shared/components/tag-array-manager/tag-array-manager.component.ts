@@ -18,12 +18,12 @@ import { StatusLoggerService } from '../../services/status-logger.service';
 })
 export class TagArrayManagerComponent implements OnInit {
   @Output() onNewTagCreated = new EventEmitter<string>();
-  @Output() selectedTagsChange = new EventEmitter<Set<string>>();
+  @Output() selectedTagsChange = new EventEmitter<string[]>();
   @Input() typeLabel: string = '';
   @Input() availableTags: string[] = [];
   @Input() staticInventoryHeight: number = 300;
   @Input() showTooltip: boolean = true;
-  @Input() selectedTags!: Set<string>;
+  @Input() selectedTags!: string[];
   suggestedTags: string[] = [];
   placeholderSentence: string = `Press 'Enter' or ',' to enter a new item.`
   tooltipSentence: string = `Entered values will be formatted to replace spaces with '-', remove all non-alphabetical characters, and have a max length of 25 characters.`
@@ -39,7 +39,7 @@ export class TagArrayManagerComponent implements OnInit {
    */
   search($event: AutoCompleteCompleteEvent): void {
     this.suggestedTags = this.availableTags.filter(item => {
-      return item.includes($event.query) && !this.selectedTags.has(item);
+      return item.includes($event.query) && this.selectedTags.indexOf(item) === -1;
     })
   }
 
@@ -48,8 +48,6 @@ export class TagArrayManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedTags = new Set<string>(this.selectedTags);
-    this.selectedTagsChange.emit(this.selectedTags);
   }
 
   /**
@@ -61,7 +59,7 @@ export class TagArrayManagerComponent implements OnInit {
     if($event.code === 'Comma' || $event.code === 'Enter') {
       let enteredTag = ($event.target as any).value;
       let sanitizedTag = this.categoriesManagementService.formatStringToTag(enteredTag);
-      if(this.selectedTags.has(sanitizedTag)) {
+      if(this.selectedTags.indexOf(sanitizedTag) !== -1) {
         this.statusLoggerService.logMessageToConsole(
           'Duplicate Tag Submitted',
           true,
@@ -78,14 +76,16 @@ export class TagArrayManagerComponent implements OnInit {
           `Item was formatted to '${sanitizedTag}'`);
       }
       ($event.target as any).value = '';
-      this.selectedTags.add(enteredTag);
+      this.selectedTags.push(sanitizedTag);
       this.selectedTagsChange.emit(this.selectedTags);
+      this.onNewTagCreated.emit(sanitizedTag);
     }
   }
 
   removeChip($event: MouseEvent, tagToRemove: string): void {
-    if(this.selectedTags.has(tagToRemove)) {
-      this.selectedTags.delete(tagToRemove);
+    let i = this.selectedTags.indexOf(tagToRemove)
+    if(i !== -1) {
+      this.selectedTags.splice(i, 1);
       this.selectedTagsChange.emit(this.selectedTags);
     }
   }

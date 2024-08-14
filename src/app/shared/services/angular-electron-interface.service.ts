@@ -62,7 +62,7 @@ export class AngularElectronInterfaceService {
    */
   getFormattedImageID(uuid: string, entityName: string): string {
     let formattedEntityName = entityName.toLowerCase().trim()
-      .replace(/ /g, '-').replace(/[^a-z-]/g, '').substring(0, 25);
+      .replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').substring(0, 25);
     return `${formattedEntityName}_${uuid}`;
   }
 
@@ -120,6 +120,46 @@ export class AngularElectronInterfaceService {
     return new Promise(async (resolve, reject) => {
       electronInstance.ipcRenderer.invoke('SAVE-IMAGE-BUFFER', buffer, entityType, imageID).then((result: boolean) => {
         if(result === true) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch((error: unknown) => {
+        reject(error);
+      })
+    })
+  }
+
+  updateImageNameInFS(entityType: EntityType, oldID: string, newID: string): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      if(oldID === '' || newID === '') resolve(false);
+      electronInstance.ipcRenderer.invoke('UPDATE-IMAGE-FILENAME', oldID, newID, entityType).then((result: boolean) => {
+        if(result === true) {
+          resolve(true);
+        } else {
+          this.logger.logMessageToConsole(
+            `updateImageNameInFS resolved false.`,
+            false,
+            `When updating an image name, it resolved false.`,
+            undefined,
+            newID
+          )
+          resolve(false);
+        }
+      }).catch((error: unknown) => {
+        reject(error);
+      })
+    })
+  }
+
+  deleteImageFromFS(entityType: EntityType, imageID: string): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      if(imageID === '') resolve(false);
+      electronInstance.ipcRenderer.invoke('DELETE-IMAGE', imageID, entityType).then((result: boolean) => {
+        if(result === true) {
+          console.log(`Image should be successfully deleted.`);
           resolve(true);
         } else {
           resolve(false);

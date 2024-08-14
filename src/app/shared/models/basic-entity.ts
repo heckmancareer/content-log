@@ -22,8 +22,8 @@ export abstract class BasicEntity {
   title: string = '';
   plotSummary: string = '';
   releaseDate: Date = new Date();
-  genres: Set<string> = new Set<string>([]);
-  tags: Set<string> = new Set<string>([]);
+  genres: string[] = [];
+  tags: [] = [];
   userDateStarted: Date | null = null;
   userDateCompleted: Date | null = null;
   userDateAdded: Date = new Date();
