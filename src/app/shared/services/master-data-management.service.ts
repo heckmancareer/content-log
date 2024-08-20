@@ -98,6 +98,20 @@ export class MasterDataManagementService {
     }
   }
 
+  removeEntityImage<T extends BasicEntity>(
+    uuid: string,
+    entityType: EntityType
+  ): boolean {
+    let masterSet = this.entityTypeToMasterSet(entityType);
+    if(masterSet[uuid]) {
+      masterSet[uuid].hasImage = false;
+      masterSet[uuid].imageID = '';
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   /**
    * Returns a set of entities. Should only be used to read those
    * sets.

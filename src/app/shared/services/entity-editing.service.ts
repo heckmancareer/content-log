@@ -130,10 +130,28 @@ export class EntityEditingService {
     })
   }
 
-  submitImageIDForDeletion(entityType: EntityType, imageID: string): Promise<boolean> {
+
+  /**
+   * First, attempts to delte an image by ImageID from the FS. Then, tries to update
+   * the entry in the db by removing the imageID, and hasImage flag, since these need
+   * to be changed even before the 'Save' submission.
+   *
+   * @param {EntityType} entityType
+   * @param {string} imageID
+   * @returns {Promise<boolean>}
+   */
+  submitImageIDForDeletion(entityType: EntityType, imageID: string, uuid: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      await this.angularElectronInterface.deleteImageFromFS(entityType, imageID).then((result) => {
-        resolve(true);
+      await this.angularElectronInterface.deleteImageFromFS(entityType, imageID).then((result) => {})
+        .catch((error) => {
+          reject(error);
+        })
+      await this.angularElectronInterface.removeEntitiesImageFromStorage(entityType, uuid).then((result) => {
+        if(this.masterDataManagement.removeEntityImage(uuid, entityType)) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
       }).catch((error) => {
         reject(error);
       })

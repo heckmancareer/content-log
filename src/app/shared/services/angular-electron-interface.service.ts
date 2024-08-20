@@ -169,4 +169,20 @@ export class AngularElectronInterfaceService {
       })
     })
   }
+
+  removeEntitiesImageFromStorage(entityType: EntityType, uuid: string): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      electronInstance.ipcRenderer.invoke('REMOVE-IMAGE-ID', uuid, entityType).then((result: boolean) => {
+        if(result === true) {
+          console.log('ImageID should be successfully removed.');
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch((error: unknown) => {
+        reject(error);
+      })
+    })
+  }
 }

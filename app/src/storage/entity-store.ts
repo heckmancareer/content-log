@@ -66,6 +66,11 @@ class EntityStoreManager {
     targetStore?.saveEntity(uuid, entity);
   }
 
+  public getEntity(entityType: string, uuid: string): any {
+    let targetStore = this.entityTypeToStore(entityType);
+    return targetStore?.getEntity(uuid);
+  }
+
   public getEntitiesOfType(entityType: string): any {
     let targetStore = this.entityTypeToStore(entityType);
     return targetStore?.getAllEntities();

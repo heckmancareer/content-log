@@ -31,7 +31,16 @@ export function registerAllIpcUpdateFunctions() {
     }
   })
 
-  ipcMain.handle('REMOVE-IMAGE-ID', async(event, imageID, entityType) => {
-
+  ipcMain.handle('REMOVE-IMAGE-ID', async(event, entityID, entityType) => {
+    let e = ENTITY_MANAGER.getEntity(entityType, entityID);
+    try {
+      e.imageID = '';
+      e.hasImage = false;
+      ENTITY_MANAGER.saveEntity(entityID, e);
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
+    return true;
   })
 }
