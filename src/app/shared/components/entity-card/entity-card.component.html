@@ -25,7 +25,7 @@
 @if(dialogEnabled) {
   <p-dialog
   [(visible)]="dialogVisible"
-  [style]="{width: '800px'}"
+  [style]="{width: '800px', height: '600px'}"
   [draggable]="false"
   [modal]="true"
   [dismissableMask]="true"
@@ -33,14 +33,104 @@
   <div class="dialog-body flex">
     <div class="dialog-body__image-column">
       <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
-      <p-button (onClick)="editEntityClick()"></p-button>
+      <p-button label="Edit" icon="pi pi-pencil" (onClick)="editEntityClick()"></p-button>
     </div>
     <div class="dialog-body__info-body">
-      @if(entity.plotSummary && entity.plotSummary !== '') {
-        <span class="info-description text-sm">
-          {{entity.plotSummary}}
-        </span>
-      }
+      <p-tabView>
+        <p-tabPanel header="Review">
+          <div class="w-full grid tab-body">
+            <div class="col-6 flex flex-column">
+              <span class="font-bold">Rating:</span>
+              <span>
+                <span class="text-6xl font-bold" [style]="{'color': userRatingSelectedColor}">{{entity.userRating}}</span><span class="text-4xl"> / 100</span>
+              </span>
+            </div>
+            <div class="col-6 flex flex-column">
+              <span class="font-bold">Status:</span>
+              <span>{{entity.completionStatus}}</span>
+            </div>
+            <div class="col-12">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Release Date:</th>
+                    <td>{{entity.releaseDate | date: 'MMMM d, y'}}</td>
+                  </tr>
+                  <tr>
+                    <th>Started:</th>
+                    <td>{{entity.userDateStarted | date:'MMMM d, y'}}</td>
+                    <th>Completed:</th>
+                    <td>{{entity.userDateCompleted | date:'MMMM d, y'}}</td>
+                  </tr>
+                  <tr>
+                    <th>Added:</th>
+                    <td>{{entity.userDateAdded | date:'MMMM d, y'}}</td>
+                    <th>Last Updated:</th>
+                    <td>{{entity.userDateLastEdited | date:'MMMM d, y'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12">
+              <p-editor [(ngModel)]="entity.userReview" [readonly]="true" [style]="{width: '100%', height: '200px'}">
+                <ng-template pTemplate="header">
+                  <span>
+                    Review:
+                  </span>
+                </ng-template>
+              </p-editor>
+            </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Categories">
+          <div class="w-full grid tab-body">
+            <div class="col-6 flex flex-column">
+              <p-fieldset [legend]="'Genres'"
+                [style]="{'height.px': '300', 'overflow': 'auto'}">
+                @for(tag of entity.genres; track $index) {
+                  <p-chip
+                    styleClass="px-3 py-1"
+                    [style]="{'margin.px': '2'}">
+                    <span class="font-medium">{{tag}}</span>
+                  </p-chip>
+                }
+              </p-fieldset>
+            </div>
+            <div class="col-6">
+              <p-fieldset [legend]="'Tags'"
+                [style]="{'height.px': '300', 'overflow': 'auto'}">
+                @for(tag of entity.tags; track $index) {
+                  <p-chip
+                    styleClass="px-3 py-1"
+                    [style]="{'margin.px': '2'}">
+                    <span class="font-medium">{{tag}}</span>
+                  </p-chip>
+                }
+              </p-fieldset>
+            </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Metadata">
+          <div class="w-full grid tab-body">
+            <div class="col-6">
+              <table>
+                <tbody>
+                  @for(field of metaDataFields; track $index) {
+                    <tr>
+                      <th>{{field.label}}:</th>
+                      <td>{{entity[field.value]}}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 flex flex-column">
+              <span class="font-bold">Plot Summary:</span>
+              <span class="text-justify">{{entity.plotSummary}}</span>
+            </div>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
     </div>
   </div>
 </p-dialog>

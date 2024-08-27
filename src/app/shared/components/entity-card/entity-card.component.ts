@@ -3,6 +3,8 @@ import { AngularElectronInterfaceService } from '../../services/angular-electron
 import { RATING_KNOB_COLORS } from '../../constants/rating-knob-colors';
 import { NavigationService } from '../../services/navigation.service';
 import { MasterDataManagementService } from '../../services/master-data-management.service';
+import { ENTITY_TYPES_AND_FIELDS, EntityLabelValuePair, EntityTypeAndFields } from './entity-metadata-config';
+import { EntityType } from '../../models/entity-type';
 
 @Component({
   selector: 'app-entity-card',
@@ -23,6 +25,9 @@ export class EntityCardComponent implements OnInit, OnChanges {
   userRatingColors: any = RATING_KNOB_COLORS;
   userRatingSelectedColor: string = this.userRatingColors['0']
 
+  entityTypesAndFields: EntityTypeAndFields =  ENTITY_TYPES_AND_FIELDS;
+  metaDataFields: EntityLabelValuePair[] = [];
+
   constructor(
     private angularElectron: AngularElectronInterfaceService,
     private masterDataManagement: MasterDataManagementService,
@@ -32,12 +37,14 @@ export class EntityCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.renderImage();
     this.setUserRatingKnobColor();
+    this.renderEntityFields();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.entity) {
       this.renderImage();
       this.setUserRatingKnobColor();
+      this.renderEntityFields();
     }
   }
 
@@ -58,5 +65,14 @@ export class EntityCardComponent implements OnInit, OnChanges {
   private setUserRatingKnobColor(): void {
     let colorKey = (Math.floor(this.entity['_userRating'] / 10) * 10).toString();
     this.userRatingSelectedColor = this.userRatingColors[colorKey];
+  }
+
+  /**
+   * Based on the entity type, unique fields need to be rendered in the 'Metadata' tab.
+   * This function looks at the entities current type, and renders the corresponding fields from
+   * the constant.
+   */
+  private renderEntityFields(): void {
+    this.metaDataFields = this.entityTypesAndFields[this.entity.entityType].fields;
   }
 }

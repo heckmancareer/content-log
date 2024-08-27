@@ -72,10 +72,21 @@ $global-cover-height: 320px;
     width: 200px;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   &__info-body {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    margin-left: 12px;
   }
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+th, td {
+  width: 25%;
+  text-align: left;
+  font-size: 0.85em;
 }
