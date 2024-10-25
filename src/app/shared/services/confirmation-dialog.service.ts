@@ -46,6 +46,7 @@ export class ConfirmationDialogService {
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
         rejectIcon: 'none',
+        style: {'max-width': '75vw'},
         acceptButtonStyleClass: warningColors ? 'p-button-danger' : '',
         rejectButtonStyleClass: 'p-button-text',
         acceptLabel: acceptButtonLabel,

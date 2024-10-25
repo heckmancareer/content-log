@@ -170,6 +170,28 @@ export class AngularElectronInterfaceService {
     })
   }
 
+  deleteEntityFromFS(uuid: string, entity: any): Promise<boolean> {
+    let electronInstance = this.electron;
+    return new Promise(async (resolve, reject) => {
+      electronInstance.ipcRenderer.invoke('DELETE-ENTITY', uuid, entity.entityType).then((result: boolean) => {
+        if(result === true) {
+          resolve(true);
+        } else {
+          this.logger.logMessageToConsole(
+            'deleteEntityFromFS resolved false.',
+            false,
+            'When sending entity to the fs to be deleted, it resolved false.',
+            undefined,
+            entity
+          )
+          resolve(false);
+        }
+      }).catch((error: unknown) => {
+        reject(error);
+      })
+    })
+  }
+
   removeEntitiesImageFromStorage(entityType: EntityType, uuid: string): Promise<boolean> {
     let electronInstance = this.electron;
     return new Promise(async (resolve, reject) => {

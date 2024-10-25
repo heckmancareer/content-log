@@ -43,4 +43,18 @@ export function registerAllIpcUpdateFunctions() {
     }
     return true;
   })
+
+  ipcMain.handle('DELETE-ENTITY', async(event, uuid, entityType) => {
+    try {
+      if(ENTITY_MANAGER.deleteEntity(uuid, entityType) === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
+    return false;
+  })
 }

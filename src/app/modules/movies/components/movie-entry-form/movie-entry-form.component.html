@@ -107,6 +107,19 @@
           <p-tabPanel header="Review">
             <div class="formgrid grid w-full">
               <div class="field col-6 flex flex-column">
+                <label for="movie-user-completion-status">Completion Status:</label>
+                <p-dropdown
+                  [(ngModel)]="movie.completionStatus"
+                  [options]="completedStatusOptions"
+                  [styleClass]="'w-full mb-2'"
+                  id="movie-user-completion-status"
+                  name="user-completion-status"
+                  optionLabel="label"
+                  optionValue="status"
+                  class="text-base text-color
+                    surface-overlay surface-border
+                    border-round appearance-none
+                    outline-none focus:border-primary"></p-dropdown>
                 <label for="movie-user-date-completed">Date Watched:</label>
                 <p-calendar
                   [(ngModel)]="movie.userDateCompleted"
@@ -158,9 +171,16 @@
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <div class="footer-buttons flex justify-content-end">
-      <p-button class="mr-3" label="Cancel" severity="danger" (onClick)="onCancel()"></p-button>
-      <p-button label="Save" severity="success" type="submit"></p-button>
+    <div class="footer-buttons flex justify-content-between">
+      <span class="button-group-left">
+        @if(deleteVisible) {
+          <p-button label="Delete" severity="danger" icon="pi pi-trash" (onClick)="onDeletion()"></p-button>
+        }
+      </span>
+      <span class="button-group-right">
+        <p-button class="mr-3" label="Cancel" severity="secondary" (onClick)="onCancel()"></p-button>
+        <p-button label="Save" severity="success" type="submit"></p-button>
+      </span>
     </div>
   </ng-template>
 </p-card>

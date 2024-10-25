@@ -28,6 +28,19 @@ class EntityStore {
   public getAllEntities(): any {
     return this.store.store;
   }
+
+  public deleteEntity(uuid: string): boolean {
+    if(this.store.get(uuid)) {
+      try {
+        this.store.delete(uuid);
+        return true;
+      } catch(err) {
+        console.log(err);
+        return false;
+      }
+    }
+    return false;
+  }
 }
 
 /**
@@ -74,6 +87,11 @@ class EntityStoreManager {
   public getEntitiesOfType(entityType: string): any {
     let targetStore = this.entityTypeToStore(entityType);
     return targetStore?.getAllEntities();
+  }
+
+  public deleteEntity(uuid: string, entityType: string): boolean | undefined {
+    let targetStore = this.entityTypeToStore(entityType);
+    return targetStore?.deleteEntity(uuid);
   }
 }
 

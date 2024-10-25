@@ -9,6 +9,8 @@ import { EntityEditingService } from '../../../../shared/services/entity-editing
 import { EntityType } from '../../../../shared/models/entity-type';
 import { NavigationService } from '../../../../shared/services/navigation.service';
 import { RATING_KNOB_COLORS } from '../../../../shared/constants/rating-knob-colors';
+import { EntityCompletionStatus } from '../../../../shared/models/basic-entity';
+import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
 
 @Component({
   selector: 'app-movie-entry-form',
@@ -37,13 +39,21 @@ export class MovieEntryFormComponent implements OnInit {
   newSubmittedImageBuffer: Buffer | undefined;
 
   formSubmitted: boolean = false;
+  deleteVisible: boolean = false;
   tabViewActiveIndex: number = 0;
+
+  completedStatusOptions = [
+    {label: 'Not Started', status: EntityCompletionStatus.NotStarted},
+    {label: 'In Progress', status: EntityCompletionStatus.InProgress},
+    {label: 'Completed', status: EntityCompletionStatus.Completed},
+  ]
 
   constructor(
     private statusLoggerService: StatusLoggerService,
     private categoriesManagmenetService: CategoriesManagementService,
     private entityEditingService: EntityEditingService,
     private navigationService: NavigationService,
+    private confirmationDialogueService: ConfirmationDialogService
   ){}
 
   ngOnInit(): void {
@@ -67,6 +77,7 @@ export class MovieEntryFormComponent implements OnInit {
       if(this.movie.hasImage) {
         this.imageUrl = this.entityEditingService.getCurrentEntityFullImagePath();
       }
+      this.deleteVisible = true;
     }
   }
 
@@ -79,7 +90,7 @@ export class MovieEntryFormComponent implements OnInit {
     let targetValue = 0;
 
     if(($event as InputNumberInputEvent).value !== undefined) {
-      targetValue = Number.parseInt(($event as InputNumberInputEvent).value);
+      targetValue = Number.parseInt(($event as any).value);
     } else {
       targetValue = ($event as number);
     }
@@ -132,6 +143,34 @@ export class MovieEntryFormComponent implements OnInit {
         this.navigationService.navigateToPreviousPage();
       }
     });
+  }
+
+  onDeletion(): void {
+    if(this.movieUUID === '' || this.deleteVisible === false) {
+      console.log(`Entity does not exist on file system, unable to delete.`);
+      return;
+    }
+    this.confirmationDialogueService.promptConfirmation(
+      `WARNING: Are you sure you want to delete?`,
+      `You are about to delete this entity, which will delete both it and any of its images from your file system. This cannot be undone. Are you sure you want to continue?`,
+      true,
+      'Delete',
+    ).then((result: boolean) => {
+      this.entityEditingService.submitEntityForDeletion(this.movieUUID, this.movie).then((result: boolean) => {
+        if(result === true) {
+          this.statusLoggerService.logMessageToConsole(
+            `Deleted movie successfully.`,
+            true,
+            undefined,
+            "success",
+          )
+          this.navigationService.enableIgnore();
+          this.navigationService.navigateToPreviousPage();
+        }
+      }).catch((error: any) => {
+        console.log(error);
+      })
+    })
   }
 
   onCancel(): void {

@@ -86,6 +86,27 @@ export class MasterDataManagementService {
   }
 
   /**
+   * Deletes an entity from memory. Returns false if the entity doesn't exist,
+   * or failed to be deleted.
+   * @param uuid
+   * @param entity
+   */
+  deleteEntity<T extends BasicEntity>(
+    uuid: string,
+    entity: T
+  ): boolean {
+    let entityType = entity.entityType;
+    let masterSet = this.entityTypeToMasterSet(entityType);
+    if(!masterSet[uuid]) {
+      return false;
+    } else {
+      delete masterSet[uuid];
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Returns a deep copy of an entity, not a reference.
    * @param uuid The uuid of the Entity.
    * @param entityType The type of the Entity you're trying to retrieve.

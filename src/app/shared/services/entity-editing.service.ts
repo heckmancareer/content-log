@@ -120,6 +120,21 @@ export class EntityEditingService {
     })
   }
 
+  submitEntityForDeletion(uuid: string, entity: any): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if(entity.hasImage && entity.imageID !== '') {
+        await this.submitImageIDForDeletion(entity.entityType, entity.imageID, uuid);
+      }
+      await this.angularElectronInterface.deleteEntityFromFS(uuid, entity).then((result) => {
+        console.log(`Entity ${uuid} should be deleted from the FS.`);
+        this.masterDataManagement.deleteEntity(uuid, entity);
+        resolve(true);
+      }).catch((error) => {
+        reject(error);
+      })
+    })
+  }
+
   submitImageBufferForSaving(buffer: Buffer, entityType: EntityType, imageID: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       await this.angularElectronInterface.sendImageBufferToFS(buffer, entityType, imageID).then((result) => {

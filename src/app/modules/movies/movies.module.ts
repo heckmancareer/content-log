@@ -15,6 +15,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { EditorModule } from 'primeng/editor';
 import { KnobModule } from 'primeng/knob';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DropdownModule } from 'primeng/dropdown';
 import { MovieEntryFormComponent } from './components/movie-entry-form/movie-entry-form.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MovieEntryFormComponent } from './components/movie-entry-form/movie-ent
     AutoCompleteModule,
     KnobModule,
     FormsModule,
+    DropdownModule,
   ],
   bootstrap: [
     MoviesInventoryPageComponent
