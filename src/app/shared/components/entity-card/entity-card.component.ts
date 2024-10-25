@@ -50,6 +50,7 @@ export class EntityCardComponent implements OnInit, OnChanges {
 
   showDialog(): void {
     if(this.dialogEnabled) this.dialogVisible = true;
+    console.log(this.entity);
   }
 
   editEntityClick(): void {

@@ -1,4 +1,3 @@
-import { Duration } from 'luxon';
 import { BasicEntity } from '../../../shared/models/basic-entity';
 import { EntityType } from '../../../shared/models/entity-type';
 

@@ -3,6 +3,9 @@ import { MovieEntity } from '../../modules/movies/models/movie-entity';
 import { EntityType } from '../models/entity-type';
 import { BasicEntity } from '../models/basic-entity';
 import { AngularElectronInterfaceService } from './angular-electron-interface.service';
+import { VideoGameEntity } from '../../modules/video-games/models/video-game-entity';
+import { TVShowEntity } from '../../modules/tv-shows/models/tv-show-entity';
+import { BookEntity } from '../../modules/books/models/book-entity';
 
 /**
  * This service is responsible for holding all data about all content
@@ -52,6 +55,7 @@ export class MasterDataManagementService {
       } else {
         masterSet[uuid] = {};
         Object.assign(masterSet[uuid], entity);
+        masterSet[uuid] = this.castPlainObjectToEntityObject(masterSet[uuid]);
         return true;
       }
       return false;
@@ -75,6 +79,7 @@ export class MasterDataManagementService {
         delete masterSet[uuid];
         masterSet[uuid] = {};
         Object.assign(masterSet[uuid], entity);
+        masterSet[uuid] = this.castPlainObjectToEntityObject(masterSet[uuid]);
         return true;
       }
       return false;
@@ -107,6 +112,33 @@ export class MasterDataManagementService {
       masterSet[uuid].hasImage = false;
       masterSet[uuid].imageID = '';
       return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Given an object, this function will attempt to invoke the corresponding
+   * 'fromPlainObject' function from the corresponding 'entityType'. If 'entityType' is undefined,
+   *  return false.
+   * @param entity
+   */
+  castPlainObjectToEntityObject(entity: any): any {
+    if(entity.entityType) {
+      try {
+        switch(entity.entityType) {
+          case(EntityType.Movie):
+            return MovieEntity.fromPlainObject(entity);
+          case(EntityType.VideoGame):
+            return VideoGameEntity.fromPlainObject(entity);
+          case(EntityType.TVShow):
+            return TVShowEntity.fromPlainObject(entity);
+          case(EntityType.Book):
+            return BookEntity.fromPlainObject(entity);
+        }
+      } catch(error) {
+        console.log(`Error when trying to cast plain object to entity object.`);
+      }
     } else {
       return false;
     }
