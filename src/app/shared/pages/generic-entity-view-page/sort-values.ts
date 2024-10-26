@@ -16,6 +16,10 @@ const BASIC_ENTITY_SORT: SortLabel[] = [
     label: 'Date Started'
   },
   {
+    field: 'userDateAdded',
+    label: 'Date Added'
+  },
+  {
     field: 'completionStatus',
     label: 'Completion Status'
   }
@@ -24,8 +28,9 @@ const BASIC_ENTITY_SORT: SortLabel[] = [
 export const MOVIE_ENTITY_SORT: SortLabel[] = [
   ...BASIC_ENTITY_SORT,
   {
-    field: '_runtimeInMinutes',
-    label: 'Runtime'
+    field: 'runtime',
+    label: 'Runtime',
+    suffix: 'minutes'
   },
   {
     field: 'director',
@@ -39,5 +44,6 @@ export const MOVIE_ENTITY_SORT: SortLabel[] = [
 
 type SortLabel = {
   field: string,
-  label: string
+  label: string,
+  suffix?: string,
 }

@@ -112,6 +112,7 @@
                   [(ngModel)]="movie.completionStatus"
                   [options]="completedStatusOptions"
                   [styleClass]="'w-full mb-2'"
+                  (onChange)="testEvent($event)"
                   id="movie-user-completion-status"
                   name="user-completion-status"
                   optionLabel="label"

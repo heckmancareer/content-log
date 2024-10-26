@@ -32,7 +32,13 @@
   [header]="entity.title">
   <div class="dialog-body flex">
     <div class="dialog-body__image-column">
-      <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+      @if(entity.hasImage) {
+        <p-image [src]="fullImagePath" [imageClass]="'card-image-cover'"></p-image>
+      } @else {
+        <div class="card__image-cover image-placeholder border-1 border-surface mb-1">
+          <i class="pi pi-ban" style="font-size: 3rem; color: gray;"></i>
+        </div>
+      }
       <p-button label="Edit" icon="pi pi-pencil" (onClick)="editEntityClick()"></p-button>
     </div>
     <div class="dialog-body__info-body">

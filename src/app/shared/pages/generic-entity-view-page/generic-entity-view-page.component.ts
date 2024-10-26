@@ -7,6 +7,7 @@ import { CategoriesManagementService } from '../../services/categories-managemen
 import { MOVIE_ENTITY_SORT } from './sort-values';
 import { sortEntityKeys } from '../../helpers/sort-entity-keys';
 import { NavigationService } from '../../services/navigation.service';
+import { EntityFilterCriteria } from '../../helpers/entity-filter-criteria';
 
 @Component({
   selector: 'app-generic-entity-view-page',
@@ -20,14 +21,15 @@ export class GenericEntityViewPageComponent implements OnInit {
   loadingState: boolean = true;
   activatedRouteData: any = {};
 
-  entityKeys: string[] = [];
+  allEntityKeys: string[] = [];
+  filteredEntityKeys: string[] = [];
   entities: Record<string, any> = {};
 
   filterGenres: string[] = [];
   filterTags: string[] = [];
 
   sortOptions: any = MOVIE_ENTITY_SORT;
-  selectedSortOption: string | undefined;
+  selectedSortOption: string | undefined = 'userDateAdded';
   sortOrder: any[] = [
     {
       label: 'Ascending',
@@ -38,7 +40,7 @@ export class GenericEntityViewPageComponent implements OnInit {
       value: 'descending'
     }
   ]
-  sortOrderDisabled: boolean = true;
+  sortOrderDisabled: boolean = false;
   selectedSortOrder: 'ascending' | 'descending' = 'descending';
 
   constructor(
@@ -62,7 +64,8 @@ export class GenericEntityViewPageComponent implements OnInit {
         this.activatedRouteData = data;
         this.currentEntityType = data.entityType;
         this.entities = this.masterDataManagementService.getEntitySetReference(this.currentEntityType);
-        this.entityKeys = Object.keys(this.entities);
+        this.allEntityKeys = Object.keys(this.entities);
+        this.filteredEntityKeys = Object.keys(this.entities);
 
         if(!this.categoriesManagementService.areCategoriesReady()) {
           return this.categoriesManagementService.categoriesReadiness;
@@ -74,6 +77,7 @@ export class GenericEntityViewPageComponent implements OnInit {
     ).subscribe({
       next: (ready) => {
         if(ready) this.retrieveCategories();
+        this.invokeSorting();
       },
       error: (error) => {
         console.error(`Error in subscription for categories.`);
@@ -106,15 +110,26 @@ export class GenericEntityViewPageComponent implements OnInit {
     this.selectedSortOption = undefined;
     this.selectedSortOrder = 'descending';
     this.sortOrderDisabled = true;
-    this.entityKeys = Object.keys(this.entities);
+    this.allEntityKeys = Object.keys(this.entities);
   }
 
   navigateToEntityEdit(entity: any, entityUUID: string) {
     this.navigationService.navigateToEntityEditing(entity.entityType, entity, entityUUID);
   }
 
+  applyFilters($event: EntityFilterCriteria): void {
+    this.filteredEntityKeys = this.allEntityKeys.filter((entityKey: any) => {
+      const entity = this.entities[entityKey];
+      return $event.evaluateEntity(entity);
+    })
+  }
+
+  resetFilters(): void {
+    this.filteredEntityKeys = [...this.allEntityKeys];
+  }
+
   private invokeSorting(): void {
-    this.entityKeys = sortEntityKeys(this.entities, this.entityKeys, this.selectedSortOption as string, this.selectedSortOrder);
+    this.allEntityKeys = sortEntityKeys(this.entities, this.allEntityKeys, this.selectedSortOption as string, this.selectedSortOrder);
   }
 
 }

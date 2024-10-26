@@ -4,93 +4,12 @@
       <h1>Movies</h1>
     </div>
     <div class="filter-bar">
-      <p-card header="Filters">
-        <span class="filter-bar__container">
-          <div class="mb-3 font-semibold">Title: </div>
-          <span class="p-float-label">
-            <input pInputText id="title" class="p-inputtext-sm" />
-            <label for="title">Movie Title</label>
-          </span>
-          <p-divider></p-divider>
-          @if(currentEntityType === 'movie') {
-            <div class="mb-3 font-semibold">Writer & Director: </div>
-            <span class="p-float-label mb-4">
-              <input pInputText id="writer" class="p-inputtext-sm" />
-              <label for="title">Writer</label>
-            </span>
-            <span class="p-float-label">
-              <input pInputText id="director" class="p-inputtext-sm" />
-              <label for="title">Director</label>
-            </span>
-            <p-divider></p-divider>
-          }
-          <div class="mb-3 font-semibold">Release Date: </div>
-          <span>
-            <span class="p-float-label mb-4">
-              <p-calendar
-                [styleClass]="'p-inputtext-sm'"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                inputId="release-date-start"></p-calendar>
-              <label for="release-date-start">From Release Date</label>
-            </span>
-          </span>
-          <span>
-            <span class="p-float-label">
-              <p-calendar
-                [styleClass]="'p-inputtext-sm'"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                inputId="release-date-end"></p-calendar>
-              <label for="release-date-end">To Release Date</label>
-            </span>
-          </span>
-          <p-divider></p-divider>
-          <div class="mb-3 font-semibold">Completion Date: </div>
-          <span>
-            <span class="p-float-label mb-4">
-              <p-calendar
-                [styleClass]="'p-inputtext-sm'"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                inputId="complete-start-date"></p-calendar>
-              <label for="complete-start-date">From Completion Date</label>
-            </span>
-          </span>
-          <span>
-            <span class="p-float-label">
-              <p-calendar
-                [styleClass]="'p-inputtext-sm'"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                inputId="complete-end-date"></p-calendar>
-              <label for="complete-end-date">To Completion Date</label>
-            </span>
-          </span>
-          <p-divider></p-divider>
-          <div class="mb-3 font-semibold">Genres & Tags: </div>
-          <span>
-            <span class="p-float-label mb-4">
-              <p-multiSelect
-                [styleClass]="'w-full'"
-                [options]="filterGenres"
-                inputId="genres-select"></p-multiSelect>
-              <label for="genres-select">Genres</label>
-            </span>
-          </span>
-          <span>
-            <span class="p-float-label">
-              <p-multiSelect
-                inputId="tags-select"
-                [styleClass]="'w-full'"
-                [options]="filterTags">
-
-              </p-multiSelect>
-              <label for="tags-select">Tags</label>
-            </span>
-          </span>
-        </span>
-      </p-card>
+        <app-generic-filter-bar
+          [currentEntityType]="currentEntityType"
+          [filterGenres]="filterGenres"
+          [filterTags]="filterTags"
+          (onFilterApply)="applyFilters($event)"
+          (onFilterReset)="resetFilters()"></app-generic-filter-bar>
     </div>
     <div class="entity-grid flex flex-column pl-4">
       <div class="entity-grid__sort-bar flex
@@ -120,7 +39,7 @@
           (onClick)="resetSort()"></p-button>
       </div>
       <div class="entity-grid__grid-body pt-3">
-        @for (entityKey of entityKeys; track $index) {
+        @for (entityKey of filteredEntityKeys; track $index) {
           <app-entity-card
             [entity]="entities[entityKey]"
             [displaySortOption]="!sortOrderDisabled"

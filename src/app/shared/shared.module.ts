@@ -36,6 +36,7 @@ import { TagArrayManagerComponent } from './components/tag-array-manager/tag-arr
 import { GenericEntityViewPageComponent } from './pages/generic-entity-view-page/generic-entity-view-page.component';
 import { EntityCardComponent } from './components/entity-card/entity-card.component';
 import { SortOptionFormatterPipe } from './pipes/sort-option-formatter.pipe';
+import { GenericFilterBarComponent } from './components/generic-filter-bar/generic-filter-bar.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { SortOptionFormatterPipe } from './pipes/sort-option-formatter.pipe';
     TagArrayManagerComponent,
     GenericEntityViewPageComponent,
     EntityCardComponent,
+    GenericFilterBarComponent
   ],
   imports: [
     CommonModule,

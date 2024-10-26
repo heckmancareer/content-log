@@ -156,21 +156,28 @@ export class MovieEntryFormComponent implements OnInit {
       true,
       'Delete',
     ).then((result: boolean) => {
-      this.entityEditingService.submitEntityForDeletion(this.movieUUID, this.movie).then((result: boolean) => {
-        if(result === true) {
-          this.statusLoggerService.logMessageToConsole(
-            `Deleted movie successfully.`,
-            true,
-            undefined,
-            "success",
-          )
-          this.navigationService.enableIgnore();
-          this.navigationService.navigateToPreviousPage();
-        }
-      }).catch((error: any) => {
-        console.log(error);
-      })
+      if(result === true) {
+        this.entityEditingService.submitEntityForDeletion(this.movieUUID, this.movie).then((result: boolean) => {
+          if(result === true) {
+            this.statusLoggerService.logMessageToConsole(
+              `Deleted movie successfully.`,
+              true,
+              undefined,
+              "success",
+            )
+            this.navigationService.enableIgnore();
+            this.navigationService.navigateToPreviousPage();
+          }
+        }).catch((error: any) => {
+          console.log(error);
+        })
+      }
     })
+  }
+
+  testEvent($event: any) {
+    console.log($event);
+    console.log(this.movie);
   }
 
   onCancel(): void {
