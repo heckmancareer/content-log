@@ -4,7 +4,7 @@ import { MasterDataManagementService } from '../../services/master-data-manageme
 import { EntityType } from '../../models/entity-type';
 import { Subscription, takeUntil, Subject, finalize, switchMap, of } from 'rxjs';
 import { CategoriesManagementService } from '../../services/categories-management.service';
-import { MOVIE_ENTITY_SORT } from './sort-values';
+import { MOVIE_ENTITY_SORT, TV_SHOW_ENTITY_SORT, BOOK_ENTITY_SORT, VIDEO_GAME_ENTITY_SORT } from './sort-values';
 import { sortEntityKeys } from '../../helpers/sort-entity-keys';
 import { NavigationService } from '../../services/navigation.service';
 import { EntityFilterCriteria } from '../../helpers/entity-filter-criteria';
@@ -66,6 +66,20 @@ export class GenericEntityViewPageComponent implements OnInit {
         this.entities = this.masterDataManagementService.getEntitySetReference(this.currentEntityType);
         this.allEntityKeys = Object.keys(this.entities);
         this.filteredEntityKeys = Object.keys(this.entities);
+        switch(this.currentEntityType) {
+          case(EntityType.Movie):
+            this.sortOptions = MOVIE_ENTITY_SORT
+            break
+          case(EntityType.Book):
+            this.sortOptions = BOOK_ENTITY_SORT
+            break
+          case(EntityType.TVShow):
+            this.sortOptions = TV_SHOW_ENTITY_SORT
+            break
+          case(EntityType.VideoGame):
+            this.sortOptions = VIDEO_GAME_ENTITY_SORT
+            break
+        }
 
         if(!this.categoriesManagementService.areCategoriesReady()) {
           return this.categoriesManagementService.categoriesReadiness;

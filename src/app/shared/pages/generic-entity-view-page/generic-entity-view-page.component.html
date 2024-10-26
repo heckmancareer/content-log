@@ -1,7 +1,10 @@
 <div class="page-container">
   <div class="grid-container w-full px-4 py-4">
     <div class="page-title">
-      <h1>Movies</h1>
+      @if(currentEntityType === 'movie') {<h1>Movies</h1>}
+      @if(currentEntityType === 'tv-show') {<h1>TV Shows</h1>}
+      @if(currentEntityType === 'video-game') {<h1>Video Games</h1>}
+      @if(currentEntityType === 'book') {<h1>Books</h1>}
     </div>
     <div class="filter-bar">
         <app-generic-filter-bar

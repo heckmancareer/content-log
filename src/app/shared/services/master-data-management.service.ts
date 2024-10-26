@@ -16,9 +16,9 @@ import { BookEntity } from '../../modules/books/models/book-entity';
 })
 export class MasterDataManagementService {
   private movieMasterSet: Record<string, MovieEntity> = {};
-  private videoGameMasterSet: Record<string, MovieEntity> = {};
-  private tvShowMasterSet: Record<string, MovieEntity> = {};
-  private bookMasterSet: Record<string, MovieEntity> = {};
+  private videoGameMasterSet: Record<string, VideoGameEntity> = {};
+  private tvShowMasterSet: Record<string, TVShowEntity> = {};
+  private bookMasterSet: Record<string, BookEntity> = {};
 
   constructor(private angularElectronInterface: AngularElectronInterfaceService) {}
 
@@ -184,10 +184,22 @@ export class MasterDataManagementService {
     for(const key of Object.keys(this.movieMasterSet)) {
       this.movieMasterSet[key] = MovieEntity.fromPlainObject(this.movieMasterSet[key]);
     }
-    // this.tvShowMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
-    // this.videoGameMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
-    // this.bookMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Movie);
+    this.videoGameMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.VideoGame);
+    for(const key of Object.keys(this.videoGameMasterSet)) {
+      this.videoGameMasterSet[key] = VideoGameEntity.fromPlainObject(this.videoGameMasterSet[key]);
+    }
+    this.bookMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.Book);
+    for(const key of Object.keys(this.bookMasterSet)) {
+      this.bookMasterSet[key] = BookEntity.fromPlainObject(this.bookMasterSet[key]);
+    }
+    this.tvShowMasterSet = await this.angularElectronInterface.getAllEntitiesOfType(EntityType.TVShow);
+    for(const key of Object.keys(this.tvShowMasterSet)) {
+      this.tvShowMasterSet[key] = TVShowEntity.fromPlainObject(this.tvShowMasterSet[key]);
+    }
     console.log(this.movieMasterSet);
+    console.log(this.videoGameMasterSet);
+    console.log(this.bookMasterSet);
+    console.log(this.tvShowMasterSet);
     return true;
   }
 
