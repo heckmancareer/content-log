@@ -5,7 +5,7 @@
       <input
         [(ngModel)]="filterCriteria.title"
         pInputText id="title" class="p-inputtext-sm" />
-      <label for="title">Movie Title</label>
+      <label for="title">{{titleLabel}}</label>
     </span>
     <p-divider></p-divider>
     @if(currentEntityType === 'movie') {

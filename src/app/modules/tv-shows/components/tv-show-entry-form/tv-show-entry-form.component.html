@@ -1,0 +1,184 @@
+<form #tvShowForm="ngForm" class="h-full">
+  <p-card [header]="tvShow.title" class="card">
+    <ng-template pTemplate="content">
+      <div class="card__body-container flex" style="height: 550px">
+        <div class="card__body-left">
+          <span>Image Preview:</span>
+          <app-image-uploader
+            [imagePath]="imageUrl"
+            (onImageSubmission)="setNewSubmittedImageBuffer($event)"
+            (onImageDeletion)="imageDeletionHandler($event)"></app-image-uploader>
+        </div>
+        <div class="card__bord-right flex-grow-1 ml-2">
+          <p-tabView [(activeIndex)]="tabViewActiveIndex">
+            <p-tabPanel header="Meta Data">
+              <div class="formgrid grid w-full">
+                <div class="field col-12">
+                  <label for="movie-title">TV Show Title:</label>
+                  <input
+                    [(ngModel)]="tvShow.title"
+                    [required]="true"
+                    id="tv-show-title"
+                    name="title"
+                    type="text"
+                    class="w-full p-2"
+                    pInputText/>
+                </div>
+                <div class="field col-6 flex flex-column">
+                  <label for="movie-release-year">Conclusion Date:</label>
+                  <p-calendar
+                    [(ngModel)]="tvShow.conclusionDate"
+                    [inputStyleClass]="'w-full p-2'"
+                    [styleClass]="'w-full'"
+                    [required]="true"
+                    name="conclusion-date"
+                    inputId="tv-show-conclusion-date"
+                    class="text-base text-color
+                      surface-overlay surface-border
+                      border-round appearance-none
+                      outline-none focus:border-primary"></p-calendar>
+                </div>
+                <div class="field col-6 flex flex-column">
+                  <label for="movie-runtime">Season Number:</label>
+                  <p-inputNumber
+                    [(ngModel)]="tvShow.seasonNumber"
+                    [style]="{width: '100%', height: '36px'}"
+                    [required]="true"
+                    inputId="tv-show-season-number"
+                    name="season-number"></p-inputNumber>
+                </div>
+                <div class="field col-6 flex flex-column">
+                  <label for="movie-runtime">Episode Count:</label>
+                  <p-inputNumber
+                    [(ngModel)]="tvShow.episodeCount"
+                    [style]="{width: '100%', height: '36px'}"
+                    [suffix]="' Episodes'"
+                    [required]="true"
+                    inputId="tv-show-episode-count"
+                    name="episode-count"></p-inputNumber>
+                </div>
+                <div class="field col-12">
+                  <label for="movie-plotsummary">Plot Summary:</label>
+                  <textarea
+                    [(ngModel)]="tvShow.plotSummary"
+                    pInputTextarea
+                    class="w-full"
+                    maxlength="750"
+                    name="plot-summary"></textarea>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="Categories">
+              <div class="formgrid grid w-full">
+                <div class="field col-6 flex flex-column">
+                  <app-tag-array-manager
+                    [(selectedTags)]="tvShow.genres"
+                    [typeLabel]="'genres'"
+                    [availableTags]="genresAutoCompleteItems"
+                    (onNewTagCreated)="genresNewItems.push($event)"
+                    name="genres"></app-tag-array-manager>
+                </div>
+                <div class="field col-6 flex flex-column">
+                  <span class="p-fluid">
+                    <app-tag-array-manager
+                      [(selectedTags)]="tvShow.tags"
+                      [typeLabel]="'tags'"
+                      [availableTags]="tagsAutoCompleteItems"
+                      (onNewTagCreated)="tagsNewItems.push($event)"
+                      name="tags"></app-tag-array-manager>
+                  </span>
+                </div>
+              </div>
+            </p-tabPanel>
+            <p-tabPanel header="Review">
+              <div class="formgrid grid w-full">
+                <div class="field col-6 flex flex-column">
+                  <label for="movie-user-completion-status">Completion Status:</label>
+                  <p-dropdown
+                    [(ngModel)]="tvShow.completionStatus"
+                    [options]="completedStatusOptions"
+                    [styleClass]="'w-full mb-2'"
+                    (onChange)="testEvent($event)"
+                    id="tv-show-user-completion-status"
+                    name="user-completion-status"
+                    optionLabel="label"
+                    optionValue="status"
+                    class="text-base text-color
+                      surface-overlay surface-border
+                      border-round appearance-none
+                      outline-none focus:border-primary"></p-dropdown>
+                  <label for="movie-user-date-completed">Date Started:</label>
+                  <p-calendar
+                    [(ngModel)]="tvShow.userDateStarted"
+                    [inputStyleClass]="'w-full p-2'"
+                    [styleClass]="'w-full'"
+                    name="user-date-started"
+                    inputId="tv-show-user-date-started"
+                    class="text-base text-color
+                      surface-overlay surface-border
+                      border-round appearance-none
+                      outline-none focus:border-primary"></p-calendar>
+                  <label for="movie-user-date-completed">Date Completed:</label>
+                  <p-calendar
+                    [(ngModel)]="tvShow.userDateCompleted"
+                    [inputStyleClass]="'w-full p-2'"
+                    [styleClass]="'w-full'"
+                    name="user-date-completed"
+                    inputId="tv-show-user-date-completed"
+                    class="text-base text-color
+                      surface-overlay surface-border
+                      border-round appearance-none
+                      outline-none focus:border-primary"></p-calendar>
+                </div>
+                <div class="field col-6 flex flex-column">
+                  <label for="movie-user-rating">Rating:</label>
+                  <p-knob
+                    [(ngModel)]="tvShow.userRating"
+                    [valueColor]="userRatingKnobColor"
+                    (onChange)="setUserRatingKnobColor($event)"
+                    name="user-rating-knob"
+                    class="m-auto"></p-knob>
+                  <p-inputNumber
+                    [(ngModel)]="tvShow.userRating"
+                    [showButtons]="true"
+                    [buttonLayout]="'horizontal'"
+                    [decrementButtonClass]="'p-button-danger'"
+                    [decrementButtonIcon]="'pi pi-minus'"
+                    [incrementButtonClass]="'p-button-success'"
+                    [incrementButtonIcon]="'pi pi-plus'"
+                    [step]="5"
+                    [suffix]="' / 100'"
+                    [min]="0"
+                    [max]="100"
+                    (onInput)="setUserRatingKnobColor($event)"
+                    name="user-rating-number"
+                    inputId="movie-user-rating"
+                    class="m-auto"></p-inputNumber>
+                </div>
+                <div class="field col-12 flex flex-column">
+                  <label>Review:</label>
+                  <p-editor
+                    [(ngModel)]="tvShow.userReview"
+                    [style]="{width: '100%', height: '200px'}" name="user-review"></p-editor>
+                </div>
+              </div>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="footer-buttons flex justify-content-between">
+        <span class="button-group-left">
+          @if(deleteVisible) {
+            <p-button label="Delete" severity="danger" icon="pi pi-trash" (onClick)="onDeletion()"></p-button>
+          }
+        </span>
+        <span class="button-group-right">
+          <p-button class="mr-3" label="Cancel" severity="secondary" (onClick)="onCancel()"></p-button>
+          <p-button label="Save" severity="success" type="submit" (onClick)="onSubmit($event)"></p-button>
+        </span>
+      </div>
+    </ng-template>
+  </p-card>
+</form>

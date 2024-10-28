@@ -5,6 +5,9 @@ import { StatusLoggerService } from './status-logger.service';
 import { EntityType } from '../models/entity-type';
 import { BasicEntity } from '../models/basic-entity';
 import { MovieEntity } from '../../modules/movies/models/movie-entity';
+import { TVShowEntity } from '../../modules/tv-shows/models/tv-show-entity';
+import { VideoGameEntity } from '../../modules/video-games/models/video-game-entity';
+import { BookEntity } from '../../modules/books/models/book-entity';
 
 /**
  * This service is responsible for handling edits to entities
@@ -66,6 +69,18 @@ export class EntityEditingService {
     this.currentEntity = MovieEntity.fromPlainObject(entity);
     console.log(`Object after assignment: `);
     console.log(this.currentEntity)
+  }
+
+  setCurrentTVShowEntity(entity: TVShowEntity): void {
+    this.currentEntity = TVShowEntity.fromPlainObject(entity);
+  }
+
+  setCurrentVideoGameEntity(entity: VideoGameEntity): void {
+    this.currentEntity = VideoGameEntity.fromPlainObject(entity);
+  }
+
+  setCurrentBookEntity(entity: BookEntity): void {
+    this.currentEntity = BookEntity.fromPlainObject(entity);
   }
 
   hasCurrentEntity(): boolean {

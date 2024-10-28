@@ -41,6 +41,7 @@ export class CategoriesManagementService implements OnInit {
       case EntityType.VideoGame:
         return this.videoGameGenres;
     }
+    return new Set<string>();
   }
 
   private entityTypeToTagSet(entityType: EntityType): Set<string> {
@@ -54,6 +55,7 @@ export class CategoriesManagementService implements OnInit {
       case EntityType.VideoGame:
         return this.videoGameTags;
     }
+    return new Set<string>();
   }
 
   areCategoriesReady(): boolean {

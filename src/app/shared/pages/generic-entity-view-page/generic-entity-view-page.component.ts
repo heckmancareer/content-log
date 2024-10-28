@@ -136,14 +136,16 @@ export class GenericEntityViewPageComponent implements OnInit {
       const entity = this.entities[entityKey];
       return $event.evaluateEntity(entity);
     })
+    this.invokeSorting();
   }
 
   resetFilters(): void {
     this.filteredEntityKeys = [...this.allEntityKeys];
+    this.invokeSorting();
   }
 
   private invokeSorting(): void {
-    this.allEntityKeys = sortEntityKeys(this.entities, this.allEntityKeys, this.selectedSortOption as string, this.selectedSortOrder);
+    this.filteredEntityKeys = sortEntityKeys(this.entities, this.filteredEntityKeys, this.selectedSortOption as string, this.selectedSortOrder);
   }
 
 }

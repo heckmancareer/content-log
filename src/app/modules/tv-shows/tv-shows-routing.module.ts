@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { TvShowsInventoryPageComponent } from './pages/tv-shows-inventory-page/tv-shows-inventory-page.component';
 import { GenericEntityViewPageComponent } from '../../shared/pages/generic-entity-view-page/generic-entity-view-page.component';
 import { EntityType } from '../../shared/models/entity-type';
+import { TVShowEditPageComponent } from './pages/tv-show-edit-page/tv-show-edit-page.component';
+import { unsavedChangesConfirmationGuard } from '../../shared/guards/unsaved-changes-confirmation.guard';
 
 
 const routes: Routes = [
@@ -14,6 +16,11 @@ const routes: Routes = [
       entityType: EntityType.TVShow
     }
   },
+  {
+    path: 'edit-tv-show',
+    component: TVShowEditPageComponent,
+    canDeactivate: [unsavedChangesConfirmationGuard]
+  }
 ];
 
 @NgModule({

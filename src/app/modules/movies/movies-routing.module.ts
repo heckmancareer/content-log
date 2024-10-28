@@ -15,7 +15,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'new-movie',
+    path: 'edit-movie',
     component: MovieEditPageComponent,
     canDeactivate: [unsavedChangesConfirmationGuard],
   }

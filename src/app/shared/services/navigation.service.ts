@@ -5,6 +5,9 @@ import { BasicEntity } from '../models/basic-entity';
 import { EntityEditingService } from './entity-editing.service';
 import { EntityType } from '../models/entity-type';
 import { MovieEntity } from '../../modules/movies/models/movie-entity';
+import { TVShowEntity } from '../../modules/tv-shows/models/tv-show-entity';
+import { BookEntity } from '../../modules/books/models/book-entity';
+import { VideoGameEntity } from '../../modules/video-games/models/video-game-entity';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +27,23 @@ export class NavigationService {
   }
 
   navigateToEntityEditing(entityToEditType: EntityType, entityToEdit?: unknown, entityToEditUUID?: string): void {
+    if(entityToEditUUID) this.entityEditingService.setCurrentEntityUUID(entityToEditUUID);
     switch(entityToEditType) {
       case EntityType.Movie:
-        if(entityToEditUUID) this.entityEditingService.setCurrentEntityUUID(entityToEditUUID);
         if(entityToEdit) this.entityEditingService.setCurrentMovieEntity(entityToEdit as MovieEntity);
-        this.router.navigateByUrl(`/movies/new-movie`);
+        this.router.navigateByUrl(`/movies/edit-movie`);
+        break;
+      case EntityType.TVShow:
+        if(entityToEdit) this.entityEditingService.setCurrentTVShowEntity(entityToEdit as TVShowEntity);
+        this.router.navigateByUrl('/tv-shows/edit-tv-show');
+        break;
+      case EntityType.Book:
+        if(entityToEdit) this.entityEditingService.setCurrentBookEntity(entityToEdit as BookEntity);
+        this.router.navigateByUrl('/book/edit-book');
+        break;
+      case EntityType.VideoGame:
+        if(entityToEdit) this.entityEditingService.setCurrentVideoGameEntity(entityToEdit as VideoGameEntity);
+        this.router.navigateByUrl('/video-game/edit-video-game');
         break;
     }
   }

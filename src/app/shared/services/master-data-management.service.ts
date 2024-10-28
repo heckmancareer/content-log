@@ -37,6 +37,7 @@ export class MasterDataManagementService {
       case(EntityType.Book):
         return this.bookMasterSet;
     }
+    return this.movieMasterSet;
   }
 
   /**

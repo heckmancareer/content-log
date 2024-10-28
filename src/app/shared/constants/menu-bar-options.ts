@@ -53,7 +53,10 @@ export function getMenuBarConfig(navigation: NavigationService): RouteAndMenuIte
             },
             {
               label: 'New Entry',
-              icon: PrimeIcons.PLUS_CIRCLE
+              icon: PrimeIcons.PLUS_CIRCLE,
+              command: () => {
+                navigation.navigateToEntityEditing(EntityType.TVShow);
+              }
             }
           ]
         }
@@ -79,7 +82,10 @@ export function getMenuBarConfig(navigation: NavigationService): RouteAndMenuIte
             },
             {
               label: 'New Entry',
-              icon: PrimeIcons.PLUS_CIRCLE
+              icon: PrimeIcons.PLUS_CIRCLE,
+              command: () => {
+                navigation.navigateToEntityEditing(EntityType.VideoGame);
+              }
             }
           ]
         }
@@ -105,7 +111,10 @@ export function getMenuBarConfig(navigation: NavigationService): RouteAndMenuIte
             },
             {
               label: 'New Entry',
-              icon: PrimeIcons.PLUS_CIRCLE
+              icon: PrimeIcons.PLUS_CIRCLE,
+              command: () => {
+                navigation.navigateToEntityEditing(EntityType.Book);
+              }
             }
           ]
         }

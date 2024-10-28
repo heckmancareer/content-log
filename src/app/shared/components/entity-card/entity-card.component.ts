@@ -5,6 +5,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { MasterDataManagementService } from '../../services/master-data-management.service';
 import { ENTITY_TYPES_AND_FIELDS, EntityLabelValuePair, EntityTypeAndFields } from './entity-metadata-config';
 import { EntityType } from '../../models/entity-type';
+import { EntityCompletionStatus } from '../../models/basic-entity';
 
 @Component({
   selector: 'app-entity-card',
@@ -28,6 +29,8 @@ export class EntityCardComponent implements OnInit, OnChanges {
   entityTypesAndFields: EntityTypeAndFields =  ENTITY_TYPES_AND_FIELDS;
   metaDataFields: EntityLabelValuePair[] = [];
 
+  completionStatusLabel: string = '';
+
   constructor(
     private angularElectron: AngularElectronInterfaceService,
     private masterDataManagement: MasterDataManagementService,
@@ -50,6 +53,17 @@ export class EntityCardComponent implements OnInit, OnChanges {
 
   showDialog(): void {
     if(this.dialogEnabled) this.dialogVisible = true;
+    switch(this.entity.completionStatus) {
+      case(EntityCompletionStatus.NotStarted):
+        this.completionStatusLabel = 'Not Started'
+        break;
+      case(EntityCompletionStatus.InProgress):
+        this.completionStatusLabel = 'In Progress'
+        break;
+      case(EntityCompletionStatus.Completed):
+        this.completionStatusLabel = 'Completed'
+        break;
+    }
     console.log(this.entity);
   }
 

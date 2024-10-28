@@ -53,14 +53,26 @@
             </div>
             <div class="col-6 flex flex-column">
               <span class="font-bold">Status:</span>
-              <span>{{entity.completionStatus}}</span>
+              <span>{{completionStatusLabel}}</span>
             </div>
             <div class="col-12">
               <table>
                 <tbody>
                   <tr>
-                    <th>Release Date:</th>
-                    <td>{{entity.releaseDate | date: 'MMMM d, y'}}</td>
+                    @switch(entity.entityType) {
+                      @case('movie' || 'video-game') {
+                        <th>Release Date:</th>
+                        <td>{{entity.releaseDate | date: 'MMMM d, y'}}</td>
+                      }
+                      @case('tv-show') {
+                        <th>Conclusion Date:</th>
+                        <td>{{entity.conclusionDate | date: 'MMMM d, y'}}</td>
+                      }
+                      @case('book') {
+                        <th>Publication Year:</th>
+                        <td>{{entity.publicationYear | date: 'y'}}</td>
+                      }
+                    }
                   </tr>
                   <tr>
                     <th>Started:</th>
@@ -124,7 +136,7 @@
                   @for(field of metaDataFields; track $index) {
                     <tr>
                       <th>{{field.label}}:</th>
-                      <td>{{entity[field.value]}}</td>
+                      <td>{{entity[field.value]}}@if(field.suffix){ {{field.suffix}}}</td>
                     </tr>
                   }
                 </tbody>

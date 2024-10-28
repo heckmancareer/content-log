@@ -9,7 +9,7 @@ export const CATEGORIES: ContentLogCategory[] = [
     name: 'TV Shows',
     icon: 'volume-up',
     route: 'tv-shows',
-    color: 'teal'
+    color: 'green'
   },
   {
     name: 'Video Games',
